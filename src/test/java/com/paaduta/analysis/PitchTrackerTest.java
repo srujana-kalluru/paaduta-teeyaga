@@ -44,4 +44,14 @@ class PitchTrackerTest {
     void silentClipHasNoVoicedFrames() {
         assertEquals(0, PitchTracker.track(new float[Synth.RATE * 2]).voicedFrames());
     }
+
+    @Test
+    void foldsBriefOctaveErrorsButKeepsRealLeaps() {
+        var blip = PitchTracker.track(Synth.notes(2, new double[]{220, 0, 0.95}, new double[]{440, 0.95, 0.1}, new double[]{220, 1.05, 0.95}));
+        var leap = PitchTracker.track(Synth.notes(2, new double[]{220, 0, 1}, new double[]{440, 1, 1}));
+
+        assertEquals(220, blip.f0()[49], 3);
+        assertEquals(220, leap.f0()[47], 3);
+        assertEquals(440, leap.f0()[51], 3);
+    }
 }

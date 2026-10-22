@@ -1,8 +1,11 @@
 package com.paaduta.analysis;
 
 import com.paaduta.model.Contour;
+import com.paaduta.util.Stats;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.paaduta.constants.AudioConstants.HOP;
 import static com.paaduta.constants.AudioConstants.RATE;
@@ -17,6 +20,8 @@ public final class PitchTracker {
     private static final double YIN_THRESHOLD = 0.2;
     private static final double EPSILON = 1e-12;
     private static final int MIN_VOICED_RUN = 3;
+    private static final int OCTAVE_CONTEXT = 10;
+    private static final double OCTAVE_TOLERANCE = 1 / 6.0;
 
     private PitchTracker() {
     }
@@ -40,6 +45,7 @@ public final class PitchTracker {
             }
         }
         dropShortRuns(f0);
+        foldOctaveErrors(f0);
         return new Contour((double) x.length / RATE, f0, probability, db);
     }
 
@@ -105,5 +111,30 @@ public final class PitchTracker {
             }
             i = Math.max(end, i + 1);
         }
+    }
+
+    private static void foldOctaveErrors(Double[] f0) {
+        var original = f0.clone();
+        for (int i = 0; i < f0.length; i++) {
+            if (original[i] != null) {
+                var around = neighbourhood(original, i);
+                if (around.size() >= OCTAVE_CONTEXT) {
+                    double octaves = Math.log(original[i] / Stats.median(around)) / Math.log(2);
+                    if (Math.abs(Math.abs(octaves) - 1) < OCTAVE_TOLERANCE) {
+                        f0[i] = original[i] * (octaves > 0 ? 0.5 : 2);
+                    }
+                }
+            }
+        }
+    }
+
+    private static List<Double> neighbourhood(Double[] f0, int centre) {
+        var around = new ArrayList<Double>();
+        for (int k = Math.max(0, centre - OCTAVE_CONTEXT); k <= Math.min(f0.length - 1, centre + OCTAVE_CONTEXT); k++) {
+            if (f0[k] != null) {
+                around.add(f0[k]);
+            }
+        }
+        return around;
     }
 }
