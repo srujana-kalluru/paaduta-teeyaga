@@ -4,6 +4,7 @@ import { drawChart, drawLive } from './chart.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+const API_BASE = $('meta[name="api-base"]').content;
 
 const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] } };
 const players = { reference: new Audio(), user: new Audio() };
@@ -48,10 +49,11 @@ function toast(message, action) {
 async function api(path, form, signal) {
   let response;
   try {
-    response = await fetch(path, { method: 'POST', body: form, signal });
+    response = await fetch(API_BASE + path, { method: 'POST', body: form, signal });
   } catch (e) {
     if (e.name === 'AbortError') throw e;
-    throw new Error("Can't reach the analysis service. Is it running?");
+    const where = API_BASE ? ` at ${API_BASE}` : '';
+    throw new Error(`Can't reach the analysis service${where}. Is it running?`);
   }
   const body = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(body.detail ?? `The analysis service returned an error (${response.status}).`);

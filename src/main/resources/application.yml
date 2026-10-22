@@ -29,3 +29,7 @@ analysis:
   min-alignment-confidence: 0.5
   max-issues: 5
   unsteady-cents: 70
+
+app:
+  cors:
+    allowed-origins: https://*.github.io,http://localhost:[*],http://127.0.0.1:[*]

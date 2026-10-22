@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,6 +52,16 @@ class AnalysisApiTest {
     @Test
     void healthCheck() throws Exception {
         mvc.perform(get("/api/health")).andExpect(status().isOk()).andExpect(jsonPath("$.status").value("ok"));
+    }
+
+    @Test
+    void allowsGitHubPagesAndLocalOriginsOnly() throws Exception {
+        mvc.perform(get("/api/health").header("Origin", "https://someone.github.io"))
+                .andExpect(header().string("Access-Control-Allow-Origin", "https://someone.github.io"));
+        mvc.perform(get("/api/health").header("Origin", "http://localhost:5500"))
+                .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5500"));
+        mvc.perform(get("/api/health").header("Origin", "https://example.com"))
+                .andExpect(status().isForbidden());
     }
 
     @Test
