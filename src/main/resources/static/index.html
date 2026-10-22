@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>Paaduta Teeyaga</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230071e3'/%3E%3Cstop offset='1' stop-color='%23ff2d55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cg fill='white' transform='translate(8 8) scale(.75)'%3E%3Cpath d='M22 14 54 6v8l-32 8z'/%3E%3Crect x='22' y='16' width='4' height='30'/%3E%3Crect x='50' y='8' width='4' height='32'/%3E%3Cellipse cx='16' cy='46' rx='9.5' ry='7' transform='rotate(-22 16 46)'/%3E%3Cellipse cx='45' cy='40' rx='9.5' ry='7' transform='rotate(-22 45 40)'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="app.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+<header class="bar" hidden>
+  <button class="link" id="reset">Reset</button>
+</header>
+
+<main>
+  <section id="home" class="view">
+    <svg class="note" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="note-fill" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="64" y2="64">
+          <stop offset="0" stop-color="#0071e3"/>
+          <stop offset=".55" stop-color="#af52de"/>
+          <stop offset="1" stop-color="#ff2d55"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#note-fill)">
+        <path d="M22 14 54 6v8l-32 8z"/>
+        <rect x="22" y="16" width="4" height="30"/>
+        <rect x="50" y="8" width="4" height="32"/>
+        <ellipse cx="16" cy="46" rx="9.5" ry="7" transform="rotate(-22 16 46)"/>
+        <ellipse cx="45" cy="40" rx="9.5" ry="7" transform="rotate(-22 45 40)"/>
+      </g>
+    </svg>
+    <h1 class="title">Paaduta Teeyaga</h1>
+    <p class="tagline">Hear where it drifts. Sing it better.</p>
+    <button class="primary" data-go="setup">Start practice</button>
+  </section>
+
+  <section id="setup" class="view" hidden>
+    <div class="slots">
+      <article class="card slot" id="reference">
+        <h3>Reference</h3>
+        <div class="row">
+          <button class="record" aria-label="Record reference" aria-pressed="false"><span></span></button>
+          <span class="timer" aria-live="polite"></span>
+        </div>
+        <audio controls hidden></audio>
+        <ul class="notes"></ul>
+      </article>
+      <article class="card slot" id="user">
+        <h3>Attempt</h3>
+        <div class="row">
+          <button class="record" aria-label="Record attempt" aria-pressed="false"><span></span></button>
+          <span class="timer" aria-live="polite"></span>
+        </div>
+        <audio controls hidden></audio>
+        <ul class="notes"></ul>
+      </article>
+    </div>
+    <button class="primary wide" id="analyse" disabled>Analyse</button>
+  </section>
+
+  <section id="analysing" class="view center" hidden>
+    <div class="spinner" aria-hidden="true"></div>
+    <h2 role="status">Analysing…</h2>
+    <button class="secondary" id="cancel">Cancel</button>
+  </section>
+
+  <section id="results" class="view" hidden>
+    <div class="segmented" id="takes" role="tablist" aria-label="Takes" hidden></div>
+
+    <div class="card summary">
+      <p class="eyebrow" id="confidence"></p>
+      <h2 id="headline" aria-live="polite"></h2>
+      <div class="segmented" id="keys" role="group" aria-label="Compare in" hidden></div>
+      <ul class="warnings" id="warnings"></ul>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Pitch</h3>
+        <div class="zoom">
+          <button class="secondary" id="zoom-out" aria-label="Zoom out">−</button>
+          <button class="secondary" id="zoom-in" aria-label="Zoom in">+</button>
+        </div>
+      </div>
+      <div class="legend"><span class="ref">Reference</span><span class="you">Attempt</span><span class="gap">Not compared</span><span class="flag">Flagged</span></div>
+      <div class="chart" id="chart"></div>
+      <div class="row">
+        <button class="secondary" data-play="reference">Reference</button>
+        <button class="secondary" data-play="user">Attempt</button>
+      </div>
+    </div>
+
+    <div id="issues"></div>
+
+    <div class="card" id="tips">
+      <h3>Try this next</h3>
+      <ol></ol>
+    </div>
+
+    <div class="card" id="progress" hidden>
+      <h3></h3>
+      <dl></dl>
+    </div>
+
+    <details class="card" id="adjust">
+      <summary>Key</summary>
+      <label for="key">Key of the attempt</label>
+      <select id="key"><option value="">Detect automatically</option></select>
+      <button class="primary" id="reanalyse">Analyse again</button>
+    </details>
+
+    <button class="primary wide" id="again">Record another take</button>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="alert" hidden></div>
+</body>
+</html>
