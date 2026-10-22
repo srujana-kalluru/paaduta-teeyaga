@@ -7,21 +7,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.paaduta.constants.AnalysisConstants.EPSILON;
+import static com.paaduta.constants.AnalysisConstants.FRAME;
+import static com.paaduta.constants.AnalysisConstants.MIN_VOICED_RUN;
+import static com.paaduta.constants.AnalysisConstants.OCTAVE_CONTEXT;
+import static com.paaduta.constants.AnalysisConstants.OCTAVE_TOLERANCE;
+import static com.paaduta.constants.AnalysisConstants.TAU_MAX;
+import static com.paaduta.constants.AnalysisConstants.TAU_MIN;
+import static com.paaduta.constants.AnalysisConstants.WINDOW;
+import static com.paaduta.constants.AnalysisConstants.YIN_THRESHOLD;
 import static com.paaduta.constants.AudioConstants.HOP;
 import static com.paaduta.constants.AudioConstants.RATE;
 import static com.paaduta.constants.AudioConstants.SILENCE_DB;
 
 public final class PitchTracker {
-
-    private static final int TAU_MIN = RATE / 1100;
-    private static final int TAU_MAX = RATE / 65;
-    private static final int WINDOW = 512;
-    static final int FRAME = WINDOW + TAU_MAX;
-    private static final double YIN_THRESHOLD = 0.2;
-    private static final double EPSILON = 1e-12;
-    private static final int MIN_VOICED_RUN = 3;
-    private static final int OCTAVE_CONTEXT = 10;
-    private static final double OCTAVE_TOLERANCE = 1 / 6.0;
 
     private PitchTracker() {
     }

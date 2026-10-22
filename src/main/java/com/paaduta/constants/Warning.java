@@ -4,6 +4,8 @@ import com.paaduta.dto.Notice;
 
 import java.util.Locale;
 
+import static com.paaduta.constants.ApiConstants.REFERENCE_TRACK;
+
 public enum Warning {
     TOO_SHORT("%s is under 1 second."),
     LOW_VOLUME("%s is very quiet. Move closer to the microphone."),
@@ -14,8 +16,6 @@ public enum Warning {
     WEAK_ALIGNMENT("The recordings didn't line up reliably, so nothing is flagged. Record both again, singing the same phrase."),
     LIKELY_OCTAVE_ERROR("Some octave jumps were ignored as likely tracking errors."),
     POSSIBLE_KEY_MISMATCH("The attempt is about %2$s the reference.");
-
-    private static final String REFERENCE_TRACK = "reference";
 
     private final String template;
 

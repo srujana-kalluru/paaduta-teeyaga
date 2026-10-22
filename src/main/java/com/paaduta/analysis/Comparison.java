@@ -14,44 +14,43 @@ import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 
+import static com.paaduta.constants.AnalysisConstants.CENTS_PER_OCTAVE;
+import static com.paaduta.constants.AnalysisConstants.CENTS_PER_SEMITONE;
+import static com.paaduta.constants.AnalysisConstants.CHUNK;
+import static com.paaduta.constants.AnalysisConstants.CHUNK_MIN_COVERAGE;
+import static com.paaduta.constants.AnalysisConstants.KEY_SHIFT_MIN_CENTS;
+import static com.paaduta.constants.AnalysisConstants.MAX_GAP;
+import static com.paaduta.constants.AnalysisConstants.MAX_STALL;
+import static com.paaduta.constants.AnalysisConstants.OCTAVE_SUSPECT_CENTS;
+import static com.paaduta.constants.AnalysisConstants.ONSET_MIN_RUN;
+import static com.paaduta.constants.AnalysisConstants.ONSET_SILENCE;
+import static com.paaduta.constants.AnalysisConstants.ONSET_VOICING_FRAMES;
+import static com.paaduta.constants.AnalysisConstants.ONSET_WINDOW;
+import static com.paaduta.constants.AnalysisConstants.SILENT_PROBABILITY;
+import static com.paaduta.constants.AnalysisConstants.SMOOTHING;
+import static com.paaduta.constants.AnalysisConstants.SPREAD_HIGH_PERCENTILE;
+import static com.paaduta.constants.AnalysisConstants.SPREAD_LOW_PERCENTILE;
+import static com.paaduta.constants.AnalysisConstants.TIMING_TAIL;
+import static com.paaduta.constants.ApiConstants.ATTEMPT_ONLY;
+import static com.paaduta.constants.ApiConstants.EARLY;
+import static com.paaduta.constants.ApiConstants.EXTRA;
+import static com.paaduta.constants.ApiConstants.FLAT;
+import static com.paaduta.constants.ApiConstants.ISSUE_ID_PREFIX;
+import static com.paaduta.constants.ApiConstants.LATE;
+import static com.paaduta.constants.ApiConstants.MISSED;
+import static com.paaduta.constants.ApiConstants.ONSET_OFFSET;
+import static com.paaduta.constants.ApiConstants.PITCH_DEVIATION;
+import static com.paaduta.constants.ApiConstants.PITCH_WAVERING;
+import static com.paaduta.constants.ApiConstants.PROBABILITY_PLACES;
+import static com.paaduta.constants.ApiConstants.REFERENCE_ONLY;
+import static com.paaduta.constants.ApiConstants.SECONDS_PLACES;
+import static com.paaduta.constants.ApiConstants.SHARP;
+import static com.paaduta.constants.ApiConstants.SUSTAINED_DEVIATION;
+import static com.paaduta.constants.ApiConstants.TIMING;
+import static com.paaduta.constants.ApiConstants.UNSTEADY;
 import static com.paaduta.constants.AudioConstants.HOP_SECONDS;
 
 public final class Comparison {
-
-    private static final double CENTS_PER_SEMITONE = 100;
-    private static final double CENTS_PER_OCTAVE = 1200;
-    private static final double OCTAVE_SUSPECT_CENTS = 1000;
-    private static final double KEY_SHIFT_MIN_CENTS = 150;
-    private static final double SILENT_PROBABILITY = 0.2;
-    private static final int MAX_GAP = 3;
-    private static final int MAX_STALL = 10;
-    private static final int SMOOTHING = 4;
-    private static final int CHUNK = 25;
-    private static final double CHUNK_MIN_COVERAGE = 0.8;
-    private static final double SPREAD_LOW_PERCENTILE = 0.2;
-    private static final double SPREAD_HIGH_PERCENTILE = 0.8;
-    private static final int ONSET_SILENCE = 8;
-    private static final int ONSET_MIN_RUN = 10;
-    private static final int ONSET_WINDOW = 37;
-    private static final int ONSET_VOICING_FRAMES = 5;
-    private static final int TIMING_TAIL = 15;
-    private static final String ISSUE_ID_PREFIX = "issue-";
-    private static final String PITCH_DEVIATION = "pitch_deviation";
-    private static final String TIMING = "timing";
-    private static final String MISSED = "missed";
-    private static final String EXTRA = "extra";
-    private static final String UNSTEADY = "unsteady";
-    private static final String FLAT = "flat";
-    private static final String SHARP = "sharp";
-    private static final String LATE = "late";
-    private static final String EARLY = "early";
-    private static final String SUSTAINED_DEVIATION = "sustained_deviation";
-    private static final String ONSET_OFFSET = "onset_offset";
-    private static final String REFERENCE_ONLY = "reference_only";
-    private static final String ATTEMPT_ONLY = "attempt_only";
-    private static final String PITCH_WAVERING = "pitch_wavering";
-    private static final int SECONDS_PLACES = 2;
-    private static final int PROBABILITY_PLACES = 2;
 
     private record Window(int from, int to, double attemptFrom, double attemptTo) {
     }

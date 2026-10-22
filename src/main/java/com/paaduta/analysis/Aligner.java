@@ -7,14 +7,13 @@ import com.paaduta.util.Stats;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import static com.paaduta.constants.AnalysisConstants.NEAR_TIE;
+import static com.paaduta.constants.ApiConstants.ALIGNMENT_METHOD;
+import static com.paaduta.constants.ApiConstants.PROBABILITY_PLACES;
+import static com.paaduta.constants.ApiConstants.SECONDS_PLACES;
 import static com.paaduta.constants.AudioConstants.HOP_SECONDS;
 
 public final class Aligner {
-
-    private static final double NEAR_TIE = 0.98;
-    private static final String ALIGNMENT_METHOD = "voicing_overlap";
-    private static final int SECONDS_PLACES = 2;
-    private static final int PROBABILITY_PLACES = 2;
 
     private Aligner() {
     }

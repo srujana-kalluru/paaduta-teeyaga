@@ -1,9 +1,4 @@
-const SVG_NS = 'http://www.w3.org/2000/svg';
-const CHART_HEIGHT = 260;
-const CHART_TOP = 20;
-const CHART_BOTTOM = 28;
-const CHART_AXIS = 44;
-const NOTE_NAMES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
+import { CHART_AXIS, CHART_BOTTOM, CHART_HEIGHT, CHART_TOP, NOTE_NAMES, SVG_NS } from './constants.js';
 
 const node = (name, attrs, parent) => {
   const el = document.createElementNS(SVG_NS, name);

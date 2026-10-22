@@ -1,9 +1,4 @@
-const RATE = 16000;
-const MIN_HZ = 65;
-const MAX_HZ = 1100;
-const SILENCE_DB = -50;
-const YIN_THRESHOLD = 0.2;
-const ANALYSER_SIZE = 2048;
+import { ANALYSER_SIZE, MAX_HZ, MIN_HZ, RATE, SILENCE_DB, YIN_THRESHOLD } from './constants.js';
 
 const midi = (hz) => 69 + 12 * Math.log2(hz / 440);
 

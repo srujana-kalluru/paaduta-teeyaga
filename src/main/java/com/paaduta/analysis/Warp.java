@@ -2,15 +2,15 @@ package com.paaduta.analysis;
 
 import com.paaduta.model.Contour;
 
-final class Warp {
+import static com.paaduta.constants.AnalysisConstants.CENTS_PER_SEMITONE;
+import static com.paaduta.constants.AnalysisConstants.MAX_STEP_SEMITONES;
+import static com.paaduta.constants.AnalysisConstants.STEP_LEFT;
+import static com.paaduta.constants.AnalysisConstants.STEP_PENALTY;
+import static com.paaduta.constants.AnalysisConstants.STEP_UP;
+import static com.paaduta.constants.AnalysisConstants.WARP_BAND;
+import static com.paaduta.constants.AnalysisConstants.WARP_WIDTH;
 
-    private static final double CENTS_PER_SEMITONE = 100;
-    private static final int WARP_BAND = 37;
-    private static final int WARP_WIDTH = 2 * WARP_BAND + 1;
-    private static final double STEP_PENALTY = 0.15;
-    private static final double MAX_STEP_SEMITONES = 3;
-    private static final byte STEP_UP = 1;
-    private static final byte STEP_LEFT = 2;
+final class Warp {
 
     private Warp() {
     }

@@ -16,12 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.paaduta.constants.ApiConstants.STATUS_OK;
+import static com.paaduta.constants.ApiConstants.USER_TRACK;
+
 @RestController
 @RequestMapping("/api")
 class AnalysisController {
-
-    private static final String USER_TRACK = "user";
-    private static final String STATUS_OK = "ok";
 
     private final AnalysisService service;
 

@@ -1,10 +1,6 @@
 import { decode, startRecording, wav } from './audio.js';
+import { CONTEXT_SECONDS, MAX_SECONDS, NBSP, ZOOMS } from './constants.js';
 import { drawChart, drawLive } from './chart.js';
-
-const MAX_SECONDS = 179;
-const CONTEXT_SECONDS = 1;
-const ZOOMS = [10, 20, 40, 80, 160];
-const NBSP = String.fromCharCode(160);
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

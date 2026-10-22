@@ -7,6 +7,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import static com.paaduta.constants.AnalysisConstants.FRAME;
 import static com.paaduta.constants.AudioConstants.ANALYSIS_FORMAT;
 import static com.paaduta.constants.AudioConstants.MAX_SECONDS;
 import static com.paaduta.constants.AudioConstants.PCM_SCALE;
@@ -35,7 +36,7 @@ public final class AudioDecoder {
         for (int i = 0; i < samples.length; i++) {
             samples[i] = (short) ((pcm[2 * i] & 0xff) | (pcm[2 * i + 1] << 8)) / PCM_SCALE;
         }
-        if (samples.length < PitchTracker.FRAME) {
+        if (samples.length < FRAME) {
             throw new AnalysisException(EMPTY_AUDIO, track);
         }
         if (samples.length > MAX_SECONDS * RATE) {

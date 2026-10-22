@@ -24,6 +24,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.paaduta.constants.AnalysisConstants.HIGH_ALIGNMENT;
+import static com.paaduta.constants.AnalysisConstants.HIGH_COVERAGE;
+import static com.paaduta.constants.AnalysisConstants.LOUD_PERCENTILE;
+import static com.paaduta.constants.AnalysisConstants.LOW_COVERAGE;
+import static com.paaduta.constants.AnalysisConstants.LOW_VOLUME_DB;
+import static com.paaduta.constants.AnalysisConstants.MIN_OCTAVE_SUSPECTS;
+import static com.paaduta.constants.AnalysisConstants.MIN_VOICED_FRAMES;
+import static com.paaduta.constants.AnalysisConstants.MOSTLY_SILENT_FRACTION;
+import static com.paaduta.constants.AnalysisConstants.NOISY_PROBABILITY;
+import static com.paaduta.constants.AnalysisConstants.OCTAVE_SUSPECT_RATIO;
+import static com.paaduta.constants.AnalysisConstants.SEMITONES_PER_OCTAVE;
+import static com.paaduta.constants.AnalysisConstants.TOO_SHORT_SECONDS;
+import static com.paaduta.constants.ApiConstants.CENTS_PLACES;
+import static com.paaduta.constants.ApiConstants.CONFIDENCE_HIGH;
+import static com.paaduta.constants.ApiConstants.CONFIDENCE_LOW;
+import static com.paaduta.constants.ApiConstants.CONFIDENCE_MEDIUM;
+import static com.paaduta.constants.ApiConstants.HZ_PLACES;
+import static com.paaduta.constants.ApiConstants.PROBABILITY_PLACES;
+import static com.paaduta.constants.ApiConstants.REFERENCE_TRACK;
+import static com.paaduta.constants.ApiConstants.SECONDS_PLACES;
+import static com.paaduta.constants.ApiConstants.STATUS_INSUFFICIENT;
+import static com.paaduta.constants.ApiConstants.STATUS_OK;
+import static com.paaduta.constants.ApiConstants.SUMMARY_PLACES;
+import static com.paaduta.constants.ApiConstants.USER_TRACK;
 import static com.paaduta.constants.AudioConstants.HOP_SECONDS;
 import static com.paaduta.constants.AudioConstants.SILENCE_DB;
 import static com.paaduta.constants.Warning.LIKELY_OCTAVE_ERROR;
@@ -38,31 +62,6 @@ import static com.paaduta.constants.Warning.WEAK_ALIGNMENT;
 
 @Service
 public class AnalysisService {
-
-    private static final int SEMITONES_PER_OCTAVE = 12;
-    private static final int MIN_VOICED_FRAMES = 15;
-    private static final double TOO_SHORT_SECONDS = 1;
-    private static final double MOSTLY_SILENT_FRACTION = 0.2;
-    private static final double LOUD_PERCENTILE = 0.95;
-    private static final double LOW_VOLUME_DB = -35;
-    private static final double NOISY_PROBABILITY = 0.6;
-    private static final int MIN_OCTAVE_SUSPECTS = 5;
-    private static final double OCTAVE_SUSPECT_RATIO = 0.05;
-    private static final double LOW_COVERAGE = 0.3;
-    private static final double HIGH_COVERAGE = 0.6;
-    private static final double HIGH_ALIGNMENT = 0.7;
-    private static final String REFERENCE_TRACK = "reference";
-    private static final String USER_TRACK = "user";
-    private static final String STATUS_OK = "ok";
-    private static final String STATUS_INSUFFICIENT = "insufficient";
-    private static final String CONFIDENCE_LOW = "low";
-    private static final String CONFIDENCE_MEDIUM = "medium";
-    private static final String CONFIDENCE_HIGH = "high";
-    private static final int SECONDS_PLACES = 2;
-    private static final int SUMMARY_PLACES = 1;
-    private static final int HZ_PLACES = 1;
-    private static final int PROBABILITY_PLACES = 2;
-    private static final int CENTS_PLACES = 1;
 
     private static final Logger log = LoggerFactory.getLogger(AnalysisService.class);
 
