@@ -1,8 +1,26 @@
 spring:
   application:
     name: paaduta-teeyaga
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  mvc:
+    problemdetails:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 45MB
 
 logging:
   structured:
     format:
       console: logstash
+
+analysis:
+  pitch-cents: 50
+  min-issue-seconds: 0.2
+  min-issue-confidence: 0.6
+  timing-seconds: 0.2
+  min-alignment-confidence: 0.5
+  max-issues: 5
+  unsteady-cents: 70
