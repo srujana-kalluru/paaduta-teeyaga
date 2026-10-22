@@ -1,5 +1,5 @@
 import { decode, startRecording, wav } from './audio.js';
-import { drawChart } from './chart.js';
+import { drawChart, drawLive } from './chart.js';
 
 const MAX_SECONDS = 179;
 const CONTEXT_SECONDS = 1;
@@ -9,12 +9,13 @@ const NBSP = String.fromCharCode(160);
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null };
+const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] } };
 const players = { reference: new Audio(), user: new Audio() };
 let chart, stopRecording, recordTimer, playback;
 
 const seconds = (s) => `${s.toFixed(1)}${NBSP}s`;
 const median = (values) => (values.length ? [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] : null);
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 function interval(s) {
   const size = Math.abs(s);
@@ -66,6 +67,8 @@ const listNotes = (card, warnings) => $('.notes', card).replaceChildren(...warni
 function resetUser() {
   const card = $('#user'), audio = $('audio', card);
   state.user = null;
+  state.live.user = [];
+  $('canvas', card).hidden = true;
   audio.hidden = true;
   audio.removeAttribute('src');
   listNotes(card, []);
@@ -98,6 +101,15 @@ async function load(slot, blob) {
   api('/api/validate', form).then((r) => state[slot] === clip && listNotes(card, r.warnings), () => {});
 }
 
+function drawLiveFor(slot) {
+  const canvas = $(`#${slot} canvas`), first = (points) => points.find(([, m]) => m != null)?.[0] ?? 0;
+  canvas.hidden = false;
+  const reference = { points: state.live.reference, shift: 0, color: css('--ref'), width: 4 };
+  if (slot === 'reference') return drawLive(canvas, [reference]);
+  const points = state.live.user.map(([t, m]) => [t, m == null ? null : m - (state.keyShift ?? 0)]);
+  drawLive(canvas, [reference, { points, shift: first(state.live.reference) - first(points), color: css('--you'), width: 2.5 }]);
+}
+
 async function toggleRecording(slot) {
   const card = $(`#${slot}`), record = $('.record', card), timer = $('.timer', card), buttons = $$('.record');
   buttons.forEach((b) => (b.disabled = true));
@@ -113,8 +125,16 @@ async function toggleRecording(slot) {
     $('#analyse').disabled = !(state.reference && state.user);
     return load(slot, blob);
   }
+  if (slot === 'reference') {
+    state.live.user = [];
+    $('#user canvas').hidden = true;
+  }
+  state.live[slot] = [];
   try {
-    stopRecording = await startRecording();
+    stopRecording = await startRecording((t, m) => {
+      state.live[slot].push([t, m]);
+      drawLiveFor(slot);
+    });
   } catch (e) {
     buttons.forEach((b) => (b.disabled = false));
     return toast(e.name === 'NotAllowedError' ? 'Microphone access is blocked. Allow it in your browser’s site settings.' : 'No microphone is available.');

@@ -88,3 +88,27 @@ export function drawChart(host, result, { pxPerSecond, onSelect }) {
     },
   };
 }
+
+export function drawLive(canvas, series) {
+  const ratio = devicePixelRatio || 1, width = canvas.clientWidth, height = canvas.clientHeight;
+  canvas.width = width * ratio;
+  canvas.height = height * ratio;
+  const g = canvas.getContext('2d');
+  g.scale(ratio, ratio);
+  const voiced = series.flatMap(({ points, shift }) => points.filter(([, m]) => m != null).map(([t, m]) => [t + shift, m]));
+  if (!voiced.length) return;
+  const end = Math.max(4, ...voiced.map(([t]) => t + 0.5)), notes = voiced.map(([, m]) => m);
+  const lo = Math.min(...notes) - 2, hi = Math.max(...notes) + 2;
+  series.forEach(({ points, shift, color, width: stroke }) => {
+    g.strokeStyle = color;
+    g.lineWidth = stroke;
+    g.lineJoin = g.lineCap = 'round';
+    g.beginPath();
+    points.forEach(([t, m], i) => {
+      if (m == null) return;
+      const px = ((t + shift) / end) * width, py = ((hi - m) / (hi - lo)) * height;
+      points[i - 1]?.[1] == null ? g.moveTo(px, py) : g.lineTo(px, py);
+    });
+    g.stroke();
+  });
+}
