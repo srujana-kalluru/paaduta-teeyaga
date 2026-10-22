@@ -22,9 +22,14 @@ public final class Comparison {
     private static final double CENTS_PER_OCTAVE = 1200;
     private static final double OCTAVE_SUSPECT_CENTS = 1000;
     private static final double KEY_SHIFT_MIN_CENTS = 150;
+    private static final double SILENT_PROBABILITY = 0.2;
     private static final int MAX_GAP = 3;
     private static final int MAX_STALL = 10;
     private static final int SMOOTHING = 4;
+    private static final int CHUNK = 25;
+    private static final double CHUNK_MIN_COVERAGE = 0.8;
+    private static final double SPREAD_LOW_PERCENTILE = 0.2;
+    private static final double SPREAD_HIGH_PERCENTILE = 0.8;
     private static final int ONSET_SILENCE = 8;
     private static final int ONSET_MIN_RUN = 10;
     private static final int ONSET_WINDOW = 37;
@@ -33,12 +38,18 @@ public final class Comparison {
     private static final String ISSUE_ID_PREFIX = "issue-";
     private static final String PITCH_DEVIATION = "pitch_deviation";
     private static final String TIMING = "timing";
+    private static final String MISSED = "missed";
+    private static final String EXTRA = "extra";
+    private static final String UNSTEADY = "unsteady";
     private static final String FLAT = "flat";
     private static final String SHARP = "sharp";
     private static final String LATE = "late";
     private static final String EARLY = "early";
     private static final String SUSTAINED_DEVIATION = "sustained_deviation";
     private static final String ONSET_OFFSET = "onset_offset";
+    private static final String REFERENCE_ONLY = "reference_only";
+    private static final String ATTEMPT_ONLY = "attempt_only";
+    private static final String PITCH_WAVERING = "pitch_wavering";
     private static final int SECONDS_PLACES = 2;
     private static final int PROBABILITY_PLACES = 2;
 
@@ -111,9 +122,12 @@ public final class Comparison {
             }
         }
         timingIssues();
+        missedIssues();
+        extraIssues();
         if (!pitchHeld) {
             var smooth = smooth(deviation);
             pitchIssues(smooth, deviation);
+            unsteadyIssues(smooth);
         }
         return new ComparisonResult(Arrays.asList(userF0), Stats.boxed(userProbability), Arrays.asList(deviation), Stats.boxed(attemptTime),
                 kept(), detected, octave, compared, pitchHeld);
@@ -208,6 +222,31 @@ public final class Comparison {
         return baseline;
     }
 
+    private void missedIssues() {
+        IntPredicate silent = i -> !excluded[i] && ref.f0()[i] != null && userProbability[i] < SILENT_PROBABILITY;
+        for (int[] run : runs(n, silent)) {
+            double confidence = mean(ref.probability(), run[0], span(run)) * coverage(run);
+            candidates.add(issue(window(run), MISSED, null, null, null, confidence, REFERENCE_ONLY));
+        }
+    }
+
+    private void extraIssues() {
+        int m = user.frames();
+        var alignedToPitch = new boolean[m];
+        for (int i = 0; i < n; i++) {
+            if (ref.f0()[i] != null && inside(map[i])) {
+                int next = i + 1 < n && map[i + 1] > map[i] ? map[i + 1] : map[i] + 1;
+                Arrays.fill(alignedToPitch, map[i], Math.min(next, m), true);
+            }
+        }
+        for (int[] run : runs(m, j -> user.f0()[j] != null && !alignedToPitch[j])) {
+            int at = referenceFrameAt(run[0] * HOP_SECONDS);
+            double confidence = mean(user.probability(), run[0], span(run)) * coverage(run);
+            var window = new Window(at, at + 1, run[0] * HOP_SECONDS, (run[1] + 1) * HOP_SECONDS);
+            candidates.add(issue(window, EXTRA, null, null, null, confidence, ATTEMPT_ONLY));
+        }
+    }
+
     private void pitchIssues(Double[] smooth, Double[] deviation) {
         for (int sign : new int[]{-1, 1}) {
             for (int[] run : runs(n, i -> smooth[i] != null && smooth[i] * sign >= properties.pitchCents())) {
@@ -220,6 +259,24 @@ public final class Comparison {
                         voicing(run) * coverage(run), SUSTAINED_DEVIATION));
             }
         }
+    }
+
+    private void unsteadyIssues(Double[] smooth) {
+        var wavering = new boolean[n];
+        for (int start = 0; start + CHUNK <= n; start += CHUNK) {
+            if (wavers(Stats.present(Arrays.copyOfRange(smooth, start, start + CHUNK)))) {
+                Arrays.fill(wavering, start, start + CHUNK, true);
+            }
+        }
+        for (int[] run : runs(n, i -> wavering[i] && smooth[i] != null)) {
+            candidates.add(issue(window(run), UNSTEADY, null, null, null, voicing(run), PITCH_WAVERING));
+        }
+    }
+
+    private boolean wavers(double[] chunk) {
+        return chunk.length >= CHUNK_MIN_COVERAGE * CHUNK
+                && Math.abs(Stats.median(chunk)) < properties.pitchCents()
+                && Stats.percentile(chunk, SPREAD_HIGH_PERCENTILE) - Stats.percentile(chunk, SPREAD_LOW_PERCENTILE) >= properties.unsteadyCents();
     }
 
     private Double[] smooth(Double[] deviation) {
@@ -307,6 +364,10 @@ public final class Comparison {
 
     private boolean inside(int j) {
         return j >= 0 && j < user.frames();
+    }
+
+    private int referenceFrameAt(double attemptSeconds) {
+        return IntStream.range(0, n).filter(i -> attemptTime[i] >= attemptSeconds).findFirst().orElse(n - 1);
     }
 
     private double voicing(int[] run) {

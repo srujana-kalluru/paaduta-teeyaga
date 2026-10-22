@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ComparisonTest {
 
-    private static final AnalysisProperties DEFAULTS = new AnalysisProperties(50, 0.2, 0.6, 0.2, 0.5, 5);
+    private static final AnalysisProperties DEFAULTS = new AnalysisProperties(50, 0.2, 0.6, 0.2, 0.5, 5, 70);
     private static final double[] STEADY = {220, 0.2, 2.5};
 
     private static ComparisonResult compare(float[] reference, float[] user, Integer keyShift, AnalysisProperties properties) {
@@ -88,7 +88,7 @@ class ComparisonTest {
 
     @Test
     void dropsIssuesBelowConfidenceThreshold() {
-        var strict = new AnalysisProperties(50, 0.2, 1.01, 0.2, 0.5, 5);
+        var strict = new AnalysisProperties(50, 0.2, 1.01, 0.2, 0.5, 5, 70);
 
         assertTrue(compare(Synth.tone(220, 3), Synth.tone(Synth.shift(220, 100), 3), 0, strict).issues().isEmpty());
     }
@@ -141,5 +141,37 @@ class ComparisonTest {
 
         assertEquals(List.of("pitch_deviation"), types(result));
         assertEquals(-70, result.issues().getFirst().medianDeviationCents(), 15);
+    }
+
+    @Test
+    void flagsSlowWaveringAsUnsteady() {
+        var user = Synth.notes(3, new double[]{220, 0.2, 2.5, 70, 1.5});
+
+        var found = types(compare(Synth.notes(3, STEADY), user, 0, DEFAULTS));
+
+        assertFalse(found.isEmpty());
+        assertTrue(found.stream().allMatch("unsteady"::equals));
+    }
+
+    @Test
+    void flagsMissedNote() {
+        var reference = Synth.notes(3, new double[]{220, 0.3, 0.6}, new double[]{247, 1.2, 0.6}, new double[]{262, 2.1, 0.6});
+        var attempt = Synth.notes(3, new double[]{220, 0.3, 0.6}, new double[]{262, 2.1, 0.6});
+
+        var result = compare(reference, attempt, 0, DEFAULTS);
+
+        assertEquals(List.of("missed"), types(result));
+        assertEquals(1.2, result.issues().getFirst().startSeconds(), 0.1);
+    }
+
+    @Test
+    void flagsExtraNote() {
+        var reference = Synth.notes(3, new double[]{220, 0.3, 0.6}, new double[]{247, 2.1, 0.6});
+        var attempt = Synth.notes(3, new double[]{220, 0.3, 0.6}, new double[]{330, 1.2, 0.5}, new double[]{247, 2.1, 0.6});
+
+        var result = compare(reference, attempt, 0, DEFAULTS);
+
+        assertEquals(List.of("extra"), types(result));
+        assertEquals(1.2, result.issues().getFirst().attemptStartSeconds(), 0.1);
     }
 }
