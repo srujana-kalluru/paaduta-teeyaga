@@ -26,7 +26,7 @@ class PitchTrackerTest {
         var low = PitchTracker.track(Synth.tone(220, 2));
         var high = PitchTracker.track(Synth.tone(Synth.shift(220, 100), 2));
 
-        double cents = 1200 * Math.log(Stats.median(Stats.present(high.f0())) / Stats.median(Stats.present(low.f0()))) / Math.log(2);
+        double cents = Comparison.cents(Stats.median(Stats.present(high.f0())), Stats.median(Stats.present(low.f0())));
         assertEquals(100, cents, 5);
     }
 
