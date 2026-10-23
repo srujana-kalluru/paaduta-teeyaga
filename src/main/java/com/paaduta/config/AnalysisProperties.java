@@ -10,6 +10,8 @@ public record AnalysisProperties(
         @DefaultValue("0.6") double minIssueConfidence,
         @DefaultValue("0.2") double timingSeconds,
         @DefaultValue("0.3") double minAlignmentConfidence,
-        @DefaultValue("5") int maxIssues,
+        @DefaultValue("10") double secondsPerIssue,
+        @DefaultValue("5") int minIssues,
+        @DefaultValue("20") int maxIssues,
         @DefaultValue("70") double unsteadyCents) {
 }

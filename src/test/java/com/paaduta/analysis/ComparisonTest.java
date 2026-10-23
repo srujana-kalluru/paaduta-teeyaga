@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ComparisonTest {
 
-    private static final AnalysisProperties DEFAULTS = new AnalysisProperties(50, 0.2, 0.6, 0.2, 0.5, 5, 70);
+    private static final AnalysisProperties DEFAULTS = new AnalysisProperties(50, 0.2, 0.6, 0.2, 0.5, 10, 5, 20, 70);
     private static final double[] STEADY = {220, 0.2, 2.5};
 
     private static ComparisonResult compare(float[] reference, float[] user, Integer keyShift, AnalysisProperties properties) {
@@ -88,7 +88,7 @@ class ComparisonTest {
 
     @Test
     void dropsIssuesBelowConfidenceThreshold() {
-        var strict = new AnalysisProperties(50, 0.2, 1.01, 0.2, 0.5, 5, 70);
+        var strict = new AnalysisProperties(50, 0.2, 1.01, 0.2, 0.5, 10, 5, 20, 70);
 
         assertTrue(compare(Synth.tone(220, 3), Synth.tone(Synth.shift(220, 100), 3), 0, strict).issues().isEmpty());
     }
@@ -173,5 +173,31 @@ class ComparisonTest {
 
         assertEquals(List.of("extra"), types(result));
         assertEquals(1.2, result.issues().getFirst().attemptStartSeconds(), 0.1);
+    }
+
+    private static ComparisonResult flatNotes(int count, double noteSeconds, int flatEvery) {
+        var reference = new double[count][];
+        var attempt = new double[count][];
+        for (int k = 0; k < count; k++) {
+            double hz = Synth.hz(60 + k % 7);
+            double start = 0.5 + k * (noteSeconds + 0.5);
+            reference[k] = new double[]{hz, start, noteSeconds};
+            attempt[k] = new double[]{k % flatEvery == 0 ? hz : Synth.shift(hz, -80), start, noteSeconds};
+        }
+        double total = 1 + count * (noteSeconds + 0.5);
+        return compare(Synth.notes(total, reference), Synth.notes(total, attempt), 0, DEFAULTS);
+    }
+
+    @Test
+    void returnsOneMomentPerTenSecondsOfSinging() {
+        var result = flatNotes(14, 4.5, 3);
+
+        assertEquals(7, result.issues().size());
+        assertTrue(result.issues().stream().allMatch(i -> "flat".equals(i.direction())));
+    }
+
+    @Test
+    void returnsAtLeastFiveMomentsForShortRecordings() {
+        assertEquals(5, flatNotes(7, 2, 100).issues().size());
     }
 }

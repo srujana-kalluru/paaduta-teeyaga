@@ -136,10 +136,15 @@ public final class Comparison {
         var kept = candidates.stream()
                 .filter(c -> c.confidence() >= properties.minIssueConfidence())
                 .sorted(Comparator.comparingDouble(Issue::confidence).reversed())
-                .limit(properties.maxIssues())
+                .limit(issueLimit())
                 .sorted(Comparator.comparingDouble(Issue::startSeconds))
                 .toList();
         return IntStream.range(0, kept.size()).mapToObj(k -> kept.get(k).withId(ISSUE_ID_PREFIX + (k + 1))).toList();
+    }
+
+    private int issueLimit() {
+        long scaled = (long) Math.ceil(ref.voicedFrames() * HOP_SECONDS / properties.secondsPerIssue());
+        return Math.clamp(scaled, properties.minIssues(), properties.maxIssues());
     }
 
     private static int detectKeyShift(Contour ref, Contour user, int[] map) {

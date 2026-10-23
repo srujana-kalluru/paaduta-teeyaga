@@ -30,7 +30,9 @@ analysis:
   min-issue-confidence: 0.6
   timing-seconds: 0.2
   min-alignment-confidence: 0.5
-  max-issues: 5
+  seconds-per-issue: 10
+  min-issues: 5
+  max-issues: 20
   unsteady-cents: 70
 
 app:
