@@ -216,7 +216,7 @@ function issueCard(issue, k) {
       element('span', { className: 'meta', textContent: `${Math.round(issue.confidence * 100)}% confidence` })),
     element('h3', { textContent: title }),
     element('p', { textContent: observation }),
-    row(button('▶ Reference', () => playIssue('reference', issue)), button('▶ Attempt', () => playIssue('user', issue))));
+    row(button('▶ Reference', () => playIssue('reference', issue)), button('▶ Attempt', () => playIssue('user', issue)), button('▶ Both', () => playIssue('both', issue))));
 }
 
 function headline(r, pending) {
@@ -294,23 +294,37 @@ function renderProgress() {
   $('dl', box).replaceChildren(...rows.map(([term, value]) => element('div', {}, element('dt', { textContent: term }), element('dd', { textContent: value }))));
 }
 
+const markPlaying = () => $$('[data-play]').forEach((b) => b.classList.toggle('playing', b.dataset.play === playback?.which));
+
 function stopPlayback() {
   Object.values(players).forEach((p) => p.pause());
   cancelAnimationFrame(playback?.frame);
+  clearTimeout(playback?.delay);
+  playback = null;
+  markPlaying();
 }
 
 function play(which, from, to = Infinity) {
   stopPlayback();
-  const player = players[which], toReference = which === 'user' ? referenceAt : (t) => t;
-  player.currentTime = Math.max(0, from);
-  player.play();
+  const lead = which === 'user' ? players.user : players.reference, toReference = which === 'user' ? referenceAt : (t) => t;
+  const start = Math.max(0, from);
+  lead.currentTime = start;
+  lead.play();
+  playback = { which };
+  if (which === 'both') {
+    const at = attemptAt(start) || start + state.takes[state.current].result.alignment.offset_seconds;
+    playback.delay = setTimeout(() => {
+      players.user.currentTime = Math.max(0, at);
+      players.user.play();
+    }, Math.max(0, -at) * 1000);
+  }
   const tick = () => {
-    if (player.paused) return;
-    if (player.currentTime >= to) return player.pause();
-    chart.playhead(toReference(player.currentTime));
+    if (lead.paused || lead.currentTime >= to) return stopPlayback();
+    chart.playhead(toReference(lead.currentTime));
     playback.frame = requestAnimationFrame(tick);
   };
-  playback = { frame: requestAnimationFrame(tick) };
+  playback.frame = requestAnimationFrame(tick);
+  markPlaying();
 }
 
 function playIssue(which, issue) {
@@ -329,14 +343,12 @@ $('#zoom-out').onclick = () => { state.zoom = Math.max(0, state.zoom - 1); drawR
 $('#zoom-in').onclick = () => { state.zoom = Math.min(ZOOMS.length - 1, state.zoom + 1); drawResultsChart(); };
 $$('[data-play]').forEach((b) => (b.onclick = () => {
   const which = b.dataset.play;
-  if (!players[which].paused) {
+  if (playback?.which === which) {
     stopPlayback();
     return;
   }
   play(which, which === 'user' ? attemptAt(state.cursor) : state.cursor);
 }));
-Object.entries(players).forEach(([k, p]) => ['play', 'pause'].forEach((type) =>
-  p.addEventListener(type, () => $(`[data-play=${k}]`).classList.toggle('playing', !p.paused))));
 $('#key').append(...Array.from({ length: 25 }, (_, k) => k - 12).map((s) => new Option(s ? interval(s).replace(/^./, (c) => c.toUpperCase()) : 'Same key as the reference', s)));
 $('#reanalyse').onclick = () => {
   const key = $('#key').value;
