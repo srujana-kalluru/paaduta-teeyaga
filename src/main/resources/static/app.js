@@ -90,12 +90,72 @@ async function load(slot, blob) {
   audio.hidden = false;
   listNotes(card, []);
   $('#analyse').disabled = !(state.reference && state.user);
-  $('.bar').hidden = false;
 
   const form = new FormData();
   form.append('audio', clip.wav, `${slot}.wav`);
   form.append('track', slot);
   api('/api/validate', form).then((r) => state[slot] === clip && listNotes(card, r.warnings), () => {});
+}
+
+function clearSession() {
+  const card = $('#reference'), audio = $('audio', card);
+  Object.assign(state, { reference: null, takes: [], keyShift: null });
+  state.live.reference = [];
+  $('canvas', card).hidden = true;
+  audio.hidden = true;
+  audio.removeAttribute('src');
+  listNotes(card, []);
+  resetUser();
+}
+
+const setupPath = () => '#/tutor';
+const resultsPath = () => `${setupPath()}/results`;
+
+function go(path) {
+  if (location.hash === path) route();
+  else location.hash = path;
+}
+
+function renderCrumbs(trail) {
+  $('.bar').hidden = trail.length < 2;
+  $('#crumbs').replaceChildren(...trail.map(([label, href], k) => {
+    if (k < trail.length - 1) return element('li', {}, element('a', { href, textContent: label }));
+    const current = element('span', { textContent: label });
+    current.setAttribute('aria-current', 'page');
+    return element('li', {}, current);
+  }));
+  $('#crumbs').scrollLeft = $('#crumbs').scrollWidth;
+}
+
+function cancelWork() {
+  stopPlayback();
+  state.request?.abort();
+  if (!stopRecording) return;
+  const stop = stopRecording;
+  stopRecording = null;
+  clearInterval(recordTimer);
+  stop();
+  $$('.record').forEach((b) => {
+    b.disabled = false;
+    b.classList.remove('on');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  $$('.timer').forEach((t) => (t.textContent = ''));
+}
+
+function showStep(trail, results) {
+  if (results && !state.takes.length) return location.replace(setupPath());
+  renderCrumbs(results ? [...trail, ['Results']] : trail);
+  if (results) return renderResults();
+  show('setup');
+}
+
+function route() {
+  cancelWork();
+  const [section, id] = location.hash.slice(2).split('/'), home = ['Home', '#/'];
+  if (section === 'tutor') return showStep([home, ['Practise with a tutor', '#/tutor']], id === 'results');
+  renderCrumbs([home]);
+  show('home');
 }
 
 function drawLiveFor(slot) {
@@ -166,10 +226,11 @@ async function analyse(take, params = {}) {
     }
     Object.assign(take, { result, params });
     state.current = state.takes.indexOf(take);
-    renderResults();
+    go(resultsPath());
   } catch (e) {
+    if (e.name === 'AbortError') return;
     show(back);
-    if (e.name !== 'AbortError') toast(e.message, { label: 'Retry', run: () => analyse(take, params) });
+    toast(e.message, { label: 'Retry', run: () => analyse(take, params) });
   }
 }
 
@@ -333,12 +394,19 @@ function playIssue(which, issue) {
   play(which, from - CONTEXT_SECONDS, to + CONTEXT_SECONDS);
 }
 
-$$('[data-go]').forEach((b) => (b.onclick = (e) => { e.preventDefault(); show(b.dataset.go); }));
-$('#reset').onclick = () => location.reload();
+$$('[data-go]').forEach((b) => (b.onclick = () => go(b.dataset.go)));
+$('#reset').onclick = () => {
+  cancelWork();
+  clearSession();
+  go('#/tutor');
+};
 $$('.record').forEach((b) => (b.onclick = () => toggleRecording(b.closest('.slot').id)));
 $('#analyse').onclick = () => analyse(null, state.keyShift == null ? {} : { key_shift_semitones: state.keyShift });
-$('#cancel').onclick = () => state.request?.abort();
-$('#again').onclick = () => { stopPlayback(); resetUser(); show('setup'); };
+$('#cancel').onclick = () => route();
+$('#again').onclick = () => {
+  resetUser();
+  go(setupPath());
+};
 $('#zoom-out').onclick = () => { state.zoom = Math.max(0, state.zoom - 1); drawResultsChart(); };
 $('#zoom-in').onclick = () => { state.zoom = Math.min(ZOOMS.length - 1, state.zoom + 1); drawResultsChart(); };
 $$('[data-play]').forEach((b) => (b.onclick = () => {
@@ -359,3 +427,5 @@ addEventListener('resize', () => {
   if (!$('#results').hidden) drawResultsChart();
   if (!$('#setup').hidden) ['reference', 'user'].filter((slot) => state.live[slot].length).forEach((slot) => drawLiveFor(slot));
 });
+addEventListener('hashchange', route);
+route();
