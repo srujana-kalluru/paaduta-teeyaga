@@ -12,11 +12,9 @@ Every moment has a confidence score from the signal analysis.
 
 ## 1. Features
 
-- Record two live clips of up to 3 minutes each.
-- Return contours, alignment, warnings and one moment per 10 seconds of singing, between 5 and 20.
-- Re-analyse a take in another key and compare takes within a session.
-- Align clips automatically. Ask for a new recording when alignment is weak.
-- Process requests in memory. Keep session state in the browser.
+- Records two live clips of up to 3 minutes each and returns contours, alignment, warnings and a moment per 10 seconds of singing, between 5 and 20.
+- Aligns clips automatically. Asks for a new recording when alignment is weak.
+- Processes requests in memory. Keeps session state in the browser.
 
 ## 2. Architecture
 
@@ -58,11 +56,6 @@ sequenceDiagram
     ui->>server: POST /api/analyze with key_shift_semitones
     server-->>ui: New results for the same take
 ```
-
-- The frontend source is `src/main/resources/static`.
-- Spring Boot serves the frontend and the API on one port, locally and in Docker.
-- CI publishes the same files to GitHub Pages, where they call the API on Render.
-- The browser keeps the original recording for replay and sends only the WAV.
 
 ## 3. Analysis pipeline
 
