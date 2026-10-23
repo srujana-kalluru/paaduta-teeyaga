@@ -16,3 +16,6 @@ export const CHART_TOP = 20;
 export const CHART_BOTTOM = 28;
 export const CHART_AXIS = 44;
 export const NOTE_NAMES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
+
+export const FOLD_FRAMES = 10;
+export const MAX_JUMP = 7;

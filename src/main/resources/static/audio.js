@@ -1,6 +1,21 @@
-import { ANALYSER_SIZE, MAX_HZ, MIN_HZ, RATE, SILENCE_DB, YIN_THRESHOLD } from './constants.js';
+import { ANALYSER_SIZE, FOLD_FRAMES, MAX_HZ, MAX_JUMP, MIN_HZ, RATE, SILENCE_DB, YIN_THRESHOLD } from './constants.js';
 
 const midi = (hz) => 69 + 12 * Math.log2(hz / 440);
+const refine = (d, tau) => {
+  const curve = d[tau - 1] - 2 * d[tau] + d[tau + 1];
+  return curve > 0 ? tau + (d[tau - 1] - d[tau + 1]) / (2 * curve) : tau;
+};
+const median = (values) => {
+  const sorted = values.filter((v) => v != null).sort((a, b) => a - b);
+  return sorted[sorted.length >> 1];
+};
+
+function settle(m, centre) {
+  if (m == null || centre == null) return m;
+  const octaves = Math.round((centre - m) / 12), rest = centre - m - 12 * octaves;
+  if (Math.abs(rest) <= 1) return m + 12 * octaves;
+  return Math.abs(centre - m) > MAX_JUMP ? null : m;
+}
 
 export async function decode(blob) {
   const buffer = await new OfflineAudioContext(1, 1, RATE).decodeAudioData(await blob.arrayBuffer());
@@ -46,7 +61,7 @@ function livePitch(x, rate) {
   for (let tau = tauMin; tau <= tauMax; tau++) {
     if (d[tau] < YIN_THRESHOLD) {
       while (tau < tauMax && d[tau + 1] < d[tau]) tau++;
-      return midi(rate / tau);
+      return midi(rate / refine(d, tau));
     }
   }
   return null;
@@ -66,7 +81,7 @@ export async function startRecording(onPitch) {
   context.createMediaStreamSource(stream).connect(analyser);
   await context.resume();
   const step = Math.round(context.sampleRate / RATE), raw = new Float32Array(analyser.fftSize), frame = new Float32Array(Math.floor(raw.length / step));
-  const started = performance.now();
+  const started = performance.now(), recent = [];
   let raf;
   const tick = () => {
     analyser.getFloatTimeDomainData(raw);
@@ -75,7 +90,9 @@ export async function startRecording(onPitch) {
       for (let k = 0; k < step; k++) sum += raw[i * step + k];
       frame[i] = sum / step;
     }
-    onPitch((performance.now() - started) / 1000, livePitch(frame, context.sampleRate / step));
+    const m = livePitch(frame, context.sampleRate / step);
+    if (recent.push(m) > 2 * FOLD_FRAMES) recent.shift();
+    onPitch((performance.now() - started) / 1000, settle(m, median(recent)));
     raf = requestAnimationFrame(tick);
   };
   recorder.ondataavailable = (e) => chunks.push(e.data);
