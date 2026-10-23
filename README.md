@@ -1,6 +1,6 @@
 # Paaduta Teeyaga
 
-**Live:** [srujana-kalluru.github.io/paaduta-teeyaga](https://srujana-kalluru.github.io/paaduta-teeyaga/) · **API:** [paaduta-teeyaga.onrender.com](https://paaduta-teeyaga.onrender.com/api/health)
+**Live:** [srujanakalluru.github.io/paaduta-teeyaga](https://srujanakalluru.github.io/paaduta-teeyaga/) · **API:** [paaduta-teeyaga.onrender.com](https://paaduta-teeyaga.onrender.com/api/health)
 
 A singing practice coach that compares a live reference phrase with an attempt and reports the below moments to practise
 - flat or sharp notes
