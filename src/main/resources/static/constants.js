@@ -20,6 +20,8 @@ export const LIVE_AXIS = 40;
 export const NOTE_TOLERANCE = 0.7;
 export const MIN_NOTE_SECONDS = 0.15;
 export const NOTE_GAP_SECONDS = 0.25;
+export const SARGAM = ['Sa', 'Ri♭', 'Ri', 'Ga♭', 'Ga', 'Ma', 'Ma♯', 'Pa', 'Da♭', 'Da', 'Ni♭', 'Ni'];
+export const SCALE = [0, 2, 4, 5, 7, 9, 11];
 
 export const FOLD_FRAMES = 10;
 export const MAX_JUMP = 7;

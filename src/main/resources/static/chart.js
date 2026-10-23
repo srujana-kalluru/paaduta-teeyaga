@@ -1,4 +1,4 @@
-import { CHART_AXIS, CHART_BOTTOM, CHART_HEIGHT, CHART_TOP, LIVE_AXIS, MIN_NOTE_SECONDS, NOTE_GAP_SECONDS, NOTE_NAMES, NOTE_TOLERANCE, SVG_NS } from './constants.js';
+import { CHART_AXIS, CHART_BOTTOM, CHART_HEIGHT, CHART_TOP, LIVE_AXIS, MIN_NOTE_SECONDS, NOTE_GAP_SECONDS, NOTE_NAMES, NOTE_TOLERANCE, SARGAM, SCALE, SVG_NS } from './constants.js';
 
 const node = (name, attrs, parent) => {
   const el = document.createElementNS(SVG_NS, name);
@@ -7,11 +7,19 @@ const node = (name, attrs, parent) => {
   return el;
 };
 const midi = (hz) => (hz == null ? null : 69 + 12 * Math.log2(hz / 440));
-const noteName = (m) => NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
+const degree = (m, tonic) => (((m - tonic) % 12) + 12) % 12;
 
-function grid(from, to, pxPerSemitone) {
-  const step = [1, 2, 3, 4, 6, 12].find((s) => s * pxPerSemitone >= 18) ?? 12;
-  return Array.from({ length: to - from + 1 }, (_, k) => from + k).filter((m) => m % step === 0);
+function noteName(m, tonic) {
+  if (tonic == null) return NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
+  const name = SARGAM[degree(m, tonic)], octave = Math.floor((m - tonic) / 12);
+  if (!octave) return name;
+  return name[0] + (octave > 0 ? '̇' : '̣') + name.slice(1);
+}
+
+function grid(from, to, pxPerSemitone, tonic) {
+  const step = [1, 2, 3, 4, 6, 12].find((s) => s * pxPerSemitone >= 18) ?? 12, swaras = pxPerSemitone >= 11 ? SCALE : [0, 7];
+  const keep = (m) => (tonic == null ? m % step === 0 : swaras.includes(degree(m, tonic)));
+  return Array.from({ length: to - from + 1 }, (_, k) => from + k).filter(keep);
 }
 const runs = (flags) => flags.reduce((out, on, i) => {
   if (on && !flags[i - 1]) out.push([i, i + 1]);
@@ -19,7 +27,7 @@ const runs = (flags) => flags.reduce((out, on, i) => {
   return out;
 }, []);
 
-export function drawChart(host, result, { pxPerSecond, onSelect }) {
+export function drawChart(host, result, { pxPerSecond, onSelect, tonic }) {
   const c = result.contours, times = c.time_seconds, shift = result.key_shift_semitones;
   const ref = c.reference_f0_hz.map(midi), you = c.user_f0_hz.map((hz) => (hz == null ? null : midi(hz) - shift));
   const values = [...ref, ...you].filter((v) => v != null);
@@ -40,9 +48,9 @@ export function drawChart(host, result, { pxPerSecond, onSelect }) {
   host.append(scroller);
   const svg = node('svg', { width, height: CHART_HEIGHT, class: 'plot', role: 'img', 'aria-label': 'Pitch of the reference and the attempt over time. Flagged moments are listed below the chart.' }, scroller);
 
-  grid(Math.round(low), Math.round(high), plotHeight / (hi - lo)).forEach((m) => {
+  grid(Math.round(low), Math.round(high), plotHeight / (hi - lo), tonic).forEach((m) => {
     node('line', { x1: 0, x2: width, y1: y(m), y2: y(m), class: 'grid' }, svg);
-    node('text', { x: CHART_AXIS - 8, y: y(m) + 4, 'text-anchor': 'end' }, axis).textContent = noteName(m);
+    node('text', { x: CHART_AXIS - 8, y: y(m) + 4, 'text-anchor': 'end' }, axis).textContent = noteName(m, tonic);
   });
   const tick = [0.25, 0.5, 1, 2, 5, 10].find((t) => (t * width) / duration >= 50) ?? 10;
   for (let k = 0; x(k * tick) < width - 32; k++) node('text', { x: x(k * tick) + 3, y: CHART_HEIGHT - 8 }, svg).textContent = `${+(k * tick).toFixed(2)}s`;
@@ -106,7 +114,7 @@ function heldNotes(points) {
   return notes.filter((n) => n.end - n.start >= MIN_NOTE_SECONDS);
 }
 
-export function drawLive(canvas, series) {
+export function drawLive(canvas, series, tonic) {
   const ratio = devicePixelRatio || 1, width = canvas.clientWidth, height = canvas.clientHeight;
   canvas.width = width * ratio;
   canvas.height = height * ratio;
@@ -121,11 +129,11 @@ export function drawLive(canvas, series) {
   g.font = `11px ${style.fontFamily}`;
   g.textAlign = 'right';
   g.textBaseline = 'middle';
-  grid(Math.round(low), Math.round(high), height / (hi - lo)).forEach((m) => {
+  grid(Math.round(low), Math.round(high), height / (hi - lo), tonic).forEach((m) => {
     g.fillStyle = color('--line');
     g.fillRect(LIVE_AXIS, Math.round(y(m)), width - LIVE_AXIS, 1);
     g.fillStyle = color('--muted');
-    g.fillText(noteName(m), LIVE_AXIS - 6, y(m));
+    g.fillText(noteName(m, tonic), LIVE_AXIS - 6, y(m));
   });
 
   series.forEach(({ points, shift, transpose = 0, color: stroke, width: lineWidth }) => {
@@ -150,7 +158,7 @@ export function drawLive(canvas, series) {
   g.lineWidth = 4;
   let right = 0;
   heldNotes(points).forEach((n) => {
-    const name = noteName(n.note), px = x((n.start + n.end) / 2 + shift), py = Math.max(16, y(n.sum / n.count + transpose) - 6);
+    const name = noteName(n.note, tonic), px = x((n.start + n.end) / 2 + shift), py = Math.max(16, y(n.sum / n.count + transpose) - 6);
     const half = g.measureText(name).width / 2 + 4;
     if (px - half < right) return;
     right = px + half;

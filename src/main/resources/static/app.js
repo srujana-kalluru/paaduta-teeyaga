@@ -6,7 +6,7 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const API_BASE = $('meta[name="api-base"]').content;
 
-const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] } };
+const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] }, tonic: null };
 const players = { reference: new Audio(), user: new Audio() };
 let chart, stopRecording, recordTimer, playback;
 
@@ -162,9 +162,9 @@ function drawLiveFor(slot) {
   const canvas = $(`#${slot} canvas`), first = (points) => points.find(([, m]) => m != null)?.[0] ?? 0;
   canvas.hidden = false;
   const reference = { points: state.live.reference, shift: 0, color: '--ref', width: 4, labelled: slot === 'reference' };
-  if (slot === 'reference') return drawLive(canvas, [reference]);
+  if (slot === 'reference') return drawLive(canvas, [reference], state.tonic);
   const points = state.live.user;
-  drawLive(canvas, [reference, { points, shift: first(state.live.reference) - first(points), transpose: -(state.keyShift ?? 0), color: '--you', width: 2.5, labelled: true }]);
+  drawLive(canvas, [reference, { points, shift: first(state.live.reference) - first(points), transpose: -(state.keyShift ?? 0), color: '--you', width: 2.5, labelled: true }], state.tonic);
 }
 
 async function toggleRecording(slot) {
@@ -329,6 +329,7 @@ function drawResultsChart() {
   const r = state.takes[state.current].result;
   chart = drawChart($('#chart'), r, {
     pxPerSecond: ZOOMS[state.zoom],
+    tonic: state.tonic,
     onSelect: (t) => {
       state.cursor = t;
       chart.playhead(t);
