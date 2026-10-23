@@ -12,7 +12,6 @@ let chart, stopRecording, recordTimer, playback;
 
 const seconds = (s) => `${s.toFixed(1)}${NBSP}s`;
 const median = (values) => (values.length ? [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] : null);
-const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 function interval(s) {
   const size = Math.abs(s);
@@ -102,10 +101,10 @@ async function load(slot, blob) {
 function drawLiveFor(slot) {
   const canvas = $(`#${slot} canvas`), first = (points) => points.find(([, m]) => m != null)?.[0] ?? 0;
   canvas.hidden = false;
-  const reference = { points: state.live.reference, shift: 0, color: css('--ref'), width: 4 };
+  const reference = { points: state.live.reference, shift: 0, color: '--ref', width: 4, labelled: slot === 'reference' };
   if (slot === 'reference') return drawLive(canvas, [reference]);
-  const points = state.live.user.map(([t, m]) => [t, m == null ? null : m - (state.keyShift ?? 0)]);
-  drawLive(canvas, [reference, { points, shift: first(state.live.reference) - first(points), color: css('--you'), width: 2.5 }]);
+  const points = state.live.user;
+  drawLive(canvas, [reference, { points, shift: first(state.live.reference) - first(points), transpose: -(state.keyShift ?? 0), color: '--you', width: 2.5, labelled: true }]);
 }
 
 async function toggleRecording(slot) {
@@ -344,4 +343,7 @@ $('#reanalyse').onclick = () => {
   state.keyShift = key === '' ? null : Number(key);
   analyse(state.takes[state.current], { key_shift_semitones: state.keyShift });
 };
-addEventListener('resize', () => !$('#results').hidden && drawResultsChart());
+addEventListener('resize', () => {
+  if (!$('#results').hidden) drawResultsChart();
+  if (!$('#setup').hidden) ['reference', 'user'].filter((slot) => state.live[slot].length).forEach((slot) => drawLiveFor(slot));
+});

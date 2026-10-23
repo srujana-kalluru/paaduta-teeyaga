@@ -1,4 +1,4 @@
-import { CHART_AXIS, CHART_BOTTOM, CHART_HEIGHT, CHART_TOP, NOTE_NAMES, SVG_NS } from './constants.js';
+import { CHART_AXIS, CHART_BOTTOM, CHART_HEIGHT, CHART_TOP, LIVE_AXIS, MIN_NOTE_SECONDS, NOTE_GAP_SECONDS, NOTE_NAMES, NOTE_TOLERANCE, SVG_NS } from './constants.js';
 
 const node = (name, attrs, parent) => {
   const el = document.createElementNS(SVG_NS, name);
@@ -7,6 +7,12 @@ const node = (name, attrs, parent) => {
   return el;
 };
 const midi = (hz) => (hz == null ? null : 69 + 12 * Math.log2(hz / 440));
+const noteName = (m) => NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
+
+function grid(from, to, pxPerSemitone) {
+  const step = [1, 2, 3, 4, 6, 12].find((s) => s * pxPerSemitone >= 18) ?? 12;
+  return Array.from({ length: to - from + 1 }, (_, k) => from + k).filter((m) => m % step === 0);
+}
 const runs = (flags) => flags.reduce((out, on, i) => {
   if (on && !flags[i - 1]) out.push([i, i + 1]);
   else if (on) out.at(-1)[1] = i + 1;
@@ -23,7 +29,7 @@ export function drawChart(host, result, { pxPerSecond, onSelect }) {
     return { playhead() {} };
   }
 
-  const lo = Math.floor(Math.min(...values)) - 2, hi = Math.ceil(Math.max(...values)) + 2;
+  const low = Math.min(...values), high = Math.max(...values), lo = Math.floor(low) - 2, hi = Math.ceil(high) + 2;
   const duration = result.duration_seconds, hop = times[1] - times[0] || 0.02, plotHeight = CHART_HEIGHT - CHART_TOP - CHART_BOTTOM;
   const width = Math.max(host.clientWidth - CHART_AXIS, duration * pxPerSecond);
   const x = (t) => (t / duration) * width;
@@ -34,12 +40,10 @@ export function drawChart(host, result, { pxPerSecond, onSelect }) {
   host.append(scroller);
   const svg = node('svg', { width, height: CHART_HEIGHT, class: 'plot', role: 'img', 'aria-label': 'Pitch of the reference and the attempt over time. Flagged moments are listed below the chart.' }, scroller);
 
-  const step = [1, 2, 3, 4, 6, 12].find((s) => (s * plotHeight) / (hi - lo) >= 18) ?? 12;
-  for (let m = lo; m <= hi; m++) {
-    if (m % step) continue;
+  grid(Math.round(low), Math.round(high), plotHeight / (hi - lo)).forEach((m) => {
     node('line', { x1: 0, x2: width, y1: y(m), y2: y(m), class: 'grid' }, svg);
-    node('text', { x: CHART_AXIS - 8, y: y(m) + 4, 'text-anchor': 'end' }, axis).textContent = NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
-  }
+    node('text', { x: CHART_AXIS - 8, y: y(m) + 4, 'text-anchor': 'end' }, axis).textContent = noteName(m);
+  });
   const tick = [0.25, 0.5, 1, 2, 5, 10].find((t) => (t * width) / duration >= 50) ?? 10;
   for (let k = 0; x(k * tick) < width - 32; k++) node('text', { x: x(k * tick) + 3, y: CHART_HEIGHT - 8 }, svg).textContent = `${+(k * tick).toFixed(2)}s`;
 
@@ -84,26 +88,73 @@ export function drawChart(host, result, { pxPerSecond, onSelect }) {
   };
 }
 
+function heldNotes(points) {
+  const notes = [];
+  let open = null;
+  points.forEach(([t, m]) => {
+    if (m == null || (open && Math.abs(m - open.note) > NOTE_TOLERANCE)) open = null;
+    if (m == null) return;
+    if (!open) {
+      const note = Math.round(m), last = notes.at(-1);
+      open = last?.note === note && t - last.end < NOTE_GAP_SECONDS ? last : { note, start: t, sum: 0, count: 0 };
+      if (open !== last) notes.push(open);
+    }
+    open.end = t;
+    open.sum += m;
+    open.count++;
+  });
+  return notes.filter((n) => n.end - n.start >= MIN_NOTE_SECONDS);
+}
+
 export function drawLive(canvas, series) {
   const ratio = devicePixelRatio || 1, width = canvas.clientWidth, height = canvas.clientHeight;
   canvas.width = width * ratio;
   canvas.height = height * ratio;
-  const g = canvas.getContext('2d');
+  const g = canvas.getContext('2d'), style = getComputedStyle(canvas), color = (name) => style.getPropertyValue(name).trim();
   g.scale(ratio, ratio);
-  const voiced = series.flatMap(({ points, shift }) => points.filter(([, m]) => m != null).map(([t, m]) => [t + shift, m]));
+  const voiced = series.flatMap(({ points, shift, transpose = 0 }) => points.filter(([, m]) => m != null).map(([t, m]) => [t + shift, m + transpose]));
   if (!voiced.length) return;
   const end = Math.max(4, ...voiced.map(([t]) => t + 0.5)), notes = voiced.map(([, m]) => m);
-  const lo = Math.min(...notes) - 2, hi = Math.max(...notes) + 2;
-  series.forEach(({ points, shift, color, width: stroke }) => {
-    g.strokeStyle = color;
-    g.lineWidth = stroke;
+  const low = Math.min(...notes), high = Math.max(...notes), lo = Math.floor(low) - 2, hi = Math.ceil(high) + 2;
+  const x = (t) => LIVE_AXIS + (t / end) * (width - LIVE_AXIS), y = (m) => ((hi - m) / (hi - lo)) * height;
+
+  g.font = `11px ${style.fontFamily}`;
+  g.textAlign = 'right';
+  g.textBaseline = 'middle';
+  grid(Math.round(low), Math.round(high), height / (hi - lo)).forEach((m) => {
+    g.fillStyle = color('--line');
+    g.fillRect(LIVE_AXIS, Math.round(y(m)), width - LIVE_AXIS, 1);
+    g.fillStyle = color('--muted');
+    g.fillText(noteName(m), LIVE_AXIS - 6, y(m));
+  });
+
+  series.forEach(({ points, shift, transpose = 0, color: stroke, width: lineWidth }) => {
+    g.strokeStyle = color(stroke);
+    g.lineWidth = lineWidth;
     g.lineJoin = g.lineCap = 'round';
     g.beginPath();
     points.forEach(([t, m], i) => {
       if (m == null) return;
-      const px = ((t + shift) / end) * width, py = ((hi - m) / (hi - lo)) * height;
+      const px = x(t + shift), py = y(m + transpose);
       points[i - 1]?.[1] == null ? g.moveTo(px, py) : g.lineTo(px, py);
     });
     g.stroke();
+  });
+
+  const { points, shift, transpose = 0 } = series.find((s) => s.labelled);
+  g.font = `600 12px ${style.fontFamily}`;
+  g.textAlign = 'center';
+  g.textBaseline = 'bottom';
+  g.fillStyle = color('--text');
+  g.strokeStyle = color('--surface');
+  g.lineWidth = 4;
+  let right = 0;
+  heldNotes(points).forEach((n) => {
+    const name = noteName(n.note), px = x((n.start + n.end) / 2 + shift), py = Math.max(16, y(n.sum / n.count + transpose) - 6);
+    const half = g.measureText(name).width / 2 + 4;
+    if (px - half < right) return;
+    right = px + half;
+    g.strokeText(name, px, py);
+    g.fillText(name, px, py);
   });
 }
