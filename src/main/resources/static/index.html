@@ -14,7 +14,8 @@
 <body>
 <header class="bar" hidden>
   <nav aria-label="Breadcrumb"><ol id="crumbs"></ol></nav>
-  <button class="link" id="reset">Reset</button>
+  <button class="link" id="reset" hidden>Reset</button>
+  <button class="link" id="start-over" hidden>Start over</button>
 </header>
 
 <main>
@@ -37,13 +38,39 @@
     </svg>
     <h1 class="title">Paaduta Teeyaga</h1>
     <p class="tagline">Hear where it drifts. Sing it better.</p>
-    <button class="primary" data-go="#/tutor">Start practice</button>
+    <div class="row">
+      <button class="primary" data-go="#/tutor">Practise with a tutor</button>
+      <button class="secondary" data-go="#/lessons">Learn on your own</button>
+    </div>
+  </section>
+
+  <section id="lessons" class="view" hidden>
+    <h2>Lessons</h2>
+    <div class="card" id="resume" hidden>
+      <p class="eyebrow"></p>
+      <h3></h3>
+      <p class="hint"></p>
+      <div class="row">
+        <button class="primary" id="resume-go">Continue</button>
+        <button class="secondary" id="resume-next" hidden></button>
+      </div>
+    </div>
+    <div class="card">
+      <label for="sa">Your Sa</label>
+      <div class="row">
+        <select id="sa"></select>
+        <button class="secondary" id="hear-sa">Hear it</button>
+      </div>
+      <p class="hint">Pick a note you can sing comfortably. Every lesson is played from it.</p>
+    </div>
+    <div id="chapters"></div>
   </section>
 
   <section id="setup" class="view" hidden>
     <div class="slots">
       <article class="card slot" id="reference">
         <h3>Reference</h3>
+        <ul class="swaras"></ul>
         <div class="row">
           <button class="record" aria-label="Record reference" aria-pressed="false"><span></span></button>
           <span class="timer" aria-live="polite"></span>
@@ -118,6 +145,7 @@
       <button class="primary" id="reanalyse">Analyse again</button>
     </details>
 
+    <button class="primary wide" id="next-lesson" hidden>Next lesson</button>
     <button class="primary wide" id="again">Record another take</button>
   </section>
 </main>

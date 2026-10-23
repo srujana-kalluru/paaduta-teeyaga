@@ -1,14 +1,46 @@
 import { decode, startRecording, wav } from './audio.js';
-import { CONTEXT_SECONDS, MAX_SECONDS, NBSP, ZOOMS } from './constants.js';
+import { CONTEXT_SECONDS, DEFAULT_SA, LEAD_SECONDS, LOWEST_SA, MAX_SECONDS, NBSP, NOTE_NAMES, PROGRESS_KEY, SA_CHOICES, SA_KEY, STEP_GAP, VOICE_RATE, ZOOMS } from './constants.js';
 import { drawChart, drawLive } from './chart.js';
+import { CHAPTERS, LESSONS, SYLLABLES } from './lessons.js';
+import { sing } from './voice.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const API_BASE = $('meta[name="api-base"]').content;
 
-const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] }, tonic: null };
+const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] }, lesson: null, tonic: null };
 const players = { reference: new Audio(), user: new Audio() };
 let chart, stopRecording, recordTimer, playback;
+
+function stored(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function store(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const progress = stored(PROGRESS_KEY, { last: null, lessons: {} });
+const hasPassed = (lesson) => Boolean(progress.lessons[lesson.id]?.passed);
+const clean = (r) => r.status === 'ok' && !r.issues.length && !r.warnings.some((w) => w.code === 'possible_key_mismatch');
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+function remember(lesson, result, fresh) {
+  const entry = progress.lessons[lesson.id] ?? { attempts: 0, passed: false };
+  progress.lessons[lesson.id] = { attempts: entry.attempts + (fresh ? 1 : 0), passed: entry.passed || clean(result), moments: result.issues.length, at: Date.now() };
+  progress.last = lesson.id;
+  store(PROGRESS_KEY, progress);
+}
+const nextLesson = () => LESSONS[LESSONS.indexOf(state.lesson) + 1];
 
 const seconds = (s) => `${s.toFixed(1)}${NBSP}s`;
 const median = (values) => (values.length ? [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] : null);
@@ -72,11 +104,11 @@ function resetUser() {
   $('#analyse').disabled = true;
 }
 
-async function load(slot, blob) {
+async function load(slot, blob, analysed = blob) {
   const card = $(`#${slot}`);
   let samples;
   try {
-    samples = await decode(blob);
+    samples = await decode(analysed);
   } catch {
     return toast("That recording couldn't be read. Please record again.");
   }
@@ -97,10 +129,78 @@ async function load(slot, blob) {
   api('/api/validate', form).then((r) => state[slot] === clip && listNotes(card, r.warnings), () => {});
 }
 
+function ago(time) {
+  const minutes = Math.round((time - Date.now()) / 60000), format = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  if (minutes > -60) return format.format(minutes, 'minute');
+  if (minutes > -1440) return format.format(Math.round(minutes / 60), 'hour');
+  return format.format(Math.round(minutes / 1440), 'day');
+}
+
+function outcome(entry) {
+  if (entry.passed) return 'passed';
+  return entry.moments ? `${plural(entry.moments, 'moment')} to practise last time` : 'not passed yet';
+}
+
+function renderResume() {
+  const last = LESSONS.find((l) => l.id === progress.last), entry = last && progress.lessons[last.id];
+  $('#resume').hidden = !entry;
+  if (!entry) return;
+  const after = LESSONS.slice(LESSONS.indexOf(last) + 1).find((l) => !hasPassed(l));
+  $('#resume .eyebrow').textContent = `Last practised ${ago(entry.at)}`;
+  $('#resume h3').textContent = last.name;
+  $('#resume .hint').textContent = `Chapter ${CHAPTERS.indexOf(last.chapter) + 1} · ${last.chapter.title} · ${plural(entry.attempts, 'attempt')} · ${outcome(entry)}`;
+  $('#resume-go').onclick = () => openLesson(last);
+  $('#resume-next').hidden = !(entry.passed && after);
+  if (after) Object.assign($('#resume-next'), { textContent: `Next: ${after.name}`, onclick: () => openLesson(after) });
+}
+
+function lessonButton(lesson, next) {
+  const entry = progress.lessons[lesson.id];
+  const choice = button(`${entry?.passed ? '✓ ' : ''}${lesson.name}`, () => openLesson(lesson), lesson === next ? 'primary' : 'secondary');
+  choice.classList.toggle('tried', Boolean(entry && !entry.passed));
+  return choice;
+}
+
+function showLessons(chapter) {
+  show('lessons');
+  renderResume();
+  const next = LESSONS.find((l) => !hasPassed(l));
+  $('#chapters').replaceChildren(...CHAPTERS.map((section, c) => {
+    const lessons = LESSONS.filter((l) => l.chapter === section);
+    return element('article', { className: 'card chapter' },
+      element('p', { className: 'eyebrow', textContent: `Chapter ${c + 1} · ${lessons.filter(hasPassed).length} of ${lessons.length} passed` }),
+      element('h3', { textContent: section.title }),
+      element('p', { className: 'hint', textContent: section.hint }),
+      element('div', { className: 'lesson-grid' }, ...lessons.map((l) => lessonButton(l, next))));
+  }));
+  if (chapter) $$('#chapters .chapter')[chapter - 1]?.scrollIntoView({ block: 'start' });
+}
+
+function startLesson(lesson) {
+  const card = $('#reference');
+  state.lesson = lesson;
+  state.tonic = Number($('#sa').value);
+  resetUser();
+  $('h3', card).textContent = lesson.name;
+  $('.row', card).hidden = true;
+  $('.swaras', card).replaceChildren(...lesson.name.split(' ').map((swara) => element('li', { textContent: swara })));
+  const notes = lesson.notes.map((n) => state.tonic + n);
+  state.live.reference = notes.flatMap((m, i) => {
+    const start = LEAD_SECONDS + i * lesson.seconds;
+    return [[start, m], [start + lesson.seconds - STEP_GAP, m], [start + lesson.seconds, null]];
+  });
+  drawLiveFor('reference');
+  const voice = sing(notes, lesson.name.split(' ').map((swara) => SYLLABLES[swara]), lesson.seconds);
+  load('reference', wav(voice.wet, VOICE_RATE), wav(voice.dry, VOICE_RATE));
+}
+
 function clearSession() {
   const card = $('#reference'), audio = $('audio', card);
-  Object.assign(state, { reference: null, takes: [], keyShift: null });
+  Object.assign(state, { lesson: null, tonic: null, reference: null, takes: [], keyShift: null });
   state.live.reference = [];
+  $('h3', card).textContent = 'Reference';
+  $('.row', card).hidden = false;
+  $('.swaras', card).replaceChildren();
   $('canvas', card).hidden = true;
   audio.hidden = true;
   audio.removeAttribute('src');
@@ -108,12 +208,18 @@ function clearSession() {
   resetUser();
 }
 
-const setupPath = () => '#/tutor';
+const lessonPath = (lesson) => `#/lessons/${lesson.id}`;
+const setupPath = () => (state.lesson ? lessonPath(state.lesson) : '#/tutor');
 const resultsPath = () => `${setupPath()}/results`;
 
 function go(path) {
   if (location.hash === path) route();
   else location.hash = path;
+}
+
+function openLesson(lesson) {
+  startLesson(lesson);
+  go(lessonPath(lesson));
 }
 
 function renderCrumbs(trail) {
@@ -152,10 +258,32 @@ function showStep(trail, results) {
 
 function route() {
   cancelWork();
-  const [section, id] = location.hash.slice(2).split('/'), home = ['Home', '#/'];
-  if (section === 'tutor') return showStep([home, ['Practise with a tutor', '#/tutor']], id === 'results');
+  const [section, id, step] = location.hash.slice(2).split('/'), home = ['Home', '#/'];
+  $('#reset').hidden = section !== 'tutor';
+  $('#start-over').hidden = section !== 'lessons';
+  if (section === 'tutor') {
+    if (state.lesson) clearSession();
+    return showStep([home, ['Practise with a tutor', '#/tutor']], id === 'results');
+  }
+  const lesson = LESSONS.find((l) => l.id === id);
+  if (section === 'lessons' && lesson) {
+    if (state.lesson !== lesson || state.tonic !== Number($('#sa').value)) startLesson(lesson);
+    const chapter = CHAPTERS.indexOf(lesson.chapter) + 1;
+    return showStep([home, ['Lessons', '#/lessons'], [lesson.chapter.title, `#/lessons/chapter-${chapter}`], [lesson.name, lessonPath(lesson)]], step === 'results');
+  }
+  if (section === 'lessons') {
+    renderCrumbs([home, ['Lessons']]);
+    return showLessons(Number(id?.replace('chapter-', '')));
+  }
   renderCrumbs([home]);
   show('home');
+}
+
+function followSwaras() {
+  const audio = $('#reference audio');
+  const now = audio.paused || !state.lesson ? -1 : Math.floor((audio.currentTime - LEAD_SECONDS) / state.lesson.seconds);
+  $$('#reference .swaras li').forEach((chip, i) => chip.classList.toggle('on', i === now));
+  if (!audio.paused) requestAnimationFrame(followSwaras);
 }
 
 function drawLiveFor(slot) {
@@ -219,12 +347,13 @@ async function analyse(take, params = {}) {
   stopPlayback();
   show('analysing');
   try {
-    const result = await api('/api/analyze', form, state.request.signal);
-    if (!take) {
+    const result = await api('/api/analyze', form, state.request.signal), fresh = !take;
+    if (fresh) {
       take = { user: state.user };
       state.takes.push(take);
     }
     Object.assign(take, { result, params });
+    if (state.lesson) remember(state.lesson, result, fresh);
     state.current = state.takes.indexOf(take);
     go(resultsPath());
   } catch (e) {
@@ -307,6 +436,9 @@ function renderResults() {
 
   $('#confidence').textContent = `${r.summary.pitch_comparison_confidence} confidence`;
   $('#headline').textContent = headline(r, pending);
+  const done = state.lesson && clean(r);
+  if (done) $('#headline').textContent = 'Lesson passed';
+  $('#next-lesson').hidden = !(done && nextLesson());
   const own = r.key_shift_semitones || r.detected_key_shift_semitones;
   $('#keys').hidden = !own;
   $('#keys').replaceChildren(...[[0, 'Same key'], [own, `Attempt’s key, ${interval(own)}`]].map(([value, label]) => {
@@ -401,6 +533,19 @@ $('#reset').onclick = () => {
   clearSession();
   go('#/tutor');
 };
+$('#start-over').onclick = () => {
+  if (!confirm('Start the lessons again from the first one? Your lesson progress will be cleared.')) return;
+  cancelWork();
+  Object.assign(progress, { last: null, lessons: {} });
+  store(PROGRESS_KEY, progress);
+  openLesson(LESSONS[0]);
+};
+$('#next-lesson').onclick = () => openLesson(nextLesson());
+$('#sa').append(...Array.from({ length: SA_CHOICES }, (_, k) => LOWEST_SA + k).map((m) => new Option(`${NOTE_NAMES[m % 12]}${Math.floor(m / 12) - 1}`, m)));
+$('#sa').value = stored(SA_KEY, DEFAULT_SA);
+$('#sa').onchange = () => store(SA_KEY, Number($('#sa').value));
+$('#hear-sa').onclick = () => new Audio(URL.createObjectURL(wav(sing([Number($('#sa').value)], [SYLLABLES.Sa], 1.5).wet, VOICE_RATE))).play();
+['play', 'pause'].forEach((type) => $('#reference audio').addEventListener(type, followSwaras));
 $$('.record').forEach((b) => (b.onclick = () => toggleRecording(b.closest('.slot').id)));
 $('#analyse').onclick = () => analyse(null, state.keyShift == null ? {} : { key_shift_semitones: state.keyShift });
 $('#cancel').onclick = () => route();

@@ -55,3 +55,10 @@ export const CONSONANTS = {
   d: { closure: 0.05, voice: 0.08, burst: 0.3, loci: [350, 1700, 2600] },
   n: { closure: 0.07, voice: 0.45, loci: [250, 1600, 2600] },
 };
+
+export const STEP_GAP = 0.05;
+export const DEFAULT_SA = 60;
+export const SA_CHOICES = 24;
+export const LOWEST_SA = 48;
+export const PROGRESS_KEY = 'paaduta.progress';
+export const SA_KEY = 'paaduta.sa';
