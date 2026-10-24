@@ -12,23 +12,23 @@
           "lessons": [
             {
               "swaras": "S , , ,",
-              "theory": "Sa is Shadjam (షడ్జమం), which means 'born of six': the other six swarams grow out of it. Old texts liken it to the call of a peacock. Every song you will ever sing returns home to Sa."
+              "theory": "Sa is Shadjam, which means 'born of six': the other six swarams grow out of it. Old texts liken it to the call of a peacock. Every song you will ever sing returns home to Sa."
             },
             {
               "swaras": "R , , ,",
-              "theory": "Ri is Rishabham (రిషభం), the swaram texts liken to the call of a bull. It is the first step away from home, so it should feel like a small, sure step, not a stretch."
+              "theory": "Ri is Rishabham, the swaram texts liken to the call of a bull. It is the first step away from home, so it should feel like a small, sure step, not a stretch."
             },
             {
               "swaras": "G , , ,",
-              "theory": "Ga is Gandharam (గాంధారం), likened to the bleat of a goat. With Sa and Ri it forms the first small climb you will sing, and it gives a scale its bright or dark colour."
+              "theory": "Ga is Gandharam, likened to the bleat of a goat. With Sa and Ri it forms the first small climb you will sing, and it gives a scale its bright or dark colour."
             },
             {
               "swaras": "M , , ,",
-              "theory": "Ma is Madhyamam (మధ్యమం), 'the middle one': it sits at the centre of the seven swarams. Old texts liken it to the cry of the krauncha bird, the heron."
+              "theory": "Ma is Madhyamam, 'the middle one': it sits at the centre of the seven swarams. Old texts liken it to the cry of the krauncha bird, the heron."
             },
             {
               "swaras": "P , , ,",
-              "theory": "Pa is Panchamam (పంచమం), the fifth, likened to the song of the koel (కోయిల). Sa and Pa never change in any ragam, which is why the tambura plays only Sa and Pa."
+              "theory": "Pa is Panchamam, the fifth, likened to the song of the koel. Sa and Pa never change in any ragam, which is why the tambura plays only Sa and Pa."
             }
           ]
         }
@@ -76,11 +76,11 @@
           "lessons": [
             {
               "swaras": "S R G",
-              "theory": "Three rising swarams make the smallest arohanam (ఆరోహణం), the ascent. Ragam Mohanam is built on just five swarams and starts the same way: Sa Ri Ga."
+              "theory": "Three rising swarams make the smallest arohanam, the ascent. Ragam Mohanam is built on just five swarams and starts the same way: Sa Ri Ga."
             },
             {
               "swaras": "G R S",
-              "theory": "The descent is called avarohanam (అవరోహణం). Every ragam is defined by its own arohanam and avarohanam, a little like a signature."
+              "theory": "The descent is called avarohanam. Every ragam is defined by its own arohanam and avarohanam, a little like a signature."
             },
             {
               "swaras": "R G M",
@@ -88,7 +88,7 @@
             },
             {
               "swaras": "M G R",
-              "theory": "Let each swaram finish before the next begins. Teachers call this clarity swara shuddhi (స్వర శుద్ధి), clean notes."
+              "theory": "Let each swaram finish before the next begins. Teachers call this clarity swara shuddhi, clean notes."
             },
             {
               "swaras": "G M P",
@@ -113,7 +113,7 @@
           "lessons": [
             {
               "swaras": "S R G M",
-              "theory": "Sa Ri Ga Ma is the purvanga (పూర్వాంగం), the first half of the scale. Many ragams can be recognised from this half alone."
+              "theory": "Sa Ri Ga Ma is the purvanga, the first half of the scale. Many ragams can be recognised from this half alone."
             },
             {
               "swaras": "M G R S",
@@ -136,11 +136,11 @@
           "lessons": [
             {
               "swaras": "P D",
-              "theory": "Pa to Da begins the uttaranga (ఉత్తరాంగం), the upper half of the scale. It mirrors the lower half, Sa to Ri, one Pa higher."
+              "theory": "Pa to Da begins the uttaranga, the upper half of the scale. It mirrors the lower half, Sa to Ri, one Pa higher."
             },
             {
               "swaras": "D N",
-              "theory": "Da is Dhaivatam (ధైవతం), likened to the neigh of a horse, and Ni is Nishadam (నిషాదం), likened to the trumpet of an elephant."
+              "theory": "Da is Dhaivatam, likened to the neigh of a horse, and Ni is Nishadam, likened to the trumpet of an elephant."
             },
             {
               "swaras": "N S'",
@@ -148,7 +148,7 @@
             },
             {
               "swaras": "P D N S'",
-              "theory": "Upper Sa vibrates exactly twice as fast as lower Sa. That is why they sound like the same note, one sthayi (స్థాయి), or octave, apart."
+              "theory": "Upper Sa vibrates exactly twice as fast as lower Sa. That is why they sound like the same note, one sthayi, or octave, apart."
             },
             {
               "swaras": "S' N D P",
@@ -163,7 +163,7 @@
           "lessons": [
             {
               "swaras": "S R G M P D N S'",
-              "theory": "These eight notes, with Ma and Ni as you have sung them, form Dheerasankarabharanam, the 29th of the 72 melakarta (మేళకర్త) ragams. Its notes match the Western major scale."
+              "theory": "These eight notes, with Ma and Ni as you have sung them, form Dheerasankarabharanam, the 29th of the 72 melakarta ragams. Its notes match the Western major scale."
             },
             {
               "swaras": "S' N D P M G R S",
@@ -212,12 +212,12 @@
             {
               "title": "Sarali Varasa 1",
               "swaras": "S R G M P D N S' | S' N D P M G R S",
-              "theory": "Sarali Varasa (సరళీ వరస) means 'simple sequence'. Purandara Dasa set these exercises some 500 years ago, and almost every Carnatic singer since began with this one."
+              "theory": "Sarali Varasa means 'simple sequence'. Purandara Dasa set these exercises some 500 years ago, and almost every Carnatic singer since began with this one."
             },
             {
               "title": "Sarali Varasa 2 - line 1",
               "swaras": "S R S R S R G M",
-              "theory": "This line repeats Sa Ri three times before climbing. Sarali Varasas are sung in Adi taalam (ఆది తాళం), the most common rhythm cycle: eight beats to a line."
+              "theory": "This line repeats Sa Ri three times before climbing. Sarali Varasas are sung in Adi taalam, the most common rhythm cycle: eight beats to a line."
             },
             {
               "title": "Sarali Varasa 2 - line 3",
@@ -287,7 +287,7 @@
             {
               "title": "Sarali Varasa 5 - line 3",
               "swaras": "S' N D P M , S' N",
-              "theory": "Ma is held for two beats on the way down. Holding steady on a note is the foundation of good sruti (శ్రుతి), staying in tune."
+              "theory": "Ma is held for two beats on the way down. Holding steady on a note is the foundation of good sruti, staying in tune."
             },
             {
               "title": "Sarali Varasa 5",
@@ -297,7 +297,7 @@
             {
               "title": "Sarali Varasa 6",
               "swaras": "S R G M P D S R | S R G M P D N S' | S' N D P M G S' N | S' N D P M G R S",
-              "theory": "Sarali 6 climbs to Da, then turns back to Sa Ri. A turn like this is called a prayogam (ప్రయోగం), a characteristic phrase."
+              "theory": "Sarali 6 climbs to Da, then turns back to Sa Ri. A turn like this is called a prayogam, a characteristic phrase."
             },
             {
               "title": "Sarali Varasa 7",
@@ -373,7 +373,7 @@
             {
               "title": "Janta Varasa 1 - going up",
               "swaras": "S S R R G G M M | P P D D N N S' S'",
-              "theory": "Janta (జంట) is the Telugu word for a pair. Each swaram is sung twice, the second with a fresh push of breath, which builds control for gamakams later."
+              "theory": "Janta is the Telugu word for a pair. Each swaram is sung twice, the second with a fresh push of breath, which builds control for gamakams later."
             },
             {
               "title": "Janta Varasa 1",
@@ -410,7 +410,7 @@
           "lessons": [
             {
               "swaras": "S N.",
-              "theory": "Mandra sthayi (మంద్ర స్థాయి) is the lower octave, written with a dot below the swaram. Ni below Sa is the first step into it."
+              "theory": "Mandra sthayi is the lower octave, written with a dot below the swaram. Ni below Sa is the first step into it."
             },
             {
               "swaras": "N. D. N. S",
@@ -426,7 +426,7 @@
             },
             {
               "swaras": "S' R' S'",
-              "theory": "Tara sthayi (తార స్థాయి) is the upper octave, written with a dot above. Ri above upper Sa is the first step into it."
+              "theory": "Tara sthayi is the upper octave, written with a dot above. Ri above upper Sa is the first step into it."
             },
             {
               "swaras": "N S' R' S' N",
@@ -453,7 +453,7 @@
             {
               "title": "Triputa Alankaram - going up",
               "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S'",
-              "theory": "Alankaram (అలంకారం) means ornament. Purandara Dasa set seven Alankarams, one for each of the seven suladi taalams, so students learn the rhythms by singing."
+              "theory": "Alankaram means ornament. Purandara Dasa set seven Alankarams, one for each of the seven suladi taalams, so students learn the rhythms by singing."
             },
             {
               "title": "Triputa Alankaram - coming down",
