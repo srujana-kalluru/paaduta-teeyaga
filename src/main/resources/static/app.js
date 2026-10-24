@@ -1,7 +1,7 @@
 import { decode, startRecording, wav } from './audio.js';
 import { CONTEXT_SECONDS, DEFAULT_SA, LEAD_SECONDS, LOWEST_SA, MAX_SECONDS, NBSP, PROGRESS_KEY, SA_CHOICES, SA_KEY, STEP_GAP, VOICE_RATE, ZOOMS } from './constants.js';
 import { drawChart, drawLive } from './chart.js';
-import { CHAPTERS, LESSONS, SYLLABLES } from './lessons.js';
+import { CHAPTERS, LESSONS, STAGES, SYLLABLES } from './lessons.js';
 import { drawStaff, westernName } from './staff.js';
 import { sing } from './voice.js';
 
@@ -162,19 +162,31 @@ function lessonButton(lesson, next) {
   return choice;
 }
 
+function chapterCard(section, next) {
+  const lessons = LESSONS.filter((l) => l.chapter === section);
+  return element('article', { className: 'card chapter' },
+    element('p', { className: 'eyebrow', textContent: `Chapter ${CHAPTERS.indexOf(section) + 1} · ${lessons.filter(hasPassed).length} of ${lessons.length} passed` }),
+    element('h3', { textContent: section.title }),
+    element('p', { className: 'hint', textContent: section.hint }),
+    element('div', { className: 'lesson-grid' }, ...lessons.map((l) => lessonButton(l, next))));
+}
+
+// Only the stage being worked on starts open, so a beginner sees one small step rather than the whole syllabus.
 function showLessons(chapter) {
   show('lessons');
   renderResume();
-  const next = LESSONS.find((l) => !hasPassed(l));
-  $('#chapters').replaceChildren(...CHAPTERS.map((section, c) => {
-    const lessons = LESSONS.filter((l) => l.chapter === section);
-    return element('article', { className: 'card chapter' },
-      element('p', { className: 'eyebrow', textContent: `Chapter ${c + 1} · ${lessons.filter(hasPassed).length} of ${lessons.length} passed` }),
-      element('h3', { textContent: section.title }),
-      element('p', { className: 'hint', textContent: section.hint }),
-      element('div', { className: 'lesson-grid' }, ...lessons.map((l) => lessonButton(l, next))));
+  const next = LESSONS.find((l) => !hasPassed(l)), target = CHAPTERS[chapter - 1];
+  $('#chapters').replaceChildren(...STAGES.map((stage, k) => {
+    const lessons = LESSONS.filter((l) => l.chapter.stage === stage), passed = lessons.filter(hasPassed).length;
+    return element('details', { className: 'stage', open: (target ?? next?.chapter)?.stage === stage },
+      element('summary', {},
+        element('span', {},
+          element('span', { className: 'eyebrow', textContent: `Stage ${k + 1} · ${passed === lessons.length ? 'complete' : `${passed} of ${lessons.length} passed`}` }),
+          element('span', { className: 'stage-title', textContent: stage.title }),
+          element('span', { className: 'hint', textContent: stage.about }))),
+      ...stage.chapters.map((section) => chapterCard(section, next)));
   }));
-  if (chapter) $$('#chapters .chapter')[chapter - 1]?.scrollIntoView({ block: 'start' });
+  if (target) $$('#chapters .chapter')[chapter - 1]?.scrollIntoView({ block: 'start' });
 }
 
 function startLesson(lesson) {

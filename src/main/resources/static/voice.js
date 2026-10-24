@@ -1,7 +1,7 @@
 import {
   BREATH_LEVEL, CONSONANTS, DRIFT, EFFORT_TILT, FORMANT_WANDER, FUNDAMENTAL_BOOST, GLIDE_SECONDS, INHALE, JITTER, LEAD_SECONDS, NOTE_LEVEL_SPREAD, OVERSHOOT,
   PHRASE_ATTACK, PHRASE_RELEASE, RELEASE_FALL, REVERB_MIX, SCOOP, SHIMMER, SOURCE_TILT, SWELL, TRANSITION_SECONDS, VIBRATO, VOICE_CONTROL, VOICE_HARMONICS,
-  VOICE_RATE, VOICING_SECONDS, VOWELS,
+  VOCAL_TRACT, VOICE_RATE, VOICING_SECONDS, VOWELS,
 } from './constants.js';
 
 const hz = (m) => 440 * 2 ** ((m - 69) / 12);
@@ -71,7 +71,7 @@ function moment(phrase, seconds, t, motion) {
   const vibrato = depth * ease((local - VIBRATO.delay) / VIBRATO.rise) * Math.sin(motion.wobble);
   const fall = RELEASE_FALL * (1 - ease((motion.end - t) / PHRASE_RELEASE));
   const f0 = hz(from + leap * ease(local / GLIDE_SECONDS) + overshoot + motion.drift + JITTER * motion.jitter + vibrato - fall);
-  const opening = ease((local - spec.closure) / TRANSITION_SECONDS), stretch = 1 + FORMANT_WANDER * motion.formant;
+  const opening = ease((local - spec.closure) / TRANSITION_SECONDS), stretch = VOCAL_TRACT * (1 + FORMANT_WANDER * motion.formant);
   const formants = VOWELS[vowel].map(([centre, width], k) => {
     const start = spec.loci[k] ?? centre;
     return [(start + (centre - start) * opening) * stretch, width];

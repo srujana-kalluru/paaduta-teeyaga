@@ -156,6 +156,12 @@ button:active { transform: scale(.97); }
 .staff .on .head.open { fill: none; stroke: var(--accent); }
 .staff .on .stem { stroke: var(--accent); }
 #sa { max-width: 160px; margin-top: 0; }
+.stage { margin-bottom: 12px; }
+.stage summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 4px; font-size: 17px; font-weight: 400; }
+.stage summary > span, .stage summary span span { display: block; }
+.stage .stage-title { margin: 0 0 2px; font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+.stage summary .hint { margin: 0; }
+.stage[open] summary { margin-bottom: 4px; }
 .chapter { scroll-margin-top: 72px; }
 .chapter .hint { margin: 0; }
 .lesson-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }

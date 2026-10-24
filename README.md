@@ -120,7 +120,8 @@ com.paaduta
 ├── constants    AudioConstants, AnalysisConstants, ApiConstants, ErrorCode, Warning
 ├── exception    AnalysisException, ApiExceptionHandler (RFC 7807)
 └── util         Stats
-static/          index.html, app.js, audio.js, chart.js, constants.js, app.css
+static/          index.html, app.js, audio.js, chart.js, staff.js, voice.js, lessons.js, constants.js, app.css
+                 lessons.json, lessons.schema.json   the curriculum
 ```
 
 ## 5. API
@@ -156,6 +157,34 @@ static/          index.html, app.js, audio.js, chart.js, constants.js, app.css
 - The `<meta name="api-base">` tag is empty when Spring serves the page. The Pages build sets it to `API_BASE_URL`.
 - The chart shifts the attempt by the chosen key, so voices an octave apart overlap.
 - The record buttons stay disabled while a recording starts or stops. This prevents a second recorder.
+
+### Editing the lessons
+
+The curriculum is in `src/main/resources/static/lessons.json`. No code changes are needed to add or reorder lessons. Editors that read `lessons.schema.json` check the structure as you type.
+
+```json
+{
+  "title": "Small steps",
+  "about": "Move between neighbouring notes.",
+  "chapters": [
+    {
+      "title": "Two notes",
+      "hint": "Step to the next note, then back.",
+      "secondsPerBeat": 1,
+      "lessons": [
+        {"swaras": "S R"},
+        {"title": "Sarali Varisai 1", "swaras": "S R G M P D N S' | S' N D P M G R S"}
+      ]
+    }
+  ]
+}
+```
+
+- **Stage**: a group of chapters that adds one new idea. Only the stage being worked on starts open.
+- **Chapter**: `secondsPerBeat` sets the tempo (1 is 60 beats a minute). `beatsPerLine` sets the tala cycle and defaults to 8.
+- **Swaras**: `S R G M P D N`. Add `'` for the upper octave (`S'`) and `.` for the lower (`N.`). A comma holds the previous swara one more beat and `|` separates lines.
+- **Title**: optional. Without it the swaras are the name. Renaming a lesson resets its saved progress.
+- A mistake, such as an unknown swara or two lessons with the same name, is shown on the page when it loads.
 
 ## 7. Build and test
 
