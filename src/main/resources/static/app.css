@@ -53,8 +53,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 16px;
   height: 52px;
-  padding: 0 max(20px, env(safe-area-inset-left));
+  padding: 0 max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
   background: color-mix(in srgb, var(--bg) 72%, transparent);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -68,7 +69,7 @@ body {
 #crumbs a:hover { text-decoration: underline; }
 #crumbs [aria-current] { color: var(--text); font-weight: 600; }
 
-main { max-width: 980px; margin: 0 auto; padding: 0 20px 96px; }
+main { max-width: 980px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)); }
 
 .view { animation: rise .6s cubic-bezier(.2, .8, .2, 1); }
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
@@ -110,6 +111,8 @@ button {
   font-size: 17px;
   cursor: pointer;
   transition: background-color .2s, transform .15s, opacity .2s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 button:active { transform: scale(.97); }
 :focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px; }
@@ -251,9 +254,30 @@ select { display: block; width: 100%; max-width: 380px; min-height: 44px; margin
 }
 
 @media (max-width: 480px) {
-  main { padding: 0 16px 80px; }
+  main { padding: 0 max(16px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  .bar { padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left)); }
+  #crumbs { font-size: 14px; }
+  h2 { margin: 32px 0 20px; }
   .card { padding: 20px; }
   .chart { margin-right: -4px; }
+
+  #home { min-height: 80svh; }
+  .tagline { margin-bottom: 32px; }
+  #home .row { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
+
+  .slots { margin-top: 24px; }
+  .live { height: 160px; }
+  .swaras { gap: 6px; }
+  .swaras li { min-width: 44px; padding: 6px 10px; font-size: 16px; }
+  .swaras li small { font-size: 11px; }
+  .wide { margin-top: 28px; }
+
+  .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 8px; }
+  .lesson-grid button { padding: 8px 14px; font-size: 16px; line-height: 1.25; }
+
+  [data-play] { min-width: 0; padding: 0 12px; }
+  .card > .row:has([data-play]) { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  [data-play=both] { grid-column: 1 / -1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
