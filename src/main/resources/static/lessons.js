@@ -26,6 +26,10 @@ export const STAGES = curriculum.stages;
 export const CHAPTERS = STAGES.flatMap((stage) => stage.chapters.map((chapter) => Object.assign(chapter, { stage })));
 
 export const LESSONS = CHAPTERS.flatMap((chapter) => chapter.lessons.map((lesson) => {
+  if (lesson.listen) {
+    if (!lesson.title) throw new Error(`${chapter.title}: a listening lesson needs a title.`);
+    return { id: lesson.title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-'), name: lesson.title, chapter, theory: lesson.theory, listen: lesson.listen, steps: [] };
+  }
   const steps = parse(lesson.swaras, `${chapter.title}, ${lesson.title ?? lesson.swaras}`);
   return {
     id: lesson.title ? lesson.title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-') : steps.map((step) => step.id).join('-'),

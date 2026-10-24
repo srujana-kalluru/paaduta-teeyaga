@@ -2,48 +2,135 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Paaduta Teeyaga lessons",
   "type": "object",
-  "required": ["stages"],
+  "required": [
+    "stages"
+  ],
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "stages": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["title", "about", "chapters"],
+        "required": [
+          "title",
+          "about",
+          "chapters"
+        ],
         "additionalProperties": false,
         "properties": {
-          "title": { "type": "string", "description": "Stage name shown as a heading." },
-          "about": { "type": "string", "description": "One sentence on what this stage adds." },
+          "title": {
+            "type": "string",
+            "description": "Stage name shown as a heading."
+          },
+          "about": {
+            "type": "string",
+            "description": "One sentence on what this stage adds."
+          },
           "chapters": {
             "type": "array",
             "minItems": 1,
             "items": {
               "type": "object",
-              "required": ["title", "hint", "secondsPerBeat", "lessons"],
+              "required": [
+                "title",
+                "hint",
+                "secondsPerBeat",
+                "lessons"
+              ],
               "additionalProperties": false,
               "properties": {
-                "title": { "type": "string" },
-                "hint": { "type": "string", "description": "One tip shown above the lessons." },
-                "secondsPerBeat": { "type": "number", "minimum": 0.3, "maximum": 3, "description": "1 is 60 beats a minute; smaller is faster." },
-                "beatsPerLine": { "type": "integer", "minimum": 2, "maximum": 16, "description": "Beats in one tala cycle. Defaults to 8 (Adi tala)." },
+                "title": {
+                  "type": "string"
+                },
+                "hint": {
+                  "type": "string",
+                  "description": "One tip shown above the lessons."
+                },
+                "secondsPerBeat": {
+                  "type": "number",
+                  "minimum": 0.3,
+                  "maximum": 3,
+                  "description": "1 is 60 beats a minute; smaller is faster."
+                },
+                "beatsPerLine": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 16,
+                  "description": "Beats in one tala cycle. Defaults to 8 (Adi tala)."
+                },
                 "lessons": {
                   "type": "array",
                   "minItems": 1,
                   "items": {
                     "type": "object",
-                    "required": ["swaras"],
                     "additionalProperties": false,
                     "properties": {
-                      "title": { "type": "string", "description": "Optional. Without it the swaras are the name." },
-                      "theory": { "type": "string", "maxLength": 320, "description": "A short note, three or four lines at most, shown above the lesson." },
+                      "title": {
+                        "type": "string",
+                        "description": "Optional. Without it the swaras are the name."
+                      },
+                      "theory": {
+                        "type": "string",
+                        "maxLength": 320,
+                        "description": "A short note, three or four lines at most, shown above the lesson."
+                      },
                       "swaras": {
                         "type": "string",
                         "pattern": "^\\s*[SRGMPDN]['.]?(\\s+([SRGMPDN]['.]?|,|\\|))*\\s*$",
                         "description": "S R G M P D N; ' for upper octave, . for lower octave, a comma holds one more beat, | separates lines."
+                      },
+                      "listen": {
+                        "type": "object",
+                        "description": "A listening game instead of singing: two notes play and the learner says whether the second went up or down.",
+                        "required": [
+                          "intervals"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "intervals": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 12
+                            },
+                            "description": "Jump sizes in semitones to choose from: 12 is an octave, 7 is Sa to Pa, 2 is Sa to Ri."
+                          },
+                          "same": {
+                            "type": "boolean",
+                            "description": "Also ask 'same' rounds where the note does not move."
+                          },
+                          "show": {
+                            "type": "boolean",
+                            "description": "Show the notes as dots while they play, before the learner answers."
+                          },
+                          "rounds": {
+                            "type": "integer",
+                            "minimum": 3,
+                            "maximum": 20,
+                            "description": "Rounds per try. Defaults to 8."
+                          }
+                        }
                       }
-                    }
+                    },
+                    "anyOf": [
+                      {
+                        "required": [
+                          "swaras"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "title",
+                          "listen"
+                        ]
+                      }
+                    ]
                   }
                 }
               }

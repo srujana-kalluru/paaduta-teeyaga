@@ -3,6 +3,7 @@ import { CONTEXT_SECONDS, DEFAULT_SA, LEAD_SECONDS, LOWEST_SA, MAX_SECONDS, NBSP
 import { drawChart, drawLive } from './chart.js';
 import { CHAPTERS, LESSONS, STAGES, SYLLABLES } from './lessons.js';
 import { drawStaff, westernName } from './staff.js';
+import { startListen, stopListen } from './listen.js';
 import { sing } from './voice.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -42,6 +43,13 @@ function remember(lesson, result, fresh) {
   store(PROGRESS_KEY, progress);
 }
 const nextLesson = () => LESSONS[LESSONS.indexOf(state.lesson) + 1];
+
+function rememberScore(lesson, passed, misses) {
+  const entry = progress.lessons[lesson.id] ?? { attempts: 0, passed: false };
+  progress.lessons[lesson.id] = { attempts: entry.attempts + 1, passed: entry.passed || passed, moments: misses, at: Date.now() };
+  progress.last = lesson.id;
+  store(PROGRESS_KEY, progress);
+}
 
 const seconds = (s) => `${s.toFixed(1)}${NBSP}s`;
 const median = (values) => (values.length ? [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] : null);
@@ -193,10 +201,17 @@ function startLesson(lesson) {
   const card = $('#reference');
   state.lesson = lesson;
   state.tonic = Number($('#sa').value);
+  if (lesson.listen) {
+    return startListen(lesson, state.tonic, {
+      done: (passed, misses) => rememberScore(lesson, passed, misses),
+      next: () => openLesson(nextLesson()),
+      hasNext: () => Boolean(nextLesson()),
+    });
+  }
   resetUser();
   $('h3', card).textContent = lesson.name;
-  Object.assign($('.theory'), { hidden: !lesson.theory });
-  $('.theory p:last-child').textContent = lesson.theory ?? '';
+  Object.assign($('#setup .theory'), { hidden: !lesson.theory });
+  $('#setup .theory p:last-child').textContent = lesson.theory ?? '';
   $('.row', card).hidden = true;
   const phrase = lesson.steps.map((step) => ({ ...step, note: state.tonic + step.note }));
   $('.swaras', card).replaceChildren(...phrase.map((step) => element('li', {},
@@ -222,7 +237,7 @@ function clearSession() {
   $('h3', card).textContent = 'Reference';
   $('.row', card).hidden = false;
   $('.swaras', card).replaceChildren();
-  $('.theory').hidden = true;
+  $('#setup .theory').hidden = true;
   $('.staff', card).setAttribute('hidden', '');
   staffNotes = [];
   $('canvas', card).hidden = true;
@@ -259,6 +274,7 @@ function renderCrumbs(trail) {
 
 function cancelWork() {
   stopPlayback();
+  stopListen();
   state.request?.abort();
   if (!stopRecording) return;
   const stop = stopRecording;
@@ -292,7 +308,11 @@ function route() {
   const lesson = LESSONS.find((l) => l.id === id);
   if (section === 'lessons' && lesson) {
     if (state.lesson !== lesson || state.tonic !== Number($('#sa').value)) startLesson(lesson);
-    const chapter = CHAPTERS.indexOf(lesson.chapter) + 1;
+    const chapter = CHAPTERS.indexOf(lesson.chapter) + 1, trail = [home, ['Lessons', '#/lessons'], [lesson.chapter.title, `#/lessons/chapter-${chapter}`], [lesson.name, lessonPath(lesson)]];
+    if (lesson.listen) {
+      renderCrumbs(trail);
+      return show('listen');
+    }
     return showStep([home, ['Lessons', '#/lessons'], [lesson.chapter.title, `#/lessons/chapter-${chapter}`], [lesson.name, lessonPath(lesson)]], step === 'results');
   }
   if (section === 'lessons') {

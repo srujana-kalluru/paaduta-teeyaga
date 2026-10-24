@@ -163,6 +163,24 @@ button:active { transform: scale(.97); }
 .stage summary .hint { margin: 0; }
 .stage[open] summary { margin-bottom: 4px; }
 .chapter { scroll-margin-top: 72px; }
+.listen-title { margin-bottom: 4px; }
+.listen .question { margin: 12px 0 0; font-size: 19px; font-weight: 600; }
+#ladder { display: block; width: 100%; max-width: 420px; margin: 12px auto 0; }
+#ladder text { fill: var(--muted); font-size: 12px; }
+#ladder .rung { stroke: var(--line); stroke-width: 1; }
+#ladder .rung.home { stroke: var(--muted); stroke-width: 1.5; }
+#ladder .dot { fill: var(--accent); }
+#ladder .dot.n0 { fill: var(--ref); }
+#ladder .dot-label { fill: var(--text); font-size: 14px; font-weight: 600; }
+#ladder .path { stroke-width: 4; stroke-linecap: round; stroke-dasharray: 2 8; }
+#ladder .path.up { stroke: var(--accent); }
+#ladder .path.down { stroke: var(--flag); }
+#ladder .path.same { stroke: var(--muted); }
+#listen-feedback { min-height: 26px; margin: 12px 0 0; color: var(--muted); }
+#listen-feedback.good { color: #248a3d; font-weight: 600; }
+#listen-feedback.miss { color: var(--text); font-weight: 600; }
+.answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+.answers button { min-height: 52px; font-size: 19px; font-weight: 600; }
 .theory { margin-top: 40px; background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
 .theory:not([hidden]) + .slots { margin-top: 0; }
 .theory p:last-child { margin: 0; font-size: 16px; line-height: 1.5; }

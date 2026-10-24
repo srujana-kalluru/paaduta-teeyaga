@@ -102,6 +102,29 @@
     <button class="primary wide" id="analyse" disabled>Analyse</button>
   </section>
 
+  <section id="listen" class="view" hidden>
+    <aside class="card theory" hidden>
+      <p class="eyebrow">Did you know?</p>
+      <p></p>
+    </aside>
+    <article class="card listen">
+      <h3 class="listen-title"></h3>
+      <p class="eyebrow" id="listen-round"></p>
+      <p class="question" id="listen-question"></p>
+      <svg id="ladder" role="img" aria-label="The two notes on a ladder of the scale. Higher on the screen is higher in pitch."></svg>
+      <p id="listen-feedback" aria-live="polite"></p>
+      <div class="row">
+        <button class="primary" id="listen-play">Play</button>
+        <button class="primary" id="listen-next" hidden>Next</button>
+      </div>
+      <div class="row answers" id="listen-answers"></div>
+      <div class="row" id="listen-end" hidden>
+        <button class="primary" id="listen-continue">Next lesson</button>
+        <button class="secondary" id="listen-again">Try again</button>
+      </div>
+    </article>
+  </section>
+
   <section id="analysing" class="view center" hidden>
     <div class="spinner" aria-hidden="true"></div>
     <h2 role="status">Analysing…</h2>

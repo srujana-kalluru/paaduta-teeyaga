@@ -2,6 +2,105 @@
   "$schema": "./lessons.schema.json",
   "stages": [
     {
+      "title": "Hear up and down",
+      "about": "Before singing, train your ear to hear whether a note goes up or down. Every answer is shown as a picture.",
+      "chapters": [
+        {
+          "title": "Watch it move",
+          "hint": "Listen and watch. Higher on the screen means higher in pitch.",
+          "secondsPerBeat": 1,
+          "lessons": [
+            {
+              "title": "Big jumps, with pictures",
+              "listen": {"intervals": [12], "show": true, "rounds": 6},
+              "theory": "Pitch is how high or low a note sounds. Here each note appears as a dot when it plays, so you can see the jump while you hear it. These two notes are a whole octave apart, the biggest jump in this course."
+            },
+            {
+              "title": "Sa and Pa, with pictures",
+              "listen": {"intervals": [7], "show": true, "rounds": 6},
+              "theory": "Sa to Pa is a smaller jump, but still a clear one. Watch which way the line points: up means the second note is higher, down means lower."
+            }
+          ]
+        },
+        {
+          "title": "Up or down?",
+          "hint": "Listen first, then answer. The picture appears after you choose.",
+          "secondsPerBeat": 1,
+          "lessons": [
+            {
+              "title": "Octave jumps",
+              "listen": {"intervals": [12]},
+              "theory": "Now the picture waits until you answer. Many people find it easier to hum the two notes back quietly before choosing."
+            },
+            {
+              "title": "Sa to Pa jumps",
+              "listen": {"intervals": [7]},
+              "theory": "If you are unsure, imagine the notes as steps on a staircase: is the second step above or below the first?"
+            },
+            {
+              "title": "Medium jumps",
+              "listen": {"intervals": [4, 5]},
+              "theory": "These jumps are smaller, like Sa to Ma or Sa to Ga. Your ear gets sharper with every round, even the ones you miss."
+            },
+            {
+              "title": "Small steps",
+              "listen": {"intervals": [2], "rounds": 10},
+              "theory": "Neighbouring swarams, like Sa and Ri, are the hardest to tell apart. Take your time and hear each pair as often as you like."
+            },
+            {
+              "title": "All sizes mixed",
+              "listen": {"intervals": [12, 7, 4, 2], "rounds": 10},
+              "theory": "Big and small jumps mixed together. This is what real melodies do: every song is a chain of ups and downs."
+            }
+          ]
+        },
+        {
+          "title": "Up, down or the same?",
+          "hint": "Sometimes the note stays where it is.",
+          "secondsPerBeat": 1,
+          "lessons": [
+            {
+              "title": "Up, down or same",
+              "listen": {"intervals": [7, 4], "same": true, "rounds": 10},
+              "theory": "A repeated note is as important as a moving one; Janta Varasas later are built on it. Listen for whether the second note moves at all."
+            },
+            {
+              "title": "Small steps or same",
+              "listen": {"intervals": [2], "same": true, "rounds": 10},
+              "theory": "The finest listening test here: a small step or no step at all. Passing this means your ear is ready to guide your voice."
+            }
+          ]
+        },
+        {
+          "title": "Sing it up, sing it down",
+          "hint": "Now sing. Watch your own line on the graph climb or fall like the reference.",
+          "secondsPerBeat": 1,
+          "lessons": [
+            {
+              "title": "Climb to Pa",
+              "swaras": "S , P ,",
+              "theory": "Your voice draws a line on the graph as you sing. When you go from Sa to Pa, your line should climb, just like the dots did."
+            },
+            {
+              "title": "Fall to Sa",
+              "swaras": "P , S ,",
+              "theory": "Now the other way. Going down, many voices stop short of the target; let your line fall all the way to the Sa rung."
+            },
+            {
+              "title": "Climb an octave",
+              "swaras": "S , S' ,",
+              "theory": "Upper Sa is the same note, higher. Your line should jump a long way up and then sit flat."
+            },
+            {
+              "title": "Fall an octave",
+              "swaras": "S' , S ,",
+              "theory": "From upper Sa back home. Seeing your line land on Sa is the clearest proof that your ear and voice agree."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "Find your voice",
       "about": "One note at a time. No rhythm to keep up with and nothing to memorise.",
       "chapters": [

@@ -9,7 +9,7 @@ const node = (name, attrs, parent) => {
 const midi = (hz) => (hz == null ? null : 69 + 12 * Math.log2(hz / 440));
 const degree = (m, tonic) => (((m - tonic) % 12) + 12) % 12;
 
-function noteName(m, tonic) {
+export function noteName(m, tonic) {
   if (tonic == null) return NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
   const name = SARGAM[degree(m, tonic)], octave = Math.floor((m - tonic) / 12);
   if (!octave) return name;
