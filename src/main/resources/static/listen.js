@@ -147,6 +147,7 @@ function finish() {
   $('#listen-play').hidden = true;
   $('#listen-end').hidden = false;
   $('#listen-continue').hidden = !(passed && quiz.hasNext());
+  $('#listen-skip').hidden = passed || !quiz.hasNext();
 }
 
 export function stopListen() {
@@ -166,6 +167,7 @@ export function startListen(lesson, tonic, { autoplay, done, next, hasNext }) {
   $('#listen-again').onclick = () => startListen(lesson, tonic, { done, next, hasNext });
   $('#listen-continue').onclick = next;
   $('#listen-end').hidden = true;
+  $('#listen-skip').hidden = !hasNext();
   newRound();
   if (autoplay) play();
 }

@@ -100,7 +100,10 @@
         <ul class="notes"></ul>
       </article>
     </div>
-    <button class="primary wide" id="analyse" disabled>Analyse</button>
+    <div class="actions">
+      <button class="primary" id="analyse" disabled>Analyse</button>
+      <button class="secondary" id="skip" hidden>Next lesson</button>
+    </div>
   </section>
 
   <section id="listen" class="view" hidden>
@@ -122,6 +125,9 @@
       <div class="row" id="listen-end" hidden>
         <button class="primary" id="listen-continue">Next lesson</button>
         <button class="secondary" id="listen-again">Try again</button>
+      </div>
+      <div class="row">
+        <button class="link" id="listen-skip">Skip to the next lesson</button>
       </div>
     </article>
   </section>
@@ -182,7 +188,10 @@
       <button class="primary" id="reanalyse">Analyse again</button>
     </details>
 
-    <button class="primary wide" id="again">Record another take</button>
+    <div class="actions">
+      <button class="primary" id="again">Record another take</button>
+      <button class="primary" id="next-bottom" hidden>Next lesson</button>
+    </div>
   </section>
 </main>
 

@@ -312,7 +312,7 @@ function showStep(trail, results) {
   if (results && !state.takes.length) return location.replace(setupPath());
   renderCrumbs(results ? [...trail, ['Results']] : trail);
   if (results) return renderResults();
-  $('#analyse').hidden = Boolean(state.lesson);
+  $('#skip').hidden = !(state.lesson && nextLesson());
   show('setup');
 }
 
@@ -515,6 +515,7 @@ function renderResults() {
   $('#next-lesson').hidden = !(done && nextLesson());
   $('#retry').className = done ? 'secondary' : 'primary';
   $('#again').hidden = Boolean(state.lesson);
+  $('#next-bottom').hidden = !(state.lesson && nextLesson());
   const own = r.key_shift_semitones || r.detected_key_shift_semitones;
   $('#keys').hidden = !own;
   $('#keys').replaceChildren(...[[0, 'Same key'], [own, `Attempt’s key, ${interval(own)}`]].map(([value, label]) => {
@@ -616,7 +617,8 @@ $('#start-over').onclick = () => {
   store(PROGRESS_KEY, progress);
   openLesson(LESSONS[0]);
 };
-$('#next-lesson').onclick = () => openLesson(nextLesson());
+// Next lesson is offered everywhere in a lesson, so nobody is held back by a result.
+$('#next-lesson').onclick = $('#next-bottom').onclick = $('#skip').onclick = $('#listen-skip').onclick = () => openLesson(nextLesson());
 $('#sa').append(...Array.from({ length: SA_CHOICES }, (_, k) => LOWEST_SA + k).map((m) => new Option(westernName(m), m)));
 $('#sa').value = stored(SA_KEY, DEFAULT_SA);
 $('#sa').onchange = () => store(SA_KEY, Number($('#sa').value));

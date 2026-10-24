@@ -123,6 +123,8 @@ button:active { transform: scale(.97); }
 .link { min-height: 44px; padding: 0 2px; background: none; color: var(--accent); }
 .link:hover { text-decoration: underline; }
 .wide { display: flex; width: 100%; max-width: 380px; margin: 36px auto 0; }
+.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; max-width: 480px; margin: 36px auto 0; }
+.actions [hidden] { display: none; }
 
 .card { margin-bottom: 16px; padding: 24px; border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
 .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-bottom: 8px; }
