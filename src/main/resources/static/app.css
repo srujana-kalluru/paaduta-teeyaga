@@ -163,6 +163,9 @@ button:active { transform: scale(.97); }
 .stage summary .hint { margin: 0; }
 .stage[open] summary { margin-bottom: 4px; }
 .chapter { scroll-margin-top: 72px; }
+.theory { margin-top: 40px; background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.theory:not([hidden]) + .slots { margin-top: 0; }
+.theory p:last-child { margin: 0; font-size: 16px; line-height: 1.5; }
 .chapter .hint { margin: 0; }
 .lesson-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .lesson-grid .tried { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--flag) 70%, transparent); }

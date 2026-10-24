@@ -173,7 +173,7 @@ The curriculum is in `src/main/resources/static/lessons.json`. No code changes a
       "secondsPerBeat": 1,
       "lessons": [
         {"swaras": "S R"},
-        {"title": "Sarali Varisai 1", "swaras": "S R G M P D N S' | S' N D P M G R S"}
+        {"title": "Sarali Varasa 1", "swaras": "S R G M P D N S' | S' N D P M G R S", "theory": "Purandara Dasa set these exercises some 500 years ago."}
       ]
     }
   ]
@@ -181,8 +181,9 @@ The curriculum is in `src/main/resources/static/lessons.json`. No code changes a
 ```
 
 - **Stage**: a group of chapters that adds one new idea. Only the stage being worked on starts open.
-- **Chapter**: `secondsPerBeat` sets the tempo (1 is 60 beats a minute). `beatsPerLine` sets the tala cycle and defaults to 8.
-- **Swaras**: `S R G M P D N`. Add `'` for the upper octave (`S'`) and `.` for the lower (`N.`). A comma holds the previous swara one more beat and `|` separates lines.
+- **Chapter**: `secondsPerBeat` sets the tempo (1 is 60 beats a minute). `beatsPerLine` sets the taalam cycle and defaults to 8.
+- **Swaras**: `S R G M P D N`. Add `'` for the upper octave (`S'`) and `.` for the lower (`N.`). A comma holds the previous swaram one more beat and `|` separates lines.
+- **Theory**: optional. Three or four lines shown above the lesson to make it interesting.
 - **Title**: optional. Without it the swaras are the name. Renaming a lesson resets its saved progress.
 - A mistake, such as an unknown swara or two lessons with the same name, is shown on the page when it loads.
 

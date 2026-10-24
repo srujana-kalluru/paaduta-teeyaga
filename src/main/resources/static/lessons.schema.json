@@ -37,6 +37,7 @@
                     "additionalProperties": false,
                     "properties": {
                       "title": { "type": "string", "description": "Optional. Without it the swaras are the name." },
+                      "theory": { "type": "string", "maxLength": 320, "description": "A short note, three or four lines at most, shown above the lesson." },
                       "swaras": {
                         "type": "string",
                         "pattern": "^\\s*[SRGMPDN]['.]?(\\s+([SRGMPDN]['.]?|,|\\|))*\\s*$",

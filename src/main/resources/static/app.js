@@ -195,6 +195,8 @@ function startLesson(lesson) {
   state.tonic = Number($('#sa').value);
   resetUser();
   $('h3', card).textContent = lesson.name;
+  Object.assign($('.theory'), { hidden: !lesson.theory });
+  $('.theory p:last-child').textContent = lesson.theory ?? '';
   $('.row', card).hidden = true;
   const phrase = lesson.steps.map((step) => ({ ...step, note: state.tonic + step.note }));
   $('.swaras', card).replaceChildren(...phrase.map((step) => element('li', {},
@@ -220,6 +222,7 @@ function clearSession() {
   $('h3', card).textContent = 'Reference';
   $('.row', card).hidden = false;
   $('.swaras', card).replaceChildren();
+  $('.theory').hidden = true;
   $('.staff', card).setAttribute('hidden', '');
   staffNotes = [];
   $('canvas', card).hidden = true;

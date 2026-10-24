@@ -10,11 +10,26 @@
           "hint": "Breathe in, then hold each note for four slow beats.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S , , ,"},
-            {"swaras": "R , , ,"},
-            {"swaras": "G , , ,"},
-            {"swaras": "M , , ,"},
-            {"swaras": "P , , ,"}
+            {
+              "swaras": "S , , ,",
+              "theory": "Sa is Shadjam (షడ్జమం), which means 'born of six': the other six swarams grow out of it. Old texts liken it to the call of a peacock. Every song you will ever sing returns home to Sa."
+            },
+            {
+              "swaras": "R , , ,",
+              "theory": "Ri is Rishabham (రిషభం), the swaram texts liken to the call of a bull. It is the first step away from home, so it should feel like a small, sure step, not a stretch."
+            },
+            {
+              "swaras": "G , , ,",
+              "theory": "Ga is Gandharam (గాంధారం), likened to the bleat of a goat. With Sa and Ri it forms the first small climb you will sing, and it gives a scale its bright or dark colour."
+            },
+            {
+              "swaras": "M , , ,",
+              "theory": "Ma is Madhyamam (మధ్యమం), 'the middle one': it sits at the centre of the seven swarams. Old texts liken it to the cry of the krauncha bird, the heron."
+            },
+            {
+              "swaras": "P , , ,",
+              "theory": "Pa is Panchamam (పంచమం), the fifth, likened to the song of the koel (కోయిల). Sa and Pa never change in any ragam, which is why the tambura plays only Sa and Pa."
+            }
           ]
         }
       ]
@@ -28,12 +43,30 @@
           "hint": "Step to the next note, then back.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S R"},
-            {"swaras": "R S"},
-            {"swaras": "S R S"},
-            {"swaras": "R G R"},
-            {"swaras": "G M G"},
-            {"swaras": "M P M"}
+            {
+              "swaras": "S R",
+              "theory": "Moving between two neighbouring swarams is called a step. A clean step lands straight on the new note, like stepping onto a stair, instead of sliding up a ramp."
+            },
+            {
+              "swaras": "R S",
+              "theory": "Coming down is often harder than going up: the voice tends to fall flat. Think of placing Sa gently, as if setting down a full glass."
+            },
+            {
+              "swaras": "S R S",
+              "theory": "Sa Ri Sa is a tiny round trip. Every phrase in Carnatic music is built from journeys like this one, away from home and back again."
+            },
+            {
+              "swaras": "R G R",
+              "theory": "Here home moves to Ri. Practising the same shape from different swarams trains your ear to hear the distance, not just the names."
+            },
+            {
+              "swaras": "G M G",
+              "theory": "Ga to Ma is a smaller step than Ri to Ga, a half step instead of a whole one. Listen for how much closer together they feel."
+            },
+            {
+              "swaras": "M P M",
+              "theory": "Ma Pa Ma crosses the middle of the scale. Pa is fixed in every ragam, so it is a safe place to land."
+            }
           ]
         },
         {
@@ -41,12 +74,30 @@
           "hint": "Climb three notes and come back down.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S R G"},
-            {"swaras": "G R S"},
-            {"swaras": "R G M"},
-            {"swaras": "M G R"},
-            {"swaras": "G M P"},
-            {"swaras": "P M G"}
+            {
+              "swaras": "S R G",
+              "theory": "Three rising swarams make the smallest arohanam (ఆరోహణం), the ascent. Ragam Mohanam is built on just five swarams and starts the same way: Sa Ri Ga."
+            },
+            {
+              "swaras": "G R S",
+              "theory": "The descent is called avarohanam (అవరోహణం). Every ragam is defined by its own arohanam and avarohanam, a little like a signature."
+            },
+            {
+              "swaras": "R G M",
+              "theory": "The same shape, one swaram higher. Your voice may feel slightly different here; that is your range changing, and it is completely normal."
+            },
+            {
+              "swaras": "M G R",
+              "theory": "Let each swaram finish before the next begins. Teachers call this clarity swara shuddhi (స్వర శుద్ధి), clean notes."
+            },
+            {
+              "swaras": "G M P",
+              "theory": "Ga Ma Pa spans the middle of the octave. This is often the most comfortable part of the voice, so enjoy it."
+            },
+            {
+              "swaras": "P M G",
+              "theory": "Coming down from Pa, keep the energy in the voice even though the notes get lower. Flat endings are the most common slip at this stage."
+            }
           ]
         }
       ]
@@ -60,10 +111,22 @@
           "hint": "Keep every note even as the phrase grows.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S R G M"},
-            {"swaras": "M G R S"},
-            {"swaras": "S R G M P"},
-            {"swaras": "P M G R S"}
+            {
+              "swaras": "S R G M",
+              "theory": "Sa Ri Ga Ma is the purvanga (పూర్వాంగం), the first half of the scale. Many ragams can be recognised from this half alone."
+            },
+            {
+              "swaras": "M G R S",
+              "theory": "Walking back down the purvanga. If Sa sounds lower than when you started, pause, play Sa again and match it."
+            },
+            {
+              "swaras": "S R G M P",
+              "theory": "Adding Pa completes five swarams. Five-note ragams such as Mohanam and Hamsadhwani are among the most loved in Carnatic music."
+            },
+            {
+              "swaras": "P M G R S",
+              "theory": "Five notes down to Sa. You have now sung more than half of every scale you will ever learn."
+            }
           ]
         },
         {
@@ -71,11 +134,26 @@
           "hint": "The same steps, higher up. Reach the upper Sa without pushing.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "P D"},
-            {"swaras": "D N"},
-            {"swaras": "N S'"},
-            {"swaras": "P D N S'"},
-            {"swaras": "S' N D P"}
+            {
+              "swaras": "P D",
+              "theory": "Pa to Da begins the uttaranga (ఉత్తరాంగం), the upper half of the scale. It mirrors the lower half, Sa to Ri, one Pa higher."
+            },
+            {
+              "swaras": "D N",
+              "theory": "Da is Dhaivatam (ధైవతం), likened to the neigh of a horse, and Ni is Nishadam (నిషాదం), likened to the trumpet of an elephant."
+            },
+            {
+              "swaras": "N S'",
+              "theory": "Ni to upper Sa is another half step. Ni always wants to resolve upward into Sa; let it."
+            },
+            {
+              "swaras": "P D N S'",
+              "theory": "Upper Sa vibrates exactly twice as fast as lower Sa. That is why they sound like the same note, one sthayi (స్థాయి), or octave, apart."
+            },
+            {
+              "swaras": "S' N D P",
+              "theory": "Coming down from upper Sa, keep your voice light at the top. Pushing makes the voice tight and the pitch sharp."
+            }
           ]
         },
         {
@@ -83,8 +161,14 @@
           "hint": "Join the two halves you already know.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S R G M P D N S'"},
-            {"swaras": "S' N D P M G R S"}
+            {
+              "swaras": "S R G M P D N S'",
+              "theory": "These eight notes, with Ma and Ni as you have sung them, form Dheerasankarabharanam, the 29th of the 72 melakarta (మేళకర్త) ragams. Its notes match the Western major scale."
+            },
+            {
+              "swaras": "S' N D P M G R S",
+              "theory": "The complete avarohanam. Traditionally the first lessons are taught in Mayamalavagowla; we use Sankarabharanam here because its notes are easier for a new ear."
+            }
           ]
         },
         {
@@ -92,41 +176,96 @@
           "hint": "Land on the note without sliding up to it.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S G"},
-            {"swaras": "S P"},
-            {"swaras": "S S'"},
-            {"swaras": "S G P"},
-            {"swaras": "P G S"}
+            {
+              "swaras": "S G",
+              "theory": "A leap skips over swarams. Hear Ga in your head before you sing it, then land on it directly without sliding."
+            },
+            {
+              "swaras": "S P",
+              "theory": "Sa to Pa is the most natural leap in music: the two notes vibrate in the ratio 3 to 2. That is why the tambura drone sounds so settled."
+            },
+            {
+              "swaras": "S S'",
+              "theory": "Sa to upper Sa is a full octave, the ratio 2 to 1. Singers say the upper Sa should feel like the same note, only lighter."
+            },
+            {
+              "swaras": "S G P",
+              "theory": "Sa Ga Pa outlines the major chord, the brightest-sounding chord there is. Hear Pa before you leap to it."
+            },
+            {
+              "swaras": "P G S",
+              "theory": "Coming down by leaps is harder than going up. Aim slightly high in your mind; the voice tends to fall below the target."
+            }
           ]
         }
       ]
     },
     {
-      "title": "Your first varisais",
+      "title": "Your first varasas",
       "about": "The first exercises every Carnatic student sings, one line at a time.",
       "chapters": [
         {
-          "title": "Sarali Varisai 1 and 2",
+          "title": "Sarali Varasa 1 and 2",
           "hint": "Lines 2 and 4 of every Sarali are the scale you already know, so learn the new lines on their own first.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"title": "Sarali Varisai 1", "swaras": "S R G M P D N S' | S' N D P M G R S"},
-            {"title": "Sarali Varisai 2 - line 1", "swaras": "S R S R S R G M"},
-            {"title": "Sarali Varisai 2 - line 3", "swaras": "S' N S' N S' N D P"},
-            {"title": "Sarali Varisai 2", "swaras": "S R S R S R G M | S R G M P D N S' | S' N S' N S' N D P | S' N D P M G R S"}
+            {
+              "title": "Sarali Varasa 1",
+              "swaras": "S R G M P D N S' | S' N D P M G R S",
+              "theory": "Sarali Varasa (సరళీ వరస) means 'simple sequence'. Purandara Dasa set these exercises some 500 years ago, and almost every Carnatic singer since began with this one."
+            },
+            {
+              "title": "Sarali Varasa 2 - line 1",
+              "swaras": "S R S R S R G M",
+              "theory": "This line repeats Sa Ri three times before climbing. Sarali Varasas are sung in Adi taalam (ఆది తాళం), the most common rhythm cycle: eight beats to a line."
+            },
+            {
+              "title": "Sarali Varasa 2 - line 3",
+              "swaras": "S' N S' N S' N D P",
+              "theory": "The same pattern from upper Sa downward. Notice it is line 1 turned upside down; most Varasas are built from mirrors like this."
+            },
+            {
+              "title": "Sarali Varasa 2",
+              "swaras": "S R S R S R G M | S R G M P D N S' | S' N S' N S' N D P | S' N D P M G R S",
+              "theory": "Your first full Sarali with a pattern in it. Clap on beats 1, 5 and 7 as you sing; that is how Adi taalam is kept: a laghu of four beats and two drutams of two."
+            }
           ]
         },
         {
-          "title": "Sarali Varisai 3 and 4",
+          "title": "Sarali Varasa 3 and 4",
           "hint": "Each new line repeats a short group of notes. Count the groups as you sing.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"title": "Sarali Varisai 3 - line 1", "swaras": "S R G S R G S R"},
-            {"title": "Sarali Varisai 3 - line 3", "swaras": "S' N D S' N D S' N"},
-            {"title": "Sarali Varisai 3", "swaras": "S R G S R G S R | S R G M P D N S' | S' N D S' N D S' N | S' N D P M G R S"},
-            {"title": "Sarali Varisai 4 - line 1", "swaras": "S R G M S R G M"},
-            {"title": "Sarali Varisai 4 - line 3", "swaras": "S' N D P S' N D P"},
-            {"title": "Sarali Varisai 4", "swaras": "S R G M S R G M | S R G M P D N S' | S' N D P S' N D P | S' N D P M G R S"}
+            {
+              "title": "Sarali Varasa 3 - line 1",
+              "swaras": "S R G S R G S R",
+              "theory": "Sa Ri Ga, three times, then Sa Ri. Grouping in threes inside an eight-beat cycle creates a gentle tension that resolves at the line's end."
+            },
+            {
+              "title": "Sarali Varasa 3 - line 3",
+              "swaras": "S' N D S' N D S' N",
+              "theory": "The mirror of line 1. Count the groups in your head: 3, 3, 2."
+            },
+            {
+              "title": "Sarali Varasa 3",
+              "swaras": "S R G S R G S R | S R G M P D N S' | S' N D S' N D S' N | S' N D P M G R S",
+              "theory": "Sarali Varasa 3 trains the voice to restart the same group cleanly each time, a skill every gamakam later relies on."
+            },
+            {
+              "title": "Sarali Varasa 4 - line 1",
+              "swaras": "S R G M S R G M",
+              "theory": "Groups of four fit Adi taalam exactly: two groups per line. This makes Sarali 4 feel steady and square."
+            },
+            {
+              "title": "Sarali Varasa 4 - line 3",
+              "swaras": "S' N D P S' N D P",
+              "theory": "Coming down in fours. Keep each upper Sa at the same height every time it returns."
+            },
+            {
+              "title": "Sarali Varasa 4",
+              "swaras": "S R G M S R G M | S R G M P D N S' | S' N D P S' N D P | S' N D P M G R S",
+              "theory": "Most Carnatic kritis are in Telugu: Tyagaraja, the best-loved composer of all, wrote nearly every one of his in Telugu. These Varasas are the first step toward singing them."
+            }
           ]
         }
       ]
@@ -136,17 +275,45 @@
       "about": "A comma holds the note for one more beat. Phrases now turn back before they finish.",
       "chapters": [
         {
-          "title": "Sarali Varisai 5 to 9",
+          "title": "Sarali Varasa 5 to 9",
           "hint": "Keep the note steady through every comma.",
           "secondsPerBeat": 0.9,
           "lessons": [
-            {"title": "Sarali Varisai 5 - line 1", "swaras": "S R G M P , S R"},
-            {"title": "Sarali Varisai 5 - line 3", "swaras": "S' N D P M , S' N"},
-            {"title": "Sarali Varisai 5", "swaras": "S R G M P , S R | S R G M P D N S' | S' N D P M , S' N | S' N D P M G R S"},
-            {"title": "Sarali Varisai 6", "swaras": "S R G M P D S R | S R G M P D N S' | S' N D P M G S' N | S' N D P M G R S"},
-            {"title": "Sarali Varisai 7", "swaras": "S R G M P D N D | S R G M P D N S' | S' N D P M G R G | S' N D P M G R S"},
-            {"title": "Sarali Varisai 8", "swaras": "S R G M P M G R | S R G M P D N S' | S' N D P M P D N | S' N D P M G R S"},
-            {"title": "Sarali Varisai 9", "swaras": "S R G M P M D P | S R G M P D N S' | S' N D P M P G M | S' N D P M G R S"}
+            {
+              "title": "Sarali Varasa 5 - line 1",
+              "swaras": "S R G M P , S R",
+              "theory": "The comma (,) marks a held beat: Pa here lasts two beats. In Telugu notation books the same comma is used, so this is exactly how printed Varasas look."
+            },
+            {
+              "title": "Sarali Varasa 5 - line 3",
+              "swaras": "S' N D P M , S' N",
+              "theory": "Ma is held for two beats on the way down. Holding steady on a note is the foundation of good sruti (శ్రుతి), staying in tune."
+            },
+            {
+              "title": "Sarali Varasa 5",
+              "swaras": "S R G M P , S R | S R G M P D N S' | S' N D P M , S' N | S' N D P M G R S",
+              "theory": "The full Sarali 5. The pause on Pa and Ma gives a feeling of breath inside the line; real compositions use held notes the same way."
+            },
+            {
+              "title": "Sarali Varasa 6",
+              "swaras": "S R G M P D S R | S R G M P D N S' | S' N D P M G S' N | S' N D P M G R S",
+              "theory": "Sarali 6 climbs to Da, then turns back to Sa Ri. A turn like this is called a prayogam (ప్రయోగం), a characteristic phrase."
+            },
+            {
+              "title": "Sarali Varasa 7",
+              "swaras": "S R G M P D N D | S R G M P D N S' | S' N D P M G R G | S' N D P M G R S",
+              "theory": "Sarali 7 climbs to Ni and turns back to Da. The turn just below upper Sa is a favourite move in many ragams."
+            },
+            {
+              "title": "Sarali Varasa 8",
+              "swaras": "S R G M P M G R | S R G M P D N S' | S' N D P M P D N | S' N D P M G R S",
+              "theory": "Sarali 8 rises to Pa and walks straight back down. Up-and-back shapes like this train the ear for symmetry."
+            },
+            {
+              "title": "Sarali Varasa 9",
+              "swaras": "S R G M P M D P | S R G M P D N S' | S' N D P M P G M | S' N D P M G R S",
+              "theory": "Sarali 9 rises to Pa, dips to Ma, then lifts to Da. Zig-zag movement like this is the first taste of a ragam's twists."
+            }
           ]
         }
       ]
@@ -156,34 +323,78 @@
       "about": "Longer holds and phrases that start from the upper Sa.",
       "chapters": [
         {
-          "title": "Sarali Varisai 10 to 14",
+          "title": "Sarali Varasa 10 to 14",
           "hint": "A long note is many beats of the same pitch. Keep it still to the end.",
           "secondsPerBeat": 0.8,
           "lessons": [
-            {"title": "Hold Pa", "swaras": "P , , , P , , ,"},
-            {"title": "Sarali Varisai 10", "swaras": "S R G M P , G M | P , , , P , , , | G M P D N D P M | G M P G M G R S"},
-            {"title": "Sarali Varisai 11", "swaras": "S' , N D N , D P | D , P M P , P , | G M P D N D P M | G M P G M G R S"},
-            {"title": "Sarali Varisai 12", "swaras": "S' S' N D N N D P | D D P M P , P , | G M P D N D P M | G M P G M G R S"},
-            {"title": "Sarali Varisai 13", "swaras": "S R G R G , G M | P M P , D P D , | M P D P D N D P | M P D P M G R S"},
-            {"title": "Sarali Varisai 14", "swaras": "S R G M P , P , | D D P , M M P , | D N S' , S' N D P | S' N D P M G R S"}
+            {
+              "title": "Hold Pa",
+              "swaras": "P , , , P , , ,",
+              "theory": "Pa held for four beats, twice. Long notes reveal every wobble, so this is where a steady sruti really shows."
+            },
+            {
+              "title": "Sarali Varasa 10",
+              "swaras": "S R G M P , G M | P , , , P , , , | G M P D N D P M | G M P G M G R S",
+              "theory": "Sarali 10 introduces a full-beat hold on Pa across the whole line. Steady long notes are the resting places of a song, where the listener feels the ragam settle."
+            },
+            {
+              "title": "Sarali Varasa 11",
+              "swaras": "S' , N D N , D P | D , P M P , P , | G M P D N D P M | G M P G M G R S",
+              "theory": "Sarali 11 begins on upper Sa, the first Varasa that starts high. Start light, as if the note floats."
+            },
+            {
+              "title": "Sarali Varasa 12",
+              "swaras": "S' S' N D N N D P | D D P M P , P , | G M P D N D P M | G M P G M G R S",
+              "theory": "Sarali 12 doubles some swarams before the held Pa. Repeated notes must each be sung clearly, not merged into one."
+            },
+            {
+              "title": "Sarali Varasa 13",
+              "swaras": "S R G R G , G M | P M P , D P D , | M P D P D N D P | M P D P M G R S",
+              "theory": "Sarali 13 mixes holds and turns: Ga is held, then Pa, then Da. It feels close to a real melody; you are almost singing a song."
+            },
+            {
+              "title": "Sarali Varasa 14",
+              "swaras": "S R G M P , P , | D D P , M M P , | D N S' , S' N D P | S' N D P M G R S",
+              "theory": "Sarali 14 is the last Sarali Varasa. Its held upper Sa in line 3 is the highest long note so far. Completing all fourteen is a real milestone."
+            }
           ]
         }
       ]
     },
     {
       "title": "Twin notes",
-      "about": "Janta Varisai: every swara twice, the second with its own fresh stress.",
+      "about": "Janta Varasa: every swaram twice, the second with its own fresh stress.",
       "chapters": [
         {
-          "title": "Janta Varisai",
+          "title": "Janta Varasa",
           "hint": "Restart each twin cleanly instead of sliding into it.",
           "secondsPerBeat": 0.7,
           "lessons": [
-            {"title": "Janta Varisai 1 - going up", "swaras": "S S R R G G M M | P P D D N N S' S'"},
-            {"title": "Janta Varisai 1", "swaras": "S S R R G G M M | P P D D N N S' S' | S' S' N N D D P P | M M G G R R S S"},
-            {"title": "Janta Varisai 2 - going up", "swaras": "S S R R G G R R | S S R R G G M M | R R G G M M G G | R R G G M M P P | G G M M P P M M | G G M M P P D D | M M P P D D P P | M M P P D D N N | P P D D N N D D | P P D D N N S' S'"},
-            {"title": "Janta Varisai 2 - coming down", "swaras": "S' S' N N D D N N | S' S' N N D D P P | N N D D P P D D | N N D D P P M M | D D P P M M P P | D D P P M M G G | P P M M G G M M | P P M M G G R R | M M G G R R G G | M M G G R R S S"},
-            {"title": "Janta Varisai 2", "swaras": "S S R R G G R R | S S R R G G M M | R R G G M M G G | R R G G M M P P | G G M M P P M M | G G M M P P D D | M M P P D D P P | M M P P D D N N | P P D D N N D D | P P D D N N S' S' | S' S' N N D D N N | S' S' N N D D P P | N N D D P P D D | N N D D P P M M | D D P P M M P P | D D P P M M G G | P P M M G G M M | P P M M G G R R | M M G G R R G G | M M G G R R S S"}
+            {
+              "title": "Janta Varasa 1 - going up",
+              "swaras": "S S R R G G M M | P P D D N N S' S'",
+              "theory": "Janta (జంట) is the Telugu word for a pair. Each swaram is sung twice, the second with a fresh push of breath, which builds control for gamakams later."
+            },
+            {
+              "title": "Janta Varasa 1",
+              "swaras": "S S R R G G M M | P P D D N N S' S' | S' S' N N D D P P | M M G G R R S S",
+              "theory": "The full Janta Varasa 1. Sing the second note of each pair clearly; don't let the pair blur into one long note."
+            },
+            {
+              "title": "Janta Varasa 2 - going up",
+              "swaras": "S S R R G G R R | S S R R G G M M | R R G G M M G G | R R G G M M P P | G G M M P P M M | G G M M P P D D | M M P P D D P P | M M P P D D N N | P P D D N N D D | P P D D N N S' S'",
+              "theory": "Janta Varasa 2 climbs in overlapping pairs. It is long, so breathe at the end of each eight-beat line."
+            },
+            {
+              "title": "Janta Varasa 2 - coming down",
+              "swaras": "S' S' N N D D N N | S' S' N N D D P P | N N D D P P D D | N N D D P P M M | D D P P M M P P | D D P P M M G G | P P M M G G M M | P P M M G G R R | M M G G R R G G | M M G G R R S S",
+              "theory": "The descent of Janta Varasa 2. Keep the second note of each pair as strong as the first."
+            },
+            {
+              "title": "Janta Varasa 2",
+              "swaras": "S S R R G G R R | S S R R G G M M | R R G G M M G G | R R G G M M P P | G G M M P P M M | G G M M P P D D | M M P P D D P P | M M P P D D N N | P P D D N N D D | P P D D N N S' S' | S' S' N N D D N N | S' S' N N D D P P | N N D D P P D D | N N D D P P M M | D D P P M M P P | D D P P M M G G | P P M M G G M M | P P M M G G R R | M M G G R R G G | M M G G R R S S",
+              "theory": "The complete Janta Varasa 2, all twenty lines. Many teachers say Janta Varasas are where a singer's voice first becomes strong."
+            }
           ]
         }
       ]
@@ -197,46 +408,91 @@
           "hint": "Keep the tone the same in every octave. Sing low notes gently and high notes lightly.",
           "secondsPerBeat": 1,
           "lessons": [
-            {"swaras": "S N."},
-            {"swaras": "N. D. N. S"},
-            {"swaras": "S N. D. P."},
-            {"swaras": "P. D. N. S R G"},
-            {"swaras": "S' R' S'"},
-            {"swaras": "N S' R' S' N"},
-            {"swaras": "P D N S' R' S' N D P"}
+            {
+              "swaras": "S N.",
+              "theory": "Mandra sthayi (మంద్ర స్థాయి) is the lower octave, written with a dot below the swaram. Ni below Sa is the first step into it."
+            },
+            {
+              "swaras": "N. D. N. S",
+              "theory": "A short walk in the lower octave. Let the low notes sound relaxed; low voice comes from ease, not force."
+            },
+            {
+              "swaras": "S N. D. P.",
+              "theory": "Down to the lower Pa. The middle octave is madhya sthayi; between mandra, madhya and tara, a singer usually covers about two and a half octaves."
+            },
+            {
+              "swaras": "P. D. N. S R G",
+              "theory": "From the lower octave back into the middle one. Moving smoothly across octaves is what makes a voice sound even."
+            },
+            {
+              "swaras": "S' R' S'",
+              "theory": "Tara sthayi (తార స్థాయి) is the upper octave, written with a dot above. Ri above upper Sa is the first step into it."
+            },
+            {
+              "swaras": "N S' R' S' N",
+              "theory": "A short walk around upper Sa. High notes ring best when the throat stays relaxed and the breath steady."
+            },
+            {
+              "swaras": "P D N S' R' S' N D P",
+              "theory": "Annamacharya of Tallapaka composed thousands of Telugu sankirtanas for Lord Venkateswara in the 15th century. Many of them rise into this upper range at their peak."
+            }
           ]
         }
       ]
     },
     {
       "title": "Rhythm cycles",
-      "about": "Patterns set to a tala other than eight beats.",
+      "about": "Patterns set to a taalam other than eight beats.",
       "chapters": [
         {
-          "title": "Triputa Tala Alankaram",
-          "hint": "Triputa tala has seven beats: three, then two, then two.",
+          "title": "Triputa Taalam Alankaram",
+          "hint": "Triputa taalam has seven beats: three, then two, then two.",
           "secondsPerBeat": 0.8,
           "beatsPerLine": 7,
           "lessons": [
-            {"title": "Triputa Alankaram - going up", "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S'"},
-            {"title": "Triputa Alankaram - coming down", "swaras": "S' N D S' N D P | N D P N D P M | D P M D P M G | P M G P M G R | M G R M G R S"},
-            {"title": "Triputa Tala Alankaram", "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S' | S' N D S' N D P | N D P N D P M | D P M D P M G | P M G P M G R | M G R M G R S"}
+            {
+              "title": "Triputa Alankaram - going up",
+              "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S'",
+              "theory": "Alankaram (అలంకారం) means ornament. Purandara Dasa set seven Alankarams, one for each of the seven suladi taalams, so students learn the rhythms by singing."
+            },
+            {
+              "title": "Triputa Alankaram - coming down",
+              "swaras": "S' N D S' N D P | N D P N D P M | D P M D P M G | P M G P M G R | M G R M G R S",
+              "theory": "This Alankaram is in Tisra jaati Triputa taalam: 3 + 2 + 2 = 7 beats. Clap the first beat of each group: 1, 4 and 6."
+            },
+            {
+              "title": "Triputa Taalam Alankaram",
+              "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S' | S' N D S' N D P | N D P N D P M | D P M D P M G | P M G P M G R | M G R M G R S",
+              "theory": "The full Triputa Alankaram. The seven suladi taalams combine with five jaatis to make 35 taalams; you have now sung one of them."
+            }
           ]
         }
       ]
     },
     {
       "title": "Picking up speed",
-      "about": "The same exercises at twice the pace, madhyama kalam. Come here only once the slow versions pass cleanly.",
+      "about": "The same exercises at twice the pace, rendava kaalam. Come here only once the slow versions pass cleanly.",
       "chapters": [
         {
-          "title": "Second speed",
+          "title": "Rendava kaalam (second speed)",
           "hint": "Faster, but every note still lands in tune.",
           "secondsPerBeat": 0.5,
           "lessons": [
-            {"title": "Sarali Varisai 1 - second speed", "swaras": "S R G M P D N S' | S' N D P M G R S"},
-            {"title": "Sarali Varisai 3 - second speed", "swaras": "S R G S R G S R | S R G M P D N S' | S' N D S' N D S' N | S' N D P M G R S"},
-            {"title": "Janta Varisai 1 - second speed", "swaras": "S S R R G G M M | P P D D N N S' S' | S' S' N N D D P P | M M G G R R S S"}
+            {
+              "title": "Sarali Varasa 1 - rendava kaalam",
+              "swaras": "S R G M P D N S' | S' N D P M G R S",
+              "theory": "Carnatic music is sung in three speeds, or kaalams: prathama (first), dwitiya (second) and tritiya (third). Each speed is exactly double the one before."
+            },
+            {
+              "title": "Sarali Varasa 3 - rendava kaalam",
+              "swaras": "S R G S R G S R | S R G M P D N S' | S' N D S' N D S' N | S' N D P M G R S",
+              "theory": "Sarali 3 at second speed. The groups of three now go by quickly; keep each one clean rather than rushed."
+            },
+            {
+              "title": "Janta Varasa 1 - rendava kaalam",
+              "swaras": "S S R R G G M M | P P D D N N S' S' | S' S' N N D D P P | M M G G R R S S",
+              "theory": "Janta Varasa at second speed. After this, students usually move on to geethams such as Purandara Dasa's 'Sri Gananatha', their first real songs."
+            }
           ]
         }
       ]

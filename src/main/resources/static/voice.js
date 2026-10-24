@@ -1,5 +1,5 @@
 import {
-  BREATH_LEVEL, CONSONANTS, DRIFT, EFFORT_TILT, FORMANT_WANDER, FUNDAMENTAL_BOOST, GLIDE_SECONDS, INHALE, JITTER, LEAD_SECONDS, NOTE_LEVEL_SPREAD, OVERSHOOT,
+  BREATH_LEVEL, CONSONANTS, DRIFT, EFFORT_TILT, FORMANT_WANDER, FUNDAMENTAL_BOOST, GLIDE_SECONDS, JITTER, LEAD_SECONDS, NOTE_LEVEL_SPREAD, OVERSHOOT,
   PHRASE_ATTACK, PHRASE_RELEASE, RELEASE_FALL, REVERB_MIX, SCOOP, SHIMMER, SOURCE_TILT, SWELL, TRANSITION_SECONDS, VIBRATO, VOICE_CONTROL, VOICE_HARMONICS,
   VOCAL_TRACT, VOICE_RATE, VOICING_SECONDS, VOWELS,
 } from './constants.js';
@@ -114,7 +114,7 @@ export function sing(steps, seconds) {
   });
   const end = LEAD_SECONDS + beat * seconds, total = Math.round((end + LEAD_SECONDS) * VOICE_RATE);
   const out = new Float32Array(total), phase = new Float64Array(VOICE_HARMONICS + 1), gains = new Float64Array(VOICE_HARMONICS + 1);
-  const hiss = bandpass(6500, 1.2), breath = bandpass(2500, 0.6), burst = bandpass(1500, 0.8), inhale = bandpass(1800, 0.5);
+  const hiss = bandpass(6500, 1.2), breath = bandpass(2500, 0.6), burst = bandpass(1500, 0.8);
   const motion = { end, drift: 0, wobble: 0, jitter: 0, shimmer: 0, rate: 0, depth: 0, formant: 0 };
   for (let block = 0; block < total; block += VOICE_CONTROL) {
     const t = block / VOICE_RATE;
@@ -127,7 +127,7 @@ export function sing(steps, seconds) {
     motion.wobble += (2 * Math.PI * VIBRATO.rate * (1 + VIBRATO.rateWander * motion.rate) * VOICE_CONTROL) / VOICE_RATE;
     const now = moment(phrase, seconds, t, motion), { count, level } = harmonics(now, gains);
     const step = (2 * Math.PI * now.f0) / VOICE_RATE, envelope = ease((t - LEAD_SECONDS) / PHRASE_ATTACK) * ease((end - t) / PHRASE_RELEASE);
-    const gasp = INHALE.level * Math.sin(Math.PI * clamp((t - INHALE.start) / (INHALE.end - INHALE.start))) ** 2, shake = 1 + SHIMMER * motion.shimmer;
+    const shake = 1 + SHIMMER * motion.shimmer;
     for (let k = block; k < Math.min(total, block + VOICE_CONTROL); k++) {
       let sample = 0;
       for (let h = 1; h <= count; h++) {
@@ -135,7 +135,7 @@ export function sing(steps, seconds) {
         sample += gains[h] * Math.sin(phase[h]);
       }
       const noise = random(), pulse = 0.6 + 0.4 * Math.cos(phase[1]);
-      out[k] = gasp * inhale(noise) + envelope * (shake * level * sample + BREATH_LEVEL * now.voice * pulse * breath(noise) + now.sibilance * hiss(noise) + now.pop * burst(noise));
+      out[k] = envelope * (shake * level * sample + BREATH_LEVEL * now.voice * pulse * breath(noise) + now.sibilance * hiss(noise) + now.pop * burst(noise));
     }
   }
   return { dry: normalise(out), wet: normalise(reverb(out)) };

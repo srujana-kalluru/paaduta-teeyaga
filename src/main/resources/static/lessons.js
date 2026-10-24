@@ -9,11 +9,11 @@ export const SYLLABLES = Object.fromEntries(Object.entries(CONSONANT).map(([name
 function parse(text, where) {
   return text.split(/\s+/).filter((token) => token && token !== '|').reduce((steps, token) => {
     if (token === ',') {
-      if (!steps.length) throw new Error(`${where}: a comma needs a swara before it.`);
+      if (!steps.length) throw new Error(`${where}: a comma needs a swaram before it.`);
       steps.at(-1).beats++;
       return steps;
     }
-    if (!SWARAS[token[0]] || !OCTAVES[token.slice(1)]) throw new Error(`${where}: "${token}" is not a swara. Use S R G M P D N, with ' above or . below.`);
+    if (!SWARAS[token[0]] || !OCTAVES[token.slice(1)]) throw new Error(`${where}: "${token}" is not a swaram. Use S R G M P D N, with ' above or . below.`);
     const [name, degree] = SWARAS[token[0]], [dot, octave, id] = OCTAVES[token.slice(1)];
     steps.push({ swara: name[0] + dot + name.slice(1), note: degree + octave, syllable: SYLLABLES[name], id: name.toLowerCase() + id, beats: 1 });
     return steps;
@@ -30,6 +30,7 @@ export const LESSONS = CHAPTERS.flatMap((chapter) => chapter.lessons.map((lesson
   return {
     id: lesson.title ? lesson.title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-') : steps.map((step) => step.id).join('-'),
     name: lesson.title ?? steps.map((step) => step.swara).join(' '),
+    theory: lesson.theory,
     chapter,
     steps,
     seconds: chapter.secondsPerBeat,

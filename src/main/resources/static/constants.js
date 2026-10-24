@@ -32,15 +32,15 @@ export const VOICE_CONTROL = 64;
 export const VOICE_HARMONICS = 80;
 export const SOURCE_TILT = 2.3;
 export const FUNDAMENTAL_BOOST = 2.6;
-export const BREATH_LEVEL = 0.15;
+export const BREATH_LEVEL = 0.015;
 export const GLIDE_SECONDS = 0.12;
 export const TRANSITION_SECONDS = 0.06;
 export const VOICING_SECONDS = 0.03;
 export const SCOOP = 0.3;
 export const DRIFT = 0.01;
 export const VIBRATO = { depth: 0.16, rate: 5.2, delay: 0.3, rise: 0.4, rateWander: 0.06, depthWander: 0.3 };
-export const JITTER = 0.04;
-export const SHIMMER = 0.03;
+export const JITTER = 0.015;
+export const SHIMMER = 0.01;
 export const OVERSHOOT = { ratio: 0.06, max: 0.2 };
 export const SWELL = { floor: 0.8, seconds: 0.3 };
 export const NOTE_LEVEL_SPREAD = 0.12;
@@ -48,21 +48,20 @@ export const EFFORT_TILT = 0.4;
 export const RELEASE_FALL = 0.2;
 export const FORMANT_WANDER = 0.02;
 export const VOCAL_TRACT = 1.1;
-export const INHALE = { level: 0.035, start: 0.05, end: 0.42 };
 export const PHRASE_ATTACK = 0.08;
 export const PHRASE_RELEASE = 0.15;
-export const REVERB_MIX = 0.22;
+export const REVERB_MIX = 0.08;
 export const VOWELS = {
   a: [[760, 90], [1150, 100], [2700, 160], [3600, 300], [4700, 400]],
   i: [[300, 60], [2500, 140], [3100, 200], [3900, 300], [4700, 400]],
 };
 export const CONSONANTS = {
-  s: { closure: 0.09, voice: 0, hiss: 0.35, loci: [400, 1600, 2600] },
+  s: { closure: 0.09, voice: 0, hiss: 0.1, loci: [400, 1600, 2600] },
   r: { closure: 0.03, voice: 0.35, loci: [350, 1500, 2200] },
-  g: { closure: 0.04, voice: 0.2, burst: 0.12, loci: [300, 1900, 2100] },
+  g: { closure: 0.04, voice: 0.2, burst: 0.05, loci: [300, 1900, 2100] },
   m: { closure: 0.07, voice: 0.45, loci: [250, 1100, 2400] },
-  p: { closure: 0.05, voice: 0, burst: 0.15, loci: [400, 900, 2300] },
-  d: { closure: 0.04, voice: 0.2, burst: 0.12, loci: [350, 1700, 2600] },
+  p: { closure: 0.05, voice: 0, burst: 0.05, loci: [400, 900, 2300] },
+  d: { closure: 0.04, voice: 0.2, burst: 0.05, loci: [350, 1700, 2600] },
   n: { closure: 0.07, voice: 0.45, loci: [250, 1600, 2600] },
 };
 
