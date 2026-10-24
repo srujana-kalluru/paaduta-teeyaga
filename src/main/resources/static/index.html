@@ -43,6 +43,7 @@
     <h1 class="title">Paaduta Teeyaga</h1>
     <p class="tagline">Hear where it drifts. Sing it better.</p>
     <div class="row">
+      <button class="primary" id="home-continue" hidden></button>
       <button class="primary" data-go="#/tutor">Practise with a tutor</button>
       <button class="secondary" data-go="#/lessons">Learn on your own</button>
     </div>
@@ -139,6 +140,10 @@
       <h2 id="headline" aria-live="polite"></h2>
       <div class="segmented" id="keys" role="group" aria-label="Compare in" hidden></div>
       <ul class="warnings" id="warnings"></ul>
+      <div class="row" id="lesson-actions" hidden>
+        <button class="primary" id="next-lesson" hidden>Next lesson</button>
+        <button id="retry">Try again</button>
+      </div>
     </div>
 
     <div class="card">
@@ -177,7 +182,6 @@
       <button class="primary" id="reanalyse">Analyse again</button>
     </details>
 
-    <button class="primary wide" id="next-lesson" hidden>Next lesson</button>
     <button class="primary wide" id="again">Record another take</button>
   </section>
 </main>

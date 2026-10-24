@@ -153,7 +153,7 @@ export function stopListen() {
   stopSound();
 }
 
-export function startListen(lesson, tonic, { done, next, hasNext }) {
+export function startListen(lesson, tonic, { autoplay, done, next, hasNext }) {
   stopSound();
   quiz = { lesson, tonic, done, hasNext, rounds: lesson.listen.rounds ?? LISTEN.rounds, round: 0, correct: 0 };
   $('#listen .listen-title').textContent = lesson.name;
@@ -167,4 +167,5 @@ export function startListen(lesson, tonic, { done, next, hasNext }) {
   $('#listen-continue').onclick = next;
   $('#listen-end').hidden = true;
   newRound();
+  if (autoplay) play();
 }

@@ -157,6 +157,7 @@ static/          index.html, app.js, audio.js, chart.js, staff.js, voice.js, les
 - The `<meta name="api-base">` tag is empty when Spring serves the page. The Pages build sets it to `API_BASE_URL`.
 - The chart shifts the attempt by the chosen key, so voices an octave apart overlap.
 - The record buttons stay disabled while a recording starts or stops. This prevents a second recorder.
+- Lessons run in one-tap flow: opening a lesson plays its reference, the record button pulses when it ends, stopping the recording starts the analysis, and the result offers Next lesson or Try again. The home page offers Continue once there is progress.
 
 ### Editing the lessons
 

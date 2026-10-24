@@ -104,6 +104,7 @@ const listNotes = (card, warnings) => $('.notes', card).replaceChildren(...warni
 
 function resetUser() {
   const card = $('#user'), audio = $('audio', card);
+  $('.record', card).classList.remove('nudge');
   state.user = null;
   state.live.user = [];
   $('canvas', card).hidden = true;
@@ -129,6 +130,10 @@ async function load(slot, blob, analysed = blob) {
   const audio = $('audio', card);
   audio.src = clip.url;
   audio.hidden = false;
+  if (slot === 'reference' && state.autoplay) {
+    state.autoplay = false;
+    audio.play().catch(() => {});
+  }
   listNotes(card, []);
   $('#analyse').disabled = !(state.reference && state.user);
 
@@ -148,6 +153,14 @@ function ago(time) {
 function outcome(entry) {
   if (entry.passed) return 'passed';
   return entry.moments ? `${plural(entry.moments, 'moment')} to practise last time` : 'not passed yet';
+}
+
+// From the home page one tap goes straight into the next lesson to practise.
+function renderContinue() {
+  const next = progress.last && LESSONS.find((l) => !hasPassed(l)), choice = $('#home-continue');
+  choice.hidden = !next;
+  $('[data-go="#/tutor"]').className = next ? 'secondary' : 'primary';
+  if (next) Object.assign(choice, { textContent: `Continue: ${next.name}`, onclick: () => openLesson(next) });
 }
 
 function renderResume() {
@@ -202,7 +215,10 @@ function startLesson(lesson) {
   state.lesson = lesson;
   state.tonic = Number($('#sa').value);
   if (lesson.listen) {
+    const autoplay = state.autoplay;
+    state.autoplay = false;
     return startListen(lesson, state.tonic, {
+      autoplay,
       done: (passed, misses) => rememberScore(lesson, passed, misses),
       next: () => openLesson(nextLesson()),
       hasNext: () => Boolean(nextLesson()),
@@ -256,7 +272,10 @@ function go(path) {
   else location.hash = path;
 }
 
+// Opening a lesson is always a tap, so its sound may start straight away without a second tap on Play.
 function openLesson(lesson) {
+  state.autoplay = true;
+  state.opening = true;
   startLesson(lesson);
   go(lessonPath(lesson));
 }
@@ -293,11 +312,13 @@ function showStep(trail, results) {
   if (results && !state.takes.length) return location.replace(setupPath());
   renderCrumbs(results ? [...trail, ['Results']] : trail);
   if (results) return renderResults();
+  $('#analyse').hidden = Boolean(state.lesson);
   show('setup');
 }
 
 function route() {
-  cancelWork();
+  if (state.opening) state.opening = false;
+  else cancelWork();
   const [section, id, step] = location.hash.slice(2).split('/'), home = ['Home', '#/'];
   $('#reset').hidden = section !== 'tutor';
   $('#start-over').hidden = section !== 'lessons';
@@ -320,6 +341,7 @@ function route() {
     return showLessons(Number(id?.replace('chapter-', '')));
   }
   renderCrumbs([home]);
+  renderContinue();
   show('home');
 }
 
@@ -352,10 +374,13 @@ async function toggleRecording(slot) {
     record.classList.remove('on');
     record.setAttribute('aria-pressed', 'false');
     timer.textContent = '';
-    const blob = await stop();
+    const blob = await stop(), before = state.user;
     buttons.forEach((b) => (b.disabled = false));
     $('#analyse').disabled = !(state.reference && state.user);
-    return load(slot, blob);
+    await load(slot, blob);
+    // In a lesson the attempt is analysed as soon as it is recorded.
+    if (state.lesson && slot === 'user' && state.reference && state.user && state.user !== before) analyse();
+    return;
   }
   if (slot === 'reference') {
     state.live.user = [];
@@ -372,6 +397,7 @@ async function toggleRecording(slot) {
     return toast(e.name === 'NotAllowedError' ? 'Microphone access is blocked. Allow it in your browser’s site settings.' : 'No microphone is available.');
   }
   record.disabled = false;
+  record.classList.remove('nudge');
   $('#analyse').disabled = true;
   record.classList.add('on');
   record.setAttribute('aria-pressed', 'true');
@@ -485,7 +511,10 @@ function renderResults() {
   $('#headline').textContent = headline(r, pending);
   const done = state.lesson && clean(r);
   if (done) $('#headline').textContent = 'Lesson passed';
+  $('#lesson-actions').hidden = !state.lesson;
   $('#next-lesson').hidden = !(done && nextLesson());
+  $('#retry').className = done ? 'secondary' : 'primary';
+  $('#again').hidden = Boolean(state.lesson);
   const own = r.key_shift_semitones || r.detected_key_shift_semitones;
   $('#keys').hidden = !own;
   $('#keys').replaceChildren(...[[0, 'Same key'], [own, `Attempt’s key, ${interval(own)}`]].map(([value, label]) => {
@@ -593,10 +622,16 @@ $('#sa').value = stored(SA_KEY, DEFAULT_SA);
 $('#sa').onchange = () => store(SA_KEY, Number($('#sa').value));
 $('#hear-sa').onclick = () => new Audio(URL.createObjectURL(wav(sing([{ note: Number($('#sa').value), syllable: SYLLABLES.Sa, beats: 1 }], 1.5).wet, VOICE_RATE))).play();
 ['play', 'pause'].forEach((type) => $('#reference audio').addEventListener(type, followSwaras));
+// When a lesson's reference finishes, point to the record button so the next tap is obvious.
+$('#reference audio').addEventListener('ended', () => {
+  if (!state.lesson || state.user || stopRecording) return;
+  $('#user .record').classList.add('nudge');
+  $('#user').scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
 $$('.record').forEach((b) => (b.onclick = () => toggleRecording(b.closest('.slot').id)));
 $('#analyse').onclick = () => analyse(null, state.keyShift == null ? {} : { key_shift_semitones: state.keyShift });
 $('#cancel').onclick = () => route();
-$('#again').onclick = () => {
+$('#again').onclick = $('#retry').onclick = () => {
   resetUser();
   go(setupPath());
 };

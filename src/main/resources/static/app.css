@@ -193,6 +193,9 @@ button:active { transform: scale(.97); }
 .record span { width: 50px; height: 50px; border-radius: 50%; background: var(--rec); transition: all .3s cubic-bezier(.2, .8, .2, 1); }
 .record.on span { width: 26px; height: 26px; border-radius: 7px; }
 .record:disabled { opacity: .3; cursor: default; }
+.record.nudge { animation: nudge 1.4s ease-in-out infinite; }
+@keyframes nudge { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--rec) 22%, transparent); } }
+#lesson-actions { margin-top: 20px; }
 .timer { min-width: 4ch; color: var(--rec); font-weight: 600; font-variant-numeric: tabular-nums; }
 .timer:empty { display: none; }
 
