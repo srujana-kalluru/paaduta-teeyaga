@@ -3,44 +3,27 @@
   "stages": [
     {
       "title": "Hear up and down",
-      "about": "Before singing, train your ear to hear whether a note goes up or down. Both notes are always within one octave, Sa to upper Sa.",
+      "about": "Before singing, train your ear to hear whether a note goes up, goes down or stays the same. Both notes are always within one octave, Sa to upper Sa.",
       "chapters": [
         {
-          "title": "Watch it move",
-          "hint": "No questions yet. Listen and watch: higher on the screen means higher in pitch.",
-          "secondsPerBeat": 1,
-          "lessons": [
-            {
-              "title": "See big jumps",
-              "listen": {"demo": true, "intervals": [7, 9], "rounds": 6},
-              "theory": "The oldest Indian music, Vedic chanting from over 3,000 years ago, was built on hearing up and down. Each syllable was sung raised (udatta), lowered (anudatta) or falling (svarita). You are training that same ear."
-            },
-            {
-              "title": "See small steps",
-              "listen": {"demo": true, "intervals": [2, 4], "rounds": 6},
-              "theory": "Vedic manuscripts mark these pitch changes with small strokes above and below the words, one of the earliest ways of writing up and down. The ladder here does the same job: small steps sit close together."
-            }
-          ]
-        },
-        {
-          "title": "Up or down?",
-          "hint": "Listen first and answer. The picture only appears after you choose.",
+          "title": "Up, down or the same?",
+          "hint": "Listen first and answer. The picture appears after you choose. The last two lessons add notes that stay the same.",
           "secondsPerBeat": 1,
           "lessons": [
             {
               "title": "Big jumps",
               "listen": {"intervals": [7, 8, 9]},
-              "theory": "Bharata's Natya Shastra, written about 2,000 years ago, is the oldest surviving book to name the seven swarams. Musicians then learned entirely by ear, as you are now. Hum the two notes back before you answer."
+              "theory": "The oldest Indian music, Vedic chanting from over 3,000 years ago, was built on hearing up and down: each syllable was sung raised (udatta), lowered (anudatta) or falling (svarita). You are training that same ear. Hum the two notes back before you answer."
             },
             {
               "title": "Medium jumps",
               "listen": {"intervals": [4, 5]},
-              "theory": "The Natya Shastra divides the octave into 22 srutis, steps finer than our swarams, and describes proving them by ear on two identical veenas. Your ear can learn far more than you think."
+              "theory": "Bharata's Natya Shastra, written about 2,000 years ago, is the oldest surviving book to name the seven swarams. Musicians then learned entirely by ear, as you are now. If unsure, imagine a staircase: is the second step above or below the first?"
             },
             {
               "title": "Small steps",
               "listen": {"intervals": [2], "rounds": 10},
-              "theory": "In the 13th century Sarangadeva wrote the Sangita Ratnakara at Devagiri. Both Carnatic and Hindustani musicians still study it, and it begins, as you do, with how swarams relate to each other."
+              "theory": "The Natya Shastra divides the octave into 22 srutis, steps finer than our swarams, and describes proving them by ear on two identical veenas. Neighbouring swarams like Sa and Ri are much wider apart, so your ear can learn this."
             },
             {
               "title": "Half steps",
@@ -51,14 +34,7 @@
               "title": "All sizes mixed",
               "listen": {"intervals": [9, 7, 5, 4, 2, 1], "rounds": 10},
               "theory": "Matanga's Brihaddeshi, around the 8th century, is the first known text to define a ragam: a pattern of notes that colours the mind. Every melody is a chain of ups and downs, just like these."
-            }
-          ]
-        },
-        {
-          "title": "Up, down or the same?",
-          "hint": "Sometimes the note stays where it is.",
-          "secondsPerBeat": 1,
-          "lessons": [
+            },
             {
               "title": "Up, down or same",
               "listen": {"intervals": [4, 5, 7], "same": true, "rounds": 10},
