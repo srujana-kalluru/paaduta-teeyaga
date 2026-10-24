@@ -1,7 +1,8 @@
 import { decode, startRecording, wav } from './audio.js';
-import { CONTEXT_SECONDS, DEFAULT_SA, LEAD_SECONDS, LOWEST_SA, MAX_SECONDS, NBSP, NOTE_NAMES, PROGRESS_KEY, SA_CHOICES, SA_KEY, STEP_GAP, VOICE_RATE, ZOOMS } from './constants.js';
+import { CONTEXT_SECONDS, DEFAULT_SA, LEAD_SECONDS, LOWEST_SA, MAX_SECONDS, NBSP, PROGRESS_KEY, SA_CHOICES, SA_KEY, STEP_GAP, VOICE_RATE, ZOOMS } from './constants.js';
 import { drawChart, drawLive } from './chart.js';
 import { CHAPTERS, LESSONS, SYLLABLES } from './lessons.js';
+import { drawStaff, westernName } from './staff.js';
 import { sing } from './voice.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -10,7 +11,7 @@ const API_BASE = $('meta[name="api-base"]').content;
 
 const state = { reference: null, user: null, takes: [], current: 0, request: null, zoom: 2, cursor: 0, keyShift: null, live: { reference: [], user: [] }, lesson: null, tonic: null };
 const players = { reference: new Audio(), user: new Audio() };
-let chart, stopRecording, recordTimer, playback;
+let chart, stopRecording, recordTimer, playback, staffNotes = [];
 
 function stored(key, fallback) {
   try {
@@ -183,14 +184,20 @@ function startLesson(lesson) {
   resetUser();
   $('h3', card).textContent = lesson.name;
   $('.row', card).hidden = true;
-  $('.swaras', card).replaceChildren(...lesson.name.split(' ').map((swara) => element('li', { textContent: swara })));
-  const notes = lesson.notes.map((n) => state.tonic + n);
-  state.live.reference = notes.flatMap((m, i) => {
-    const start = LEAD_SECONDS + i * lesson.seconds;
-    return [[start, m], [start + lesson.seconds - STEP_GAP, m], [start + lesson.seconds, null]];
+  const phrase = lesson.steps.map((step) => ({ ...step, note: state.tonic + step.note }));
+  $('.swaras', card).replaceChildren(...phrase.map((step) => element('li', {},
+    element('span', { textContent: step.swara + ' ,'.repeat(step.beats - 1) }), element('small', { textContent: westernName(step.note) }))));
+  const staff = $('.staff', card);
+  staff.removeAttribute('hidden');
+  staffNotes = drawStaff(staff, lesson.steps, lesson.seconds, state.tonic, lesson.cycle);
+  let beat = 0;
+  state.live.reference = phrase.flatMap(({ note, beats }) => {
+    const start = LEAD_SECONDS + beat * lesson.seconds, end = start + beats * lesson.seconds;
+    beat += beats;
+    return [[start, note], [end - STEP_GAP, note], [end, null]];
   });
   drawLiveFor('reference');
-  const voice = sing(notes, lesson.name.split(' ').map((swara) => SYLLABLES[swara]), lesson.seconds);
+  const voice = sing(phrase, lesson.seconds);
   load('reference', wav(voice.wet, VOICE_RATE), wav(voice.dry, VOICE_RATE));
 }
 
@@ -201,6 +208,8 @@ function clearSession() {
   $('h3', card).textContent = 'Reference';
   $('.row', card).hidden = false;
   $('.swaras', card).replaceChildren();
+  $('.staff', card).setAttribute('hidden', '');
+  staffNotes = [];
   $('canvas', card).hidden = true;
   audio.hidden = true;
   audio.removeAttribute('src');
@@ -281,8 +290,11 @@ function route() {
 
 function followSwaras() {
   const audio = $('#reference audio');
-  const now = audio.paused || !state.lesson ? -1 : Math.floor((audio.currentTime - LEAD_SECONDS) / state.lesson.seconds);
+  const beat = (audio.currentTime - LEAD_SECONDS) / (state.lesson?.seconds ?? 1);
+  let start = 0;
+  const now = audio.paused || !state.lesson || beat < 0 ? -1 : state.lesson.steps.findIndex((step) => beat < (start += step.beats));
   $$('#reference .swaras li').forEach((chip, i) => chip.classList.toggle('on', i === now));
+  staffNotes.forEach((note, i) => note.classList.toggle('on', i === now));
   if (!audio.paused) requestAnimationFrame(followSwaras);
 }
 
@@ -541,10 +553,10 @@ $('#start-over').onclick = () => {
   openLesson(LESSONS[0]);
 };
 $('#next-lesson').onclick = () => openLesson(nextLesson());
-$('#sa').append(...Array.from({ length: SA_CHOICES }, (_, k) => LOWEST_SA + k).map((m) => new Option(`${NOTE_NAMES[m % 12]}${Math.floor(m / 12) - 1}`, m)));
+$('#sa').append(...Array.from({ length: SA_CHOICES }, (_, k) => LOWEST_SA + k).map((m) => new Option(westernName(m), m)));
 $('#sa').value = stored(SA_KEY, DEFAULT_SA);
 $('#sa').onchange = () => store(SA_KEY, Number($('#sa').value));
-$('#hear-sa').onclick = () => new Audio(URL.createObjectURL(wav(sing([Number($('#sa').value)], [SYLLABLES.Sa], 1.5).wet, VOICE_RATE))).play();
+$('#hear-sa').onclick = () => new Audio(URL.createObjectURL(wav(sing([{ note: Number($('#sa').value), syllable: SYLLABLES.Sa, beats: 1 }], 1.5).wet, VOICE_RATE))).play();
 ['play', 'pause'].forEach((type) => $('#reference audio').addEventListener(type, followSwaras));
 $$('.record').forEach((b) => (b.onclick = () => toggleRecording(b.closest('.slot').id)));
 $('#analyse').onclick = () => analyse(null, state.keyShift == null ? {} : { key_shift_semitones: state.keyShift });

@@ -137,7 +137,21 @@ button:active { transform: scale(.97); }
 .swaras { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
 .swaras:empty { display: none; }
 .swaras li { min-width: 52px; padding: 8px 16px; border-radius: 980px; background: var(--fill); font-size: 19px; font-weight: 600; text-align: center; transition: background-color .12s, color .12s, transform .12s; }
+.swaras li span, .swaras li small { display: block; }
+.swaras li small { color: var(--muted); font-size: 12px; font-weight: 500; }
 .swaras .on { background: var(--accent); color: #fff; transform: scale(1.08); }
+.swaras .on small { color: inherit; opacity: .85; }
+.staff { display: block; max-width: 100%; height: auto; margin-top: 16px; overflow: visible; }
+.staff .line, .staff .bar, .staff .ledger, .staff .stem { stroke: var(--text); stroke-width: 1; }
+.staff .line { stroke: var(--muted); }
+.staff .stem { stroke-width: 1.3; }
+.staff .head, .staff .dot, .staff .accidental, .staff .clef, .staff .tempo { fill: var(--text); }
+.staff .head.open { fill: none; stroke: var(--text); stroke-width: 1.6; }
+.staff .clef { font-family: 'Noto Music', 'Bravura', 'Segoe UI Symbol', 'Apple Symbols', serif; }
+.staff .tempo, .staff .accidental { font-size: 12px; }
+.staff .on .head, .staff .on .dot, .staff .on .accidental { fill: var(--accent); }
+.staff .on .head.open { fill: none; stroke: var(--accent); }
+.staff .on .stem { stroke: var(--accent); }
 #sa { max-width: 160px; margin-top: 0; }
 .chapter { scroll-margin-top: 72px; }
 .chapter .hint { margin: 0; }
