@@ -93,6 +93,12 @@ jobs:
           cp -r src/main/resources/static/. site/
           sed -i "s|<meta name=\"api-base\" content=\"\">|<meta name=\"api-base\" content=\"${API_BASE_URL}\">|" site/index.html
           grep -q "content=\"${API_BASE_URL}\"" site/index.html
+          # Stamp every script, style and data URL with the commit so a browser never mixes files from two deploys.
+          v=${GITHUB_SHA::7}
+          sed -i -E "s#(href|src)=\"(app\.(css|js))\"#\1=\"\2?v=$v\"#g" site/index.html
+          sed -i -E "s#from '\./([a-z]+\.js)'#from './\1?v=$v'#g" site/*.js
+          sed -i "s#'lessons.json'#'lessons.json?v=$v'#" site/lessons.js
+          grep -q "app.js?v=$v" site/index.html
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
