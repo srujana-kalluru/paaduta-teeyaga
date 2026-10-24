@@ -374,13 +374,10 @@ async function toggleRecording(slot) {
     record.classList.remove('on');
     record.setAttribute('aria-pressed', 'false');
     timer.textContent = '';
-    const blob = await stop(), before = state.user;
+    const blob = await stop();
     buttons.forEach((b) => (b.disabled = false));
     $('#analyse').disabled = !(state.reference && state.user);
-    await load(slot, blob);
-    // In a lesson the attempt is analysed as soon as it is recorded.
-    if (state.lesson && slot === 'user' && state.reference && state.user && state.user !== before) analyse();
-    return;
+    return load(slot, blob);
   }
   if (slot === 'reference') {
     state.live.user = [];
