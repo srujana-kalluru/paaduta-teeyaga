@@ -3,54 +3,54 @@
   "stages": [
     {
       "title": "Hear up and down",
-      "about": "Before singing, train your ear to hear whether a note goes up or down. Every answer is shown as a picture.",
+      "about": "Before singing, train your ear to hear whether a note goes up or down. Both notes are always within one octave, Sa to upper Sa.",
       "chapters": [
         {
           "title": "Watch it move",
-          "hint": "Listen and watch. Higher on the screen means higher in pitch.",
+          "hint": "No questions yet. Listen and watch: higher on the screen means higher in pitch.",
           "secondsPerBeat": 1,
           "lessons": [
             {
-              "title": "Big jumps, with pictures",
-              "listen": {"intervals": [12], "show": true, "rounds": 6},
-              "theory": "Pitch is how high or low a note sounds. Here each note appears as a dot when it plays, so you can see the jump while you hear it. These two notes are a whole octave apart, the biggest jump in this course."
+              "title": "See big jumps",
+              "listen": {"demo": true, "intervals": [7, 9], "rounds": 6},
+              "theory": "The oldest Indian music, Vedic chanting from over 3,000 years ago, was built on hearing up and down. Each syllable was sung raised (udatta), lowered (anudatta) or falling (svarita). You are training that same ear."
             },
             {
-              "title": "Sa and Pa, with pictures",
-              "listen": {"intervals": [7], "show": true, "rounds": 6},
-              "theory": "Sa to Pa is a smaller jump, but still a clear one. Watch which way the line points: up means the second note is higher, down means lower."
+              "title": "See small steps",
+              "listen": {"demo": true, "intervals": [2, 4], "rounds": 6},
+              "theory": "Vedic manuscripts mark these pitch changes with small strokes above and below the words, one of the earliest ways of writing up and down. The ladder here does the same job: small steps sit close together."
             }
           ]
         },
         {
           "title": "Up or down?",
-          "hint": "Listen first, then answer. The picture appears after you choose.",
+          "hint": "Listen first and answer. The picture only appears after you choose.",
           "secondsPerBeat": 1,
           "lessons": [
             {
-              "title": "Octave jumps",
-              "listen": {"intervals": [12]},
-              "theory": "Now the picture waits until you answer. Many people find it easier to hum the two notes back quietly before choosing."
-            },
-            {
-              "title": "Sa to Pa jumps",
-              "listen": {"intervals": [7]},
-              "theory": "If you are unsure, imagine the notes as steps on a staircase: is the second step above or below the first?"
+              "title": "Big jumps",
+              "listen": {"intervals": [7, 8, 9]},
+              "theory": "Bharata's Natya Shastra, written about 2,000 years ago, is the oldest surviving book to name the seven swarams. Musicians then learned entirely by ear, as you are now. Hum the two notes back before you answer."
             },
             {
               "title": "Medium jumps",
               "listen": {"intervals": [4, 5]},
-              "theory": "These jumps are smaller, like Sa to Ma or Sa to Ga. Your ear gets sharper with every round, even the ones you miss."
+              "theory": "The Natya Shastra divides the octave into 22 srutis, steps finer than our swarams, and describes proving them by ear on two identical veenas. Your ear can learn far more than you think."
             },
             {
               "title": "Small steps",
               "listen": {"intervals": [2], "rounds": 10},
-              "theory": "Neighbouring swarams, like Sa and Ri, are the hardest to tell apart. Take your time and hear each pair as often as you like."
+              "theory": "In the 13th century Sarangadeva wrote the Sangita Ratnakara at Devagiri. Both Carnatic and Hindustani musicians still study it, and it begins, as you do, with how swarams relate to each other."
+            },
+            {
+              "title": "Half steps",
+              "listen": {"intervals": [1], "rounds": 10},
+              "theory": "Ga to Ma and Ni to upper Sa are the scale's half steps. Old texts gave the raised Ga and Ni their own names, antara Gandharam and kakali Nishadam, because trained ears noticed even these tiny differences."
             },
             {
               "title": "All sizes mixed",
-              "listen": {"intervals": [12, 7, 4, 2], "rounds": 10},
-              "theory": "Big and small jumps mixed together. This is what real melodies do: every song is a chain of ups and downs."
+              "listen": {"intervals": [9, 7, 5, 4, 2, 1], "rounds": 10},
+              "theory": "Matanga's Brihaddeshi, around the 8th century, is the first known text to define a ragam: a pattern of notes that colours the mind. Every melody is a chain of ups and downs, just like these."
             }
           ]
         },
@@ -61,13 +61,13 @@
           "lessons": [
             {
               "title": "Up, down or same",
-              "listen": {"intervals": [7, 4], "same": true, "rounds": 10},
-              "theory": "A repeated note is as important as a moving one; Janta Varasas later are built on it. Listen for whether the second note moves at all."
+              "listen": {"intervals": [4, 5, 7], "same": true, "rounds": 10},
+              "theory": "Repeated notes have always mattered: Janta Varasa, one of Purandara Dasa's first lessons, is built entirely on them. A note that stays put is a choice, not a mistake."
             },
             {
               "title": "Small steps or same",
-              "listen": {"intervals": [2], "same": true, "rounds": 10},
-              "theory": "The finest listening test here: a small step or no step at all. Passing this means your ear is ready to guide your voice."
+              "listen": {"intervals": [1, 2], "same": true, "rounds": 10},
+              "theory": "Carnatic music is famous for gamakams, graceful movements around notes, and medieval texts listed ten kinds. Every one depends on the skill you are practising: hearing the tiniest movement, or none."
             }
           ]
         },
@@ -79,22 +79,22 @@
             {
               "title": "Climb to Pa",
               "swaras": "S , P ,",
-              "theory": "Your voice draws a line on the graph as you sing. When you go from Sa to Pa, your line should climb, just like the dots did."
+              "theory": "Sa and Pa are called prakruti swarams, the natural notes, because they never change in any ragam. That is why the tambura, the drone behind every Carnatic concert, sounds only Sa and Pa."
             },
             {
               "title": "Fall to Sa",
               "swaras": "P , S ,",
-              "theory": "Now the other way. Going down, many voices stop short of the target; let your line fall all the way to the Sa rung."
+              "theory": "The Sangita Ratnakara describes the voice as coming from three places: the chest for low notes, the throat for middle ones and the head for high ones. Falling to Sa, feel the sound settle lower."
             },
             {
               "title": "Climb an octave",
               "swaras": "S , S' ,",
-              "theory": "Upper Sa is the same note, higher. Your line should jump a long way up and then sit flat."
+              "theory": "The three octaves are called mandra, madhya and tara sthayi. Upper Sa vibrates exactly twice as fast as Sa, which is why the two sound like the same note at different heights."
             },
             {
               "title": "Fall an octave",
               "swaras": "S' , S ,",
-              "theory": "From upper Sa back home. Seeing your line land on Sa is the clearest proof that your ear and voice agree."
+              "theory": "The Vijayanagara empire, whose king Krishnadevaraya was himself a celebrated Telugu poet, was a great patron of music. Purandara Dasa lived and sang in its capital, Hampi."
             }
           ]
         }
@@ -111,23 +111,23 @@
           "lessons": [
             {
               "swaras": "S , , ,",
-              "theory": "Sa is Shadjam, which means 'born of six': the other six swarams grow out of it. Old texts liken it to the call of a peacock. Every song you will ever sing returns home to Sa."
+              "theory": "Sa is Shadjam, 'born of six': ancient texts say it arises from six parts of the body, the nose, throat, chest, palate, tongue and teeth. Medieval writers likened it to a peacock's cry."
             },
             {
               "swaras": "R , , ,",
-              "theory": "Ri is Rishabham, the swaram texts liken to the call of a bull. It is the first step away from home, so it should feel like a small, sure step, not a stretch."
+              "theory": "Ri is Rishabham, likened to the call of a bull. In the 72-melakarta system Ri comes in three varieties; the one you are singing belongs to Sankarabharanam."
             },
             {
               "swaras": "G , , ,",
-              "theory": "Ga is Gandharam, likened to the bleat of a goat. With Sa and Ri it forms the first small climb you will sing, and it gives a scale its bright or dark colour."
+              "theory": "Ga is Gandharam, likened to the bleat of a goat. Carnatic music has three varieties of Ga, and the one a ragam uses changes its mood: a higher Ga sounds bright, a lower one tender."
             },
             {
               "swaras": "M , , ,",
-              "theory": "Ma is Madhyamam, 'the middle one': it sits at the centre of the seven swarams. Old texts liken it to the cry of the krauncha bird, the heron."
+              "theory": "Ma is Madhyamam, 'the middle one'. It has two forms, shuddha and prati, and Venkatamakhin split his 72 melakartas exactly in half by them: 36 with each."
             },
             {
               "swaras": "P , , ,",
-              "theory": "Pa is Panchamam, the fifth, likened to the song of the koel. Sa and Pa never change in any ragam, which is why the tambura plays only Sa and Pa."
+              "theory": "Pa is Panchamam, 'the fifth', likened to the song of the koel. With Sa it is one of the two fixed swarams, and the tambura has sounded the pair behind Carnatic singers for centuries."
             }
           ]
         }
@@ -144,27 +144,27 @@
           "lessons": [
             {
               "swaras": "S R",
-              "theory": "Moving between two neighbouring swarams is called a step. A clean step lands straight on the new note, like stepping onto a stair, instead of sliding up a ramp."
+              "theory": "The first graded lessons were organised by Purandara Dasa (1484-1564). Born Srinivasa Nayaka, a rich merchant, he gave up his wealth to become a wandering singer. He is called the grandfather of Carnatic music."
             },
             {
               "swaras": "R S",
-              "theory": "Coming down is often harder than going up: the voice tends to fall flat. Think of placing Sa gently, as if setting down a full glass."
+              "theory": "Purandara Dasa's teaching order is still followed 500 years later: small steps first, then patterns, then songs. Coming down cleanly to Sa is part of every one of them."
             },
             {
               "swaras": "S R S",
-              "theory": "Sa Ri Sa is a tiny round trip. Every phrase in Carnatic music is built from journeys like this one, away from home and back again."
+              "theory": "Tradition says Purandara Dasa composed hundreds of thousands of songs in Kannada. Only about a thousand survive, but his teaching method reached every Carnatic classroom."
             },
             {
               "swaras": "R G R",
-              "theory": "Here home moves to Ri. Practising the same shape from different swarams trains your ear to hear the distance, not just the names."
+              "theory": "For centuries Carnatic music was taught in the gurukula way: the student lived with the teacher's family and learned by repeating short phrases like this one, day after day."
             },
             {
               "swaras": "G M G",
-              "theory": "Ga to Ma is a smaller step than Ri to Ga, a half step instead of a whole one. Listen for how much closer together they feel."
+              "theory": "Ga to Ma is a half step. Venkatamakhin, in his Chaturdandi Prakasika of 1660, worked out every arrangement of steps like these and arrived at exactly 72 parent scales."
             },
             {
               "swaras": "M P M",
-              "theory": "Ma Pa Ma crosses the middle of the scale. Pa is fixed in every ragam, so it is a safe place to land."
+              "theory": "From the 16th century Telugu-speaking Nayaka kings ruled Thanjavur, the heart of Carnatic music. Telugu became the court language, which is a big reason so much Carnatic music is in Telugu."
             }
           ]
         },
@@ -175,27 +175,27 @@
           "lessons": [
             {
               "swaras": "S R G",
-              "theory": "Three rising swarams make the smallest arohanam, the ascent. Ragam Mohanam is built on just five swarams and starts the same way: Sa Ri Ga."
+              "theory": "Raghunatha Nayaka, a 17th-century Telugu king of Thanjavur, is credited with the modern veena's design of 24 fixed frets. The Saraswati veena on stage today still follows it."
             },
             {
               "swaras": "G R S",
-              "theory": "The descent is called avarohanam. Every ragam is defined by its own arohanam and avarohanam, a little like a signature."
+              "theory": "Ragam Mohanam uses only five swarams: Sa Ri Ga Pa Da. This five-note scale is among the oldest and most widespread in the world, heard in folk music on almost every continent."
             },
             {
               "swaras": "R G M",
-              "theory": "The same shape, one swaram higher. Your voice may feel slightly different here; that is your range changing, and it is completely normal."
+              "theory": "Kshetrayya, a 17th-century composer from Movva near Machilipatnam, wrote Telugu padams sung slowly for dance. Their unhurried phrases are a good model: let every note be heard."
             },
             {
               "swaras": "M G R",
-              "theory": "Let each swaram finish before the next begins. Teachers call this clarity swara shuddhi, clean notes."
+              "theory": "Tyagaraja's family came from Kakarla in Andhra before settling in Tamil country. Born in 1767, he spent his life in Tiruvaiyaru, composing in his mother tongue, Telugu."
             },
             {
               "swaras": "G M P",
-              "theory": "Ga Ma Pa spans the middle of the octave. This is often the most comfortable part of the voice, so enjoy it."
+              "theory": "Tyagaraja is believed to have composed thousands of kritis, of which around 700 survive. Almost all are in Telugu, so as a Telugu speaker you can understand his words directly."
             },
             {
               "swaras": "P M G",
-              "theory": "Coming down from Pa, keep the energy in the voice even though the notes get lower. Flat endings are the most common slip at this stage."
+              "theory": "Every year thousands of musicians gather at Tyagaraja's samadhi in Tiruvaiyaru for the Aradhana and sing his five Pancharatna kritis together. The festival has been held for well over a century."
             }
           ]
         }
@@ -212,19 +212,19 @@
           "lessons": [
             {
               "swaras": "S R G M",
-              "theory": "Sa Ri Ga Ma is the purvanga, the first half of the scale. Many ragams can be recognised from this half alone."
+              "theory": "Sa Ri Ga Ma is the purvanga, the first half of the scale. Venkatamakhin's 72 melakartas come from pairing six possible lower halves with six upper halves, then doubling for the two Ma's."
             },
             {
               "swaras": "M G R S",
-              "theory": "Walking back down the purvanga. If Sa sounds lower than when you started, pause, play Sa again and match it."
+              "theory": "Annamacharya (1408-1503) of Tallapaka is the earliest known composer of Telugu sankirtanas. Tradition says he wrote 32,000 songs for Lord Venkateswara, one for every day of his life."
             },
             {
               "swaras": "S R G M P",
-              "theory": "Adding Pa completes five swarams. Five-note ragams such as Mohanam and Hamsadhwani are among the most loved in Carnatic music."
+              "theory": "About 13,000 of Annamacharya's songs survive because his family engraved them on copper plates. The plates lay hidden in a vault at Tirumala until they were rediscovered in the 20th century."
             },
             {
               "swaras": "P M G R S",
-              "theory": "Five notes down to Sa. You have now sung more than half of every scale you will ever learn."
+              "theory": "Annamacharya's songs, such as 'Brahmam Okkate' and 'Adivo Alladivo', are still sung in Telugu homes and on stage today, more than 500 years after he wrote them."
             }
           ]
         },
@@ -235,23 +235,23 @@
           "lessons": [
             {
               "swaras": "P D",
-              "theory": "Pa to Da begins the uttaranga, the upper half of the scale. It mirrors the lower half, Sa to Ri, one Pa higher."
+              "theory": "Pa to Da begins the uttaranga, the upper half. Bhadrachala Ramadasu, a 17th-century tax officer born Kancherla Gopanna, spent royal revenue to build the Rama temple at Bhadrachalam."
             },
             {
               "swaras": "D N",
-              "theory": "Da is Dhaivatam, likened to the neigh of a horse, and Ni is Nishadam, likened to the trumpet of an elephant."
+              "theory": "Ni is Nishadam, likened to an elephant's trumpet. Ramadasu was jailed in Golconda fort for twelve years for spending that money; the Telugu songs he sang there are still loved across Andhra."
             },
             {
               "swaras": "N S'",
-              "theory": "Ni to upper Sa is another half step. Ni always wants to resolve upward into Sa; let it."
+              "theory": "Muthuswami Dikshitar (1775-1835), one of the Carnatic Trinity, spent years in Varanasi, and his music shows northern influence. He composed mostly in Sanskrit."
             },
             {
               "swaras": "P D N S'",
-              "theory": "Upper Sa vibrates exactly twice as fast as lower Sa. That is why they sound like the same note, one sthayi, or octave, apart."
+              "theory": "Syama Sastri (1762-1827), the third of the Trinity, wrote in Telugu and Sanskrit and loved intricate rhythms. All three Trinity composers were born in the same town, Tiruvarur, within 13 years."
             },
             {
               "swaras": "S' N D P",
-              "theory": "Coming down from upper Sa, keep your voice light at the top. Pushing makes the voice tight and the pitch sharp."
+              "theory": "Muthuswami Dikshitar's brother Baluswami is credited with bringing the violin into Carnatic music around 1800. Today the violin accompanies almost every Carnatic concert."
             }
           ]
         },
@@ -262,11 +262,11 @@
           "lessons": [
             {
               "swaras": "S R G M P D N S'",
-              "theory": "These eight notes, with Ma and Ni as you have sung them, form Dheerasankarabharanam, the 29th of the 72 melakarta ragams. Its notes match the Western major scale."
+              "theory": "These notes form Dheerasankarabharanam, melakarta 29. Melakarta names hide their number: in the old katapayadi code the syllables 'dhee' and 'ra' stand for 9 and 2, read backwards as 29."
             },
             {
               "swaras": "S' N D P M G R S",
-              "theory": "The complete avarohanam. Traditionally the first lessons are taught in Mayamalavagowla; we use Sankarabharanam here because its notes are easier for a new ear."
+              "theory": "Traditionally the first lessons use Mayamalavagowla, melakarta 15 ('ma' 5, 'ya' 1, read backwards), as Purandara Dasa chose. We use Sankarabharanam here because it is easier on a new ear."
             }
           ]
         },
@@ -277,23 +277,23 @@
           "lessons": [
             {
               "swaras": "S G",
-              "theory": "A leap skips over swarams. Hear Ga in your head before you sing it, then land on it directly without sliding."
+              "theory": "In 1904 Subbarama Dikshitar published the Sangita Sampradaya Pradarshini, a vast collection of compositions in notation. He wrote it in Telugu, then the language of music scholarship."
             },
             {
               "swaras": "S P",
-              "theory": "Sa to Pa is the most natural leap in music: the two notes vibrate in the ratio 3 to 2. That is why the tambura drone sounds so settled."
+              "theory": "Sa to Pa is the ratio 3 to 2, the most consonant leap after the octave. Indian and Greek musicians recognised it independently in ancient times, and nearly every musical culture uses it."
             },
             {
               "swaras": "S S'",
-              "theory": "Sa to upper Sa is a full octave, the ratio 2 to 1. Singers say the upper Sa should feel like the same note, only lighter."
+              "theory": "Sa to upper Sa doubles the pitch. Because the whole system rests on Sa, every Carnatic concert begins with the tambura tuned to the singer's own Sa."
             },
             {
               "swaras": "S G P",
-              "theory": "Sa Ga Pa outlines the major chord, the brightest-sounding chord there is. Hear Pa before you leap to it."
+              "theory": "Sa Ga Pa outlines the major chord. When British bands reached Madras in the 1700s, Muthuswami Dikshitar wrote short Sanskrit songs, called nottuswarams, set to their tunes."
             },
             {
               "swaras": "P G S",
-              "theory": "Coming down by leaps is harder than going up. Aim slightly high in your mind; the voice tends to fall below the target."
+              "theory": "The Madras Music Academy, founded in 1928, made the December music season famous. Today the season fills Chennai with well over a thousand concerts every year."
             }
           ]
         }
@@ -311,22 +311,22 @@
             {
               "title": "Sarali Varasa 1",
               "swaras": "S R G M P D N S' | S' N D P M G R S",
-              "theory": "Sarali Varasa means 'simple sequence'. Purandara Dasa set these exercises some 500 years ago, and almost every Carnatic singer since began with this one."
+              "theory": "Sarali Varasa means 'simple sequence'. Purandara Dasa set these exercises about 500 years ago, and nearly every Carnatic singer since has begun with this one."
             },
             {
               "title": "Sarali Varasa 2 - line 1",
               "swaras": "S R S R S R G M",
-              "theory": "This line repeats Sa Ri three times before climbing. Sarali Varasas are sung in Adi taalam, the most common rhythm cycle: eight beats to a line."
+              "theory": "Sarali Varasas are in Adi taalam, 'the first taalam', eight beats long and the most used rhythm in Carnatic music. Its full name in the old system is Chaturasra jaati Triputa taalam."
             },
             {
               "title": "Sarali Varasa 2 - line 3",
               "swaras": "S' N S' N S' N D P",
-              "theory": "The same pattern from upper Sa downward. Notice it is line 1 turned upside down; most Varasas are built from mirrors like this."
+              "theory": "Line 3 mirrors line 1. These lessons were passed down orally for centuries; written notation only became common in the late 1800s through printed music books, many of them in Telugu."
             },
             {
               "title": "Sarali Varasa 2",
               "swaras": "S R S R S R G M | S R G M P D N S' | S' N S' N S' N D P | S' N D P M G R S",
-              "theory": "Your first full Sarali with a pattern in it. Clap on beats 1, 5 and 7 as you sing; that is how Adi taalam is kept: a laghu of four beats and two drutams of two."
+              "theory": "To keep Adi taalam, clap on beat 1 and count 2, 3, 4 on your fingers; then clap and wave for 5 and 6, and again for 7 and 8. Musicians have kept time with these gestures for centuries."
             }
           ]
         },
@@ -338,27 +338,27 @@
             {
               "title": "Sarali Varasa 3 - line 1",
               "swaras": "S R G S R G S R",
-              "theory": "Sa Ri Ga, three times, then Sa Ri. Grouping in threes inside an eight-beat cycle creates a gentle tension that resolves at the line's end."
+              "theory": "Groups of three inside eight beats create a gentle tension. Syama Sastri delighted in cross-rhythms like this; his songs are known as the most rhythmically intricate of the Trinity."
             },
             {
               "title": "Sarali Varasa 3 - line 3",
               "swaras": "S' N D S' N D S' N",
-              "theory": "The mirror of line 1. Count the groups in your head: 3, 3, 2."
+              "theory": "The Tachur Singaracharyulu brothers of the late 1800s were among the first to publish graded music textbooks in Telugu, putting lessons like this on paper for students everywhere."
             },
             {
               "title": "Sarali Varasa 3",
               "swaras": "S R G S R G S R | S R G M P D N S' | S' N D S' N D S' N | S' N D P M G R S",
-              "theory": "Sarali Varasa 3 trains the voice to restart the same group cleanly each time, a skill every gamakam later relies on."
+              "theory": "Before recordings, a student's only reference was the teacher's voice. The first Carnatic gramophone records were made in the early 1900s, and suddenly anyone could hear a master sing."
             },
             {
               "title": "Sarali Varasa 4 - line 1",
               "swaras": "S R G M S R G M",
-              "theory": "Groups of four fit Adi taalam exactly: two groups per line. This makes Sarali 4 feel steady and square."
+              "theory": "Groups of four fit Adi taalam exactly. All India Radio, broadcasting from Madras from 1938, took Carnatic music out of temples and palaces into ordinary homes."
             },
             {
               "title": "Sarali Varasa 4 - line 3",
               "swaras": "S' N D P S' N D P",
-              "theory": "Coming down in fours. Keep each upper Sa at the same height every time it returns."
+              "theory": "Veena, flute and violin students all begin with these same Varasas; only the instrument changes. Carnatic instrumentalists are taught to make their instruments sing like a voice."
             },
             {
               "title": "Sarali Varasa 4",
@@ -381,37 +381,37 @@
             {
               "title": "Sarali Varasa 5 - line 1",
               "swaras": "S R G M P , S R",
-              "theory": "The comma (,) marks a held beat: Pa here lasts two beats. In Telugu notation books the same comma is used, so this is exactly how printed Varasas look."
+              "theory": "The comma for a held beat is how Varasas appear in printed notation books, whether in Telugu, Tamil or Kannada. The same exercises are shared across all of South India."
             },
             {
               "title": "Sarali Varasa 5 - line 3",
               "swaras": "S' N D P M , S' N",
-              "theory": "Ma is held for two beats on the way down. Holding steady on a note is the foundation of good sruti, staying in tune."
+              "theory": "Holding a note steady against the tambura is called keeping sruti. Many teachers ask students to hold Sa until their voice and the drone seem to merge into one sound."
             },
             {
               "title": "Sarali Varasa 5",
               "swaras": "S R G M P , S R | S R G M P D N S' | S' N D P M , S' N | S' N D P M G R S",
-              "theory": "The full Sarali 5. The pause on Pa and Ma gives a feeling of breath inside the line; real compositions use held notes the same way."
+              "theory": "Sarali 5 is the first with a pause inside the line. Long held notes give a Carnatic song its breathing space, and Tyagaraja's slow kritis are full of them."
             },
             {
               "title": "Sarali Varasa 6",
               "swaras": "S R G M P D S R | S R G M P D N S' | S' N D P M G S' N | S' N D P M G R S",
-              "theory": "Sarali 6 climbs to Da, then turns back to Sa Ri. A turn like this is called a prayogam, a characteristic phrase."
+              "theory": "A turn back before the top is a prayogam, a characteristic phrase. Two ragams can share the same notes and still sound different, because their prayogams differ."
             },
             {
               "title": "Sarali Varasa 7",
               "swaras": "S R G M P D N D | S R G M P D N S' | S' N D P M G R G | S' N D P M G R S",
-              "theory": "Sarali 7 climbs to Ni and turns back to Da. The turn just below upper Sa is a favourite move in many ragams."
+              "theory": "Turning just below upper Sa is a favourite move. Tyagaraja's 'Endaro Mahanubhavulu', the fifth Pancharatna kriti, salutes all the great musicians who came before him."
             },
             {
               "title": "Sarali Varasa 8",
               "swaras": "S R G M P M G R | S R G M P D N S' | S' N D P M P D N | S' N D P M G R S",
-              "theory": "Sarali 8 rises to Pa and walks straight back down. Up-and-back shapes like this train the ear for symmetry."
+              "theory": "Up and back is the shape of a lullaby. The Telugu lullaby 'Jo Achyutananda' is attributed to Annamacharya and is still sung to babies across Andhra."
             },
             {
               "title": "Sarali Varasa 9",
               "swaras": "S R G M P M D P | S R G M P D N S' | S' N D P M P G M | S' N D P M G R S",
-              "theory": "Sarali 9 rises to Pa, dips to Ma, then lifts to Da. Zig-zag movement like this is the first taste of a ragam's twists."
+              "theory": "This zig-zag is a first taste of vakra, or crooked, movement. Some ragams, such as Sri ragam, are built on zig-zag phrases instead of straight scales."
             }
           ]
         }
@@ -429,32 +429,32 @@
             {
               "title": "Hold Pa",
               "swaras": "P , , , P , , ,",
-              "theory": "Pa held for four beats, twice. Long notes reveal every wobble, so this is where a steady sruti really shows."
+              "theory": "Long notes reveal every wobble. The tambura's rich, buzzing tone, which you measure them against, comes from a thread placed under the strings on its bridge, called the jivari."
             },
             {
               "title": "Sarali Varasa 10",
               "swaras": "S R G M P , G M | P , , , P , , , | G M P D N D P M | G M P G M G R S",
-              "theory": "Sarali 10 introduces a full-beat hold on Pa across the whole line. Steady long notes are the resting places of a song, where the listener feels the ragam settle."
+              "theory": "Long, slow alapanas, where a singer explores a ragam's held notes without words or rhythm, have been the heart of Carnatic concerts for generations. Steady notes like these are their backbone."
             },
             {
               "title": "Sarali Varasa 11",
               "swaras": "S' , N D N , D P | D , P M P , P , | G M P D N D P M | G M P G M G R S",
-              "theory": "Sarali 11 begins on upper Sa, the first Varasa that starts high. Start light, as if the note floats."
+              "theory": "The first Varasa to start from upper Sa. In the early 20th century Ariyakudi Ramanuja Iyengar shaped the concert format still used today, opening with a varnam and building to a main piece."
             },
             {
               "title": "Sarali Varasa 12",
               "swaras": "S' S' N D N N D P | D D P M P , P , | G M P D N D P M | G M P G M G R S",
-              "theory": "Sarali 12 doubles some swarams before the held Pa. Repeated notes must each be sung clearly, not merged into one."
+              "theory": "Repeated notes must each be clear. Veena players sound each repeat with a fresh pluck; singers do it with a fresh push of breath, the same skill Janta Varasa will build."
             },
             {
               "title": "Sarali Varasa 13",
               "swaras": "S R G R G , G M | P M P , D P D , | M P D P D N D P | M P D P M G R S",
-              "theory": "Sarali 13 mixes holds and turns: Ga is held, then Pa, then Da. It feels close to a real melody; you are almost singing a song."
+              "theory": "Holds and turns together make a real melody. After the Varasas, Purandara Dasa's next step is the geetham, a simple song; 'Sri Gananatha' is usually the first."
             },
             {
               "title": "Sarali Varasa 14",
               "swaras": "S R G M P , P , | D D P , M M P , | D N S' , S' N D P | S' N D P M G R S",
-              "theory": "Sarali 14 is the last Sarali Varasa. Its held upper Sa in line 3 is the highest long note so far. Completing all fourteen is a real milestone."
+              "theory": "This is the last Sarali Varasa. Traditionally a teacher asked for all fourteen in three speeds before moving on, and finishing them is a milestone every Carnatic student remembers."
             }
           ]
         }
@@ -472,27 +472,27 @@
             {
               "title": "Janta Varasa 1 - going up",
               "swaras": "S S R R G G M M | P P D D N N S' S'",
-              "theory": "Janta is the Telugu word for a pair. Each swaram is sung twice, the second with a fresh push of breath, which builds control for gamakams later."
+              "theory": "Janta is the Telugu word for a pair. Janta Varasas build the control needed for gamakams, the shakes and slides that make Carnatic music sound like nothing else."
             },
             {
               "title": "Janta Varasa 1",
               "swaras": "S S R R G G M M | P P D D N N S' S' | S' S' N N D D P P | M M G G R R S S",
-              "theory": "The full Janta Varasa 1. Sing the second note of each pair clearly; don't let the pair blur into one long note."
+              "theory": "M. Balamuralikrishna of Sankaraguptam in East Godavari gave his first full concert at eight and later created new ragams of his own. Even he began with Varasas like this one."
             },
             {
               "title": "Janta Varasa 2 - going up",
               "swaras": "S S R R G G R R | S S R R G G M M | R R G G M M G G | R R G G M M P P | G G M M P P M M | G G M M P P D D | M M P P D D P P | M M P P D D N N | P P D D N N D D | P P D D N N S' S'",
-              "theory": "Janta Varasa 2 climbs in overlapping pairs. It is long, so breathe at the end of each eight-beat line."
+              "theory": "Breath control is central to singing: the Sangita Ratnakara lists the qualities of a good singer's voice in detail, steadiness among them. Breathe at the end of each line here."
             },
             {
               "title": "Janta Varasa 2 - coming down",
               "swaras": "S' S' N N D D N N | S' S' N N D D P P | N N D D P P D D | N N D D P P M M | D D P P M M P P | D D P P M M G G | P P M M G G M M | P P M M G G R R | M M G G R R G G | M M G G R R S S",
-              "theory": "The descent of Janta Varasa 2. Keep the second note of each pair as strong as the first."
+              "theory": "Ghantasala, the legendary Telugu playback singer, trained in Carnatic music at the Maharaja's music college in Vizianagaram before his film career."
             },
             {
               "title": "Janta Varasa 2",
               "swaras": "S S R R G G R R | S S R R G G M M | R R G G M M G G | R R G G M M P P | G G M M P P M M | G G M M P P D D | M M P P D D P P | M M P P D D N N | P P D D N N D D | P P D D N N S' S' | S' S' N N D D N N | S' S' N N D D P P | N N D D P P D D | N N D D P P M M | D D P P M M P P | D D P P M M G G | P P M M G G M M | P P M M G G R R | M M G G R R G G | M M G G R R S S",
-              "theory": "The complete Janta Varasa 2, all twenty lines. Many teachers say Janta Varasas are where a singer's voice first becomes strong."
+              "theory": "The Maharaja's music college in Vizianagaram, founded in 1919, trained many great Telugu musicians. The violinist Dwaram Venkataswamy Naidu was among its famous teachers."
             }
           ]
         }
@@ -509,27 +509,27 @@
           "lessons": [
             {
               "swaras": "S N.",
-              "theory": "Mandra sthayi is the lower octave, written with a dot below the swaram. Ni below Sa is the first step into it."
+              "theory": "Mandra sthayi is the lower octave, written with a dot below. The Sangita Ratnakara says low notes come from the chest; let them feel warm and unforced."
             },
             {
               "swaras": "N. D. N. S",
-              "theory": "A short walk in the lower octave. Let the low notes sound relaxed; low voice comes from ease, not force."
+              "theory": "The tambura's lowest string is tuned to the lower Sa, so Carnatic singers have always had a low anchor to sink into. Low notes come from ease, not force."
             },
             {
               "swaras": "S N. D. P.",
-              "theory": "Down to the lower Pa. The middle octave is madhya sthayi; between mandra, madhya and tara, a singer usually covers about two and a half octaves."
+              "theory": "Men and women sing the same ragams from different Sa's. Because each singer chooses their own Sa, Carnatic music has no fixed key, unlike much Western music."
             },
             {
               "swaras": "P. D. N. S R G",
-              "theory": "From the lower octave back into the middle one. Moving smoothly across octaves is what makes a voice sound even."
+              "theory": "Musicians call this tristhana shuddhi: a voice equally clean in all three octaves. It has long been praised as the mark of a great singer."
             },
             {
               "swaras": "S' R' S'",
-              "theory": "Tara sthayi is the upper octave, written with a dot above. Ri above upper Sa is the first step into it."
+              "theory": "Tara sthayi is the upper octave, written with a dot above. The Sangita Ratnakara places high notes in the head; keep them light."
             },
             {
               "swaras": "N S' R' S' N",
-              "theory": "A short walk around upper Sa. High notes ring best when the throat stays relaxed and the breath steady."
+              "theory": "M. S. Subbulakshmi, the first musician to receive the Bharat Ratna, sang at the United Nations General Assembly in 1966. Her effortless upper notes are still a model for singers."
             },
             {
               "swaras": "P D N S' R' S' N D P",
@@ -552,17 +552,17 @@
             {
               "title": "Triputa Alankaram - going up",
               "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S'",
-              "theory": "Alankaram means ornament. Purandara Dasa set seven Alankarams, one for each of the seven suladi taalams, so students learn the rhythms by singing."
+              "theory": "Alankaram means ornament. Purandara Dasa set seven Alankarams, one for each of the seven Suladi taalams, so students learn the rhythms by singing them."
             },
             {
               "title": "Triputa Alankaram - coming down",
               "swaras": "S' N D S' N D P | N D P N D P M | D P M D P M G | P M G P M G R | M G R M G R S",
-              "theory": "This Alankaram is in Tisra jaati Triputa taalam: 3 + 2 + 2 = 7 beats. Clap the first beat of each group: 1, 4 and 6."
+              "theory": "This one is in Tisra jaati Triputa taalam: 3 + 2 + 2 = 7 beats. Clap on beats 1, 4 and 6. The seven taalams combine with five jaatis, or beat counts, to make 35 taalams."
             },
             {
               "title": "Triputa Taalam Alankaram",
               "swaras": "S R G S R G M | R G M R G M P | G M P G M P D | M P D M P D N | P D N P D N S' | S' N D S' N D P | N D P N D P M | D P M D P M G | P M G P M G R | M G R M G R S",
-              "theory": "The full Triputa Alankaram. The seven suladi taalams combine with five jaatis to make 35 taalams; you have now sung one of them."
+              "theory": "Mridangam players learn these taalams with spoken syllables such as 'ta ka di mi'. This spoken rhythm, called konnakol, can be a concert item in its own right."
             }
           ]
         }
@@ -580,17 +580,17 @@
             {
               "title": "Sarali Varasa 1 - rendava kaalam",
               "swaras": "S R G M P D N S' | S' N D P M G R S",
-              "theory": "Carnatic music is sung in three speeds, or kaalams: prathama (first), dwitiya (second) and tritiya (third). Each speed is exactly double the one before."
+              "theory": "Carnatic music uses three speeds, or kaalams: prathama, dwitiya and tritiya, each double the one before. Teachers traditionally ask for every Varasa in all three."
             },
             {
               "title": "Sarali Varasa 3 - rendava kaalam",
               "swaras": "S R G S R G S R | S R G M P D N S' | S' N D S' N D S' N | S' N D P M G R S",
-              "theory": "Sarali 3 at second speed. The groups of three now go by quickly; keep each one clean rather than rushed."
+              "theory": "Speed without clarity is not the goal. The violinist Lalgudi Jayaraman was famous for making even his fastest passages sound like singing."
             },
             {
               "title": "Janta Varasa 1 - rendava kaalam",
               "swaras": "S S R R G G M M | P P D D N N S' S' | S' S' N N D D P P | M M G G R R S S",
-              "theory": "Janta Varasa at second speed. After this, students usually move on to geethams such as Purandara Dasa's 'Sri Gananatha', their first real songs."
+              "theory": "After Varasas and Alankarams come geethams, then swarajatis and varnams, and finally kritis. You have now walked the same first steps as five centuries of Carnatic musicians."
             }
           ]
         }

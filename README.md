@@ -183,7 +183,7 @@ The curriculum is in `src/main/resources/static/lessons.json`. No code changes a
 - **Stage**: a group of chapters that adds one new idea. Only the stage being worked on starts open.
 - **Chapter**: `secondsPerBeat` sets the tempo (1 is 60 beats a minute). `beatsPerLine` sets the taalam cycle and defaults to 8.
 - **Swaras**: `S R G M P D N`. Add `'` for the upper octave (`S'`) and `.` for the lower (`N.`). A comma holds the previous swaram one more beat and `|` separates lines.
-- **Listening game**: instead of `swaras`, give a `title` and `"listen": {"intervals": [12, 7], "same": false, "show": true, "rounds": 8}`. Two notes play and the learner answers up, down or same; the notes are then shown on a ladder. `intervals` are jump sizes in semitones (12 an octave, 7 Sa to Pa, 2 Sa to Ri) and `show` draws the dots while the notes play.
+- **Listening game**: instead of `swaras`, give a `title` and `"listen": {"intervals": [7, 4], "same": false, "rounds": 8}`. Two notes within one octave play and the learner answers up, down or same; only then are the notes shown on a ladder. `intervals` are jump sizes in semitones (7 Sa to Pa, 4 Sa to Ga, 2 Sa to Ri, 1 Ga to Ma). With `"demo": true` the notes are shown as they play and nothing is asked.
 - **Theory**: optional. Three or four lines shown above the lesson to make it interesting.
 - **Title**: optional. Without it the swaras are the name. Renaming a lesson resets its saved progress.
 - A mistake, such as an unknown swara or two lessons with the same name, is shown on the page when it loads.

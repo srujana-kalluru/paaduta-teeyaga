@@ -64,13 +64,15 @@ function stopSound() {
 function play() {
   stopSound();
   quiz.shown = -1;
+  if (!quiz.answered) $('#listen-feedback').textContent = '';
   audio = new Audio(quiz.clip.url);
   audio.play().catch(() => {});
   const follow = () => {
-    // In picture mode, or once answered, each dot appears as its note sounds.
+    // In a demonstration, or once answered, each dot appears as its note sounds. Before an answer nothing is shown.
     const shown = quiz.clip.starts.filter((t) => audio.currentTime >= t).length;
-    if ((quiz.lesson.listen.show || quiz.answered) && shown !== quiz.shown) drawLadder((quiz.shown = shown));
+    if ((quiz.lesson.listen.demo || quiz.answered) && shown !== quiz.shown) drawLadder((quiz.shown = shown));
     if (!audio.paused && !audio.ended) frame = requestAnimationFrame(follow);
+    else if (quiz.lesson.listen.demo && !quiz.answered) reveal();
     else if (!quiz.answered) setAnswering(true);
   };
   frame = requestAnimationFrame(follow);
@@ -81,20 +83,36 @@ function setAnswering(on) {
   $$('#listen-answers button').forEach((b) => (b.disabled = !on || quiz.answered));
 }
 
+const direction = ([first, second]) => ({ 1: 'up', [-1]: 'down', 0: 'same' })[Math.sign(second - first)];
+const SAID = { up: 'went up', down: 'went down', same: 'stayed the same' };
+
+function showNext() {
+  $('#listen-next').textContent = quiz.round < quiz.rounds ? 'Next' : 'Finish';
+  $('#listen-next').hidden = false;
+}
+
+// A demonstration asks nothing: it names the direction once both notes have played.
+function reveal() {
+  quiz.answered = true;
+  Object.assign($('#listen-feedback'), { textContent: `It ${SAID[direction(quiz.notes)]}.`, className: 'good' });
+  showNext();
+}
+
 function newRound() {
   quiz.round++;
   quiz.answered = false;
   quiz.notes = pair(quiz.tonic, quiz.lesson.listen.intervals, quiz.lesson.listen.same);
   quiz.clip = clip(quiz.notes);
-  $('#listen-round').textContent = `Round ${quiz.round} of ${quiz.rounds} · ${quiz.correct} right so far`;
-  $('#listen-question').textContent = quiz.lesson.listen.same ? 'Did the second note go up, go down or stay the same?' : 'Did the second note go up or down?';
+  const { demo, same } = quiz.lesson.listen;
+  $('#listen-round').textContent = demo ? `Round ${quiz.round} of ${quiz.rounds}` : `Round ${quiz.round} of ${quiz.rounds} · ${quiz.correct} right so far`;
+  $('#listen-question').textContent = demo ? 'Listen and watch where the second note lands.' : same ? 'Did the second note go up, go down or stay the same?' : 'Did the second note go up or down?';
   $('#listen-feedback').textContent = quiz.round === 1 ? 'Press Play and listen to both notes.' : '';
   $('#listen-feedback').className = '';
   $('#listen-play').textContent = 'Play';
   $('#listen-play').hidden = false;
   $('#ladder').removeAttribute('hidden');
   $('#listen-next').hidden = true;
-  $('#listen-answers').hidden = false;
+  $('#listen-answers').hidden = Boolean(demo);
   setAnswering(false);
   drawLadder(0);
   if (quiz.round > 1) play();
@@ -103,25 +121,24 @@ function newRound() {
 function answer(choice) {
   if (quiz.answered) return;
   quiz.answered = true;
-  const move = Math.sign(quiz.notes[1] - quiz.notes[0]), truth = move > 0 ? 'up' : move < 0 ? 'down' : 'same', right = choice === truth;
+  const truth = direction(quiz.notes), right = choice === truth, said = SAID[truth];
   if (right) quiz.correct++;
-  const said = { up: 'went up', down: 'went down', same: 'stayed the same' }[truth];
   Object.assign($('#listen-feedback'), { textContent: right ? `Right, it ${said}.` : `Not quite: it ${said}. Hear it again while you watch.`, className: right ? 'good' : 'miss' });
   $('#listen-round').textContent = `Round ${quiz.round} of ${quiz.rounds} · ${quiz.correct} right so far`;
   setAnswering(false);
   drawLadder(2);
-  $('#listen-next').textContent = quiz.round < quiz.rounds ? 'Next' : 'See how you did';
-  $('#listen-next').hidden = false;
+  showNext();
 }
 
 function finish() {
   stopSound();
-  const passed = quiz.correct >= Math.ceil(LISTEN.pass * quiz.rounds);
-  quiz.done(passed, quiz.rounds - quiz.correct);
-  $('#listen-round').textContent = `${quiz.correct} of ${quiz.rounds} right`;
+  const { demo } = quiz.lesson.listen, passed = demo || quiz.correct >= Math.ceil(LISTEN.pass * quiz.rounds);
+  quiz.done(passed, demo ? 0 : quiz.rounds - quiz.correct);
+  $('#listen-round').textContent = demo ? `${quiz.rounds} pairs heard` : `${quiz.correct} of ${quiz.rounds} right`;
   $('#listen-question').textContent = passed ? 'Lesson passed' : 'Nearly there';
   Object.assign($('#listen-feedback'), {
-    textContent: passed ? 'Your ear is learning to hear the direction of a note.' : `Get ${Math.ceil(LISTEN.pass * quiz.rounds)} right to pass. Each try trains your ear a little more.`,
+    textContent: demo ? 'Next, you will hear the notes first and answer before the picture appears.'
+      : passed ? 'Your ear is learning to hear the direction of a note.' : `Get ${Math.ceil(LISTEN.pass * quiz.rounds)} right to pass. Each try trains your ear a little more.`,
     className: passed ? 'good' : '',
   });
   $('#listen-answers').hidden = true;

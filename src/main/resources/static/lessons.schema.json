@@ -97,23 +97,23 @@
                             "items": {
                               "type": "integer",
                               "minimum": 1,
-                              "maximum": 12
+                              "maximum": 11
                             },
-                            "description": "Jump sizes in semitones to choose from: 12 is an octave, 7 is Sa to Pa, 2 is Sa to Ri."
+                            "description": "Jump sizes in semitones, both notes within Sa to upper Sa: 7 is Sa to Pa, 4 Sa to Ga, 2 Sa to Ri, 1 Ga to Ma."
                           },
                           "same": {
                             "type": "boolean",
                             "description": "Also ask 'same' rounds where the note does not move."
-                          },
-                          "show": {
-                            "type": "boolean",
-                            "description": "Show the notes as dots while they play, before the learner answers."
                           },
                           "rounds": {
                             "type": "integer",
                             "minimum": 3,
                             "maximum": 20,
                             "description": "Rounds per try. Defaults to 8."
+                          },
+                          "demo": {
+                            "type": "boolean",
+                            "description": "A demonstration: each note is shown as it plays and nothing is asked."
                           }
                         }
                       }
